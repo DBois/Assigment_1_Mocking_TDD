@@ -2,6 +2,9 @@ package dk.cphbusiness;
 
 import dk.cphbusiness.banking.Account;
 import dk.cphbusiness.banking.Bank;
+import dk.cphbusiness.banking.Customer;
+
+import java.util.List;
 
 public class BankStub implements Bank {
 
@@ -17,6 +20,26 @@ public class BankStub implements Bank {
     @Override
     public Account getAccount(String number) {
         return this.account;
+    }
+
+    @Override
+    public void registerAccount(Account account) {
+
+    }
+
+    @Override
+    public Customer getCustomer(String number) {
+        return null;
+    }
+
+    @Override
+    public void registerCustomer(Customer customer) {
+
+    }
+
+    @Override
+    public List<Account> getAccounts(Customer customer) {
+        return null;
     }
 
     @Override
