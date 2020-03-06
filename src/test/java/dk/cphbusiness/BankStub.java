@@ -1,6 +1,6 @@
 package dk.cphbusiness;
 
-import dk.cphbusiness.banking.Account;
+import dk.cphbusiness.banking.RealAccount;
 import dk.cphbusiness.banking.Bank;
 import dk.cphbusiness.banking.Customer;
 
@@ -8,22 +8,22 @@ import java.util.List;
 
 public class BankStub implements Bank {
 
-    private Account account;
+    private RealAccount account;
 
 
-    BankStub(Account accountToStub){
+    BankStub(RealAccount accountToStub){
         this.account = accountToStub;
     }
     BankStub(){
     }
 
     @Override
-    public Account getAccount(String number) {
+    public RealAccount getAccount(String number) {
         return this.account;
     }
 
     @Override
-    public void registerAccount(Account account) {
+    public void registerAccount(RealAccount account) {
 
     }
 
@@ -38,7 +38,7 @@ public class BankStub implements Bank {
     }
 
     @Override
-    public List<Account> getAccounts(Customer customer) {
+    public List<RealAccount> getAccounts(Customer customer) {
         return null;
     }
 
@@ -47,7 +47,7 @@ public class BankStub implements Bank {
         return null;
     }
 
-    public void setAccount(Account target) {
+    public void setAccount(RealAccount target) {
         this.account = target;
     }
 }

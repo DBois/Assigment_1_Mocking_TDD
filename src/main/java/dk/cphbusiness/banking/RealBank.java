@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class RealBank implements Bank {
-    private Map<String, Account> accounts = new HashMap<>();
+    private Map<String, RealAccount> accounts = new HashMap<>();
     private Map<String, Customer> customers = new HashMap<>();
     private String name;
 
@@ -15,12 +15,12 @@ public class RealBank implements Bank {
     }
 
     @Override
-    public Account getAccount(String number) {
+    public RealAccount getAccount(String number) {
         return accounts.get(number);
     }
 
     @Override
-    public void registerAccount(Account account) {
+    public void registerAccount(RealAccount account) {
         accounts.put(account.getNumber(), account);
     }
 
@@ -35,8 +35,8 @@ public class RealBank implements Bank {
     }
 
     @Override
-    public List<Account> getAccounts(Customer customer) {
-        List<Account> accountsToReturn = new ArrayList<>();
+    public List<RealAccount> getAccounts(Customer customer) {
+        List<RealAccount> accountsToReturn = new ArrayList<>();
         for (String accNumber : customer.getAccountNumbers()
         ) {
             accountsToReturn.add(accounts.get(accNumber));
