@@ -1,6 +1,6 @@
 package dk.cphbusiness.miscellaneous;
 
-import dk.cphbusiness.banking.Account;
+import dk.cphbusiness.banking.RealAccount;
 import dk.cphbusiness.banking.Bank;
 import dk.cphbusiness.banking.Movement;
 
@@ -31,7 +31,7 @@ public class BankTool {
     private void parseAccounts(Bank bank, String line) {
         var parts = line.split(":");
         if (parts.length != 3) throw new RuntimeException();
-        var account = new Account(bank, bank.getCustomer(parts[2]), parts[1]);
+        var account = new RealAccount(bank, bank.getCustomer(parts[2]), parts[1]);
         bank.registerAccount(account);
     }
 

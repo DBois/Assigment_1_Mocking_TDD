@@ -1,20 +1,20 @@
 package dk.cphbusiness;
 
-import dk.cphbusiness.banking.Account;
+import dk.cphbusiness.banking.RealAccount;
 import dk.cphbusiness.banking.Bank;
 import dk.cphbusiness.banking.Customer;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class AccountTest {
+public class RealAccountTest {
 
     @Test
-    public void testCreateAccount() throws Exception {
+    public void testCreateAccount() {
         Bank bank = null;
         Customer customer =  new CustomerDummy();
         String number = null;
-        Account account = new Account(bank, customer, number);
-        assertNotNull(account);
+        RealAccount realAccount = new RealAccount(bank, customer, number);
+        assertNotNull(realAccount);
     }
 
     @Test
@@ -22,9 +22,9 @@ public class AccountTest {
         Bank bank = new BankDummy();
         Customer customer = new CustomerDummy();
         String number = null;
-        Account account = new Account(bank, customer, number);
-        assertEquals(bank, account.getBank());
-        assertNotNull(account.getBank());
+        RealAccount realAccount = new RealAccount(bank, customer, number);
+        assertEquals(bank, realAccount.getBank());
+        assertNotNull(realAccount.getBank());
     }
 
     @Test
@@ -32,9 +32,9 @@ public class AccountTest {
         Bank bank = new BankDummy();
         Customer customer = new CustomerDummy();
         String number = null;
-        Account account = new Account(bank, customer, number);
-        assertEquals(customer, account.getCustomer());
-        assertNotNull(account.getCustomer());
+        RealAccount realAccount = new RealAccount(bank, customer, number);
+        assertEquals(customer, realAccount.getCustomer());
+        assertNotNull(realAccount.getCustomer());
     }
 
     @Test
@@ -42,9 +42,9 @@ public class AccountTest {
         Bank bank = new BankDummy();
         Customer customer = new CustomerDummy();
         String number = "ABC12345";
-        Account account = new Account(bank, customer, number);
-        assertEquals(number, account.getNumber());
-        assertNotNull(account.getNumber());
+        RealAccount realAccount = new RealAccount(bank, customer, number);
+        assertEquals(number, realAccount.getNumber());
+        assertNotNull(realAccount.getNumber());
     }
 
     @Test
@@ -52,17 +52,17 @@ public class AccountTest {
         Bank bank = new BankDummy();
         Customer customer = new CustomerDummy();
         String number = "ABC12345";
-        Account account = new Account(bank, customer, number);
-        assertEquals(0L, account.getBalance());
-        assertNotNull(account.getNumber());
+        RealAccount realAccount = new RealAccount(bank, customer, number);
+        assertEquals(0L, realAccount.getBalance());
+        assertNotNull(realAccount.getNumber());
     }
 
     @Test
     public void testTransferPositiveAmount(){
         Bank bank = new BankDummy();
         Customer customer = new CustomerDummy();
-        Account source = new Account(bank, customer, "SRC12345");
-        Account target = new Account(bank, customer, "TGT12345");
+        RealAccount source = new RealAccount(bank, customer, "SRC12345");
+        RealAccount target = new RealAccount(bank, customer, "TGT12345");
         source.transfer(10000L, target);
         assertEquals(-10000L, source.getBalance());
         assertEquals(10000L, target.getBalance());
@@ -76,8 +76,8 @@ public class AccountTest {
         Customer customer = new CustomerDummy();
         String targetNumber = "SRC12345";
 
-        Account target = new Account(bankDummy, customer, targetNumber);
-        Account source = new Account(bank, customer, "EWQEW21321");
+        RealAccount target = new RealAccount(bankDummy, customer, targetNumber);
+        RealAccount source = new RealAccount(bank, customer, "EWQEW21321");
         bank.setAccount(target);
         source.transfer(10000L, targetNumber);
         assertEquals(-10000L, source.getBalance());

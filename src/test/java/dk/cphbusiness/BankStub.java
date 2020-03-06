@@ -1,6 +1,7 @@
 package dk.cphbusiness;
 
 import dk.cphbusiness.banking.Account;
+import dk.cphbusiness.banking.RealAccount;
 import dk.cphbusiness.banking.Bank;
 import dk.cphbusiness.banking.Customer;
 
@@ -23,7 +24,7 @@ public class BankStub implements Bank {
     }
 
     @Override
-    public void registerAccount(Account account) {
+    public void registerAccount(Account Account) {
 
     }
 
@@ -47,7 +48,7 @@ public class BankStub implements Bank {
         return null;
     }
 
-    public void setAccount(Account target) {
+    public void setAccount(RealAccount target) {
         this.account = target;
     }
 }

@@ -1,7 +1,6 @@
 package dk.cphbusiness;
 
-import dk.cphbusiness.banking.Account;
-import dk.cphbusiness.banking.Customer;
+import dk.cphbusiness.banking.RealAccount;
 import dk.cphbusiness.banking.RealBank;
 import org.junit.Test;
 
@@ -57,7 +56,7 @@ public class RealBankTest {
         rb.registerAccount(account2);
         var customerAccounts = rb.getAccounts(customer);
         //Assert
-        var expected = new ArrayList<Account>() {{
+        var expected = new ArrayList<RealAccount>() {{
            add(account1);
            add(account2);
         }};

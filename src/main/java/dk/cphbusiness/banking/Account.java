@@ -1,42 +1,17 @@
 package dk.cphbusiness.banking;
 
-public class Account {
-    private Bank bank;
-    private Customer customer;
-    private String number;
-    private long balance = 0;
+public interface Account {
+    Bank getBank();
 
-    public Account(Bank bank, Customer customer, String number){
-        this.bank = bank;
-        this.customer = customer;
-        this.number = number;
-    }
+    Customer getCustomer();
 
-    public Bank getBank() {
-        return bank;
-    }
+    String getNumber();
 
-    public Customer getCustomer() {
-        return customer;
-    }
+    long getBalance();
 
-    public String getNumber() {
-        return number;
-    }
+    void transfer(long amount, Account target);
 
-    public long getBalance(){
-        return balance;
-    }
+    void transfer(long amount, String targetNumber);
 
-
-
-    public void transfer(long amount, Account target) {
-        balance -= amount;
-        target.balance += amount;
-    }
-
-    public void transfer(long amount, String targetNumber){
-        Account target = bank.getAccount(targetNumber);
-        transfer(amount, target);
-    }
+    void updateBalance(Long amount);
 }

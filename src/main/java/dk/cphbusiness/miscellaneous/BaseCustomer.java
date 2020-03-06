@@ -1,6 +1,8 @@
 package dk.cphbusiness.miscellaneous;
 
 import dk.cphbusiness.banking.Account;
+import dk.cphbusiness.banking.Bank;
+import dk.cphbusiness.banking.RealAccount;
 import dk.cphbusiness.banking.Customer;
 
 import java.util.List;
@@ -25,6 +27,16 @@ public class BaseCustomer implements Customer {
 
     @Override
     public List<String> getAccountNumbers() {
+        return null;
+    }
+
+    @Override
+    public void addAccountNumber(String accountNumber) {
+
+    }
+
+    @Override
+    public Bank getBank() {
         return null;
     }
 }
