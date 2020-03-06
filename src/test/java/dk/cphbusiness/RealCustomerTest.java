@@ -88,8 +88,15 @@ public class RealCustomerTest {
         context.checking(new Expectations(){{
             oneOf(SOURCE).updateBalance(-amount);
             oneOf(TARGET).updateBalance(amount);
+
             oneOf(BANK).getAccount(customerTarget.getAccountNumbers().get(0));
             will(returnValue(TARGET));
+
+            oneOf(SOURCE).getBalance();
+            will(returnValue(-amount));
+
+            oneOf(TARGET).getBalance();
+            will(returnValue(amount));
 
         }});
 
@@ -100,8 +107,8 @@ public class RealCustomerTest {
         customerSource.transfer(amount, SOURCE, customerTarget);
 
         //Assert
-        assertEquals(-10000L, SOURCE.getBalance());
-        assertEquals(10000L, TARGET.getBalance());
+        assertEquals(-1000L, SOURCE.getBalance());
+        assertEquals(1000L, TARGET.getBalance());
     }
 
 
