@@ -1,8 +1,6 @@
 package dk.cphbusiness;
 
-import dk.cphbusiness.banking.RealAccount;
-import dk.cphbusiness.banking.Bank;
-import dk.cphbusiness.banking.Customer;
+import dk.cphbusiness.banking.*;
 import org.jmock.Expectations;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
@@ -21,8 +19,9 @@ public class RealAccountMockingTest {
         final Customer CUSTOMER = context.mock(Customer.class);
         final Bank BANK = context.mock(Bank.class);
         final String TARGET_NUMBER = "TGT54321";
-        RealAccount source = new RealAccount(BANK, CUSTOMER, "DPG43212");
-        RealAccount target = new RealAccount(BANK, CUSTOMER, TARGET_NUMBER);
+        var clock = new RealClock();
+        RealAccount source = new RealAccount(BANK, CUSTOMER, "DPG43212", clock);
+        RealAccount target = new RealAccount(BANK, CUSTOMER, TARGET_NUMBER, clock);
         context.checking(new Expectations(){{
             oneOf(BANK).getAccount(TARGET_NUMBER);
             will(returnValue(target));
@@ -44,8 +43,9 @@ public class RealAccountMockingTest {
         final Customer CUSTOMER = context.mock(Customer.class);
         final Bank BANK = context.mock(Bank.class);
         final String TARGET_NUMBER = "TGT54321";
-        RealAccount source = new RealAccount(BANK, CUSTOMER, "DPG43212");
-        RealAccount target = new RealAccount(BANK, CUSTOMER, TARGET_NUMBER);
+        var clock = new RealClock();
+        RealAccount source = new RealAccount(BANK, CUSTOMER, "DPG43212", clock);
+        RealAccount target = new RealAccount(BANK, CUSTOMER, TARGET_NUMBER, clock);
 
         //Act
         source.transfer(10000L, target);

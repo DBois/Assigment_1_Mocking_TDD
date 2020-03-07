@@ -1,17 +1,17 @@
 package dk.cphbusiness;
-
-import dk.cphbusiness.banking.*;
+import dk.cphbusiness.banking.Account;
+import dk.cphbusiness.banking.Bank;
+import dk.cphbusiness.banking.RealAccount;
+import dk.cphbusiness.banking.RealCustomer;
 import org.jmock.Expectations;
+import org.jmock.api.Invocation;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.lang.annotation.Target;
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import static org.junit.Assert.*;
 
 public class RealCustomerTest {
 
@@ -19,99 +19,75 @@ public class RealCustomerTest {
     public JUnitRuleMockery context = new JUnitRuleMockery();
 
     @Test
-    public void testCreateCustomer() {
-        String cpr = "1111111111";
-        String name = "Kurt";
-        BankDummy bd = new BankDummy();
-        RealCustomer c = new RealCustomer(cpr, name, bd);
-        assertNotNull(c);
+    public void testCreateCustomer(){
+        var bank = new BankDummy();
+        var customer = new RealCustomer("100895-6666", "Adam", bank);
+        assertNotNull(customer);
     }
 
     @Test
-    public void testGetCpr() {
-        String cpr = "1111111111";
-        String name = "Kurt";
-        BankDummy bd = new BankDummy();
-        RealCustomer c = new RealCustomer(cpr, name, bd);
-        String res = c.getCpr();
-        assertEquals(res, cpr);
+    public void testGetName(){
+        var bank = new BankDummy();
+        var customer = new RealCustomer("100895-6666", "Adam", bank);
+        assertEquals(customer.getName(), "Adam");
+    }
+    
+    @Test
+    public void testGetCpr(){
+        var bank = new BankDummy();
+        var customer = new RealCustomer("100895-6666", "Adam", bank);
+        assertEquals(customer.getCpr(), "100895-6666");
     }
 
     @Test
-    public void testGetName() {
-        String cpr = "1111111111";
-        String name = "Kurt";
-        BankDummy bd = new BankDummy();
-        RealCustomer c = new RealCustomer(cpr, name, bd);
-        String res = c.getName();
-        assertEquals(res, name);
-    }
-
-    @Test
-    public void testAccountNumbers() {
-        //Arrange
-        String cpr = "1111111111";
-        String name = "Kurt";
-        BankDummy bd = new BankDummy();
+    public void testGetAllAccountNumbers(){
+        var bank = new BankDummy();
+        var customer = new RealCustomer("100895-6666", "Adam", bank){{
+            addAccountNumber("123abc");
+            addAccountNumber("321abc");
+        }};
 
         var expected = new ArrayList<String>() {{
-            add("AC12345");
-            add("AC123456");
-            add("AC1234567");
-            add("AC12345678");
+            add("123abc");
+            add("321abc");
         }};
+        var actual = customer.getAccountNumbers();
 
-
-        //Act
-        RealCustomer c = new RealCustomer(cpr, name, bd) {{
-            for (var accountNumber : expected) {
-                addAccountNumber(accountNumber);
-            }
-        }};
-
-        //Assert
-        assertEquals(c.getAccountNumbers(), expected);
+        assertEquals(expected, actual);
+        assertEquals(expected.size(), actual.size());
     }
 
     @Test
     public void testTransfer(){
-        //Arrange
+
+        final Account ACCOUNT_SOURCE = context.mock(Account.class, "account source");
+        final Account ACCOUNT_TARGET = context.mock(Account.class, "account target");
         final Bank BANK = context.mock(Bank.class);
-        RealCustomer customerSource = new RealCustomer("123456", "customerSource", BANK);
-        RealCustomer customerTarget = new RealCustomer("654321", "customerTarget", BANK);
-        customerTarget.addAccountNumber("TARGET");
+        var source = new RealCustomer("100895-6666", "Adam", BANK){{
+            addAccountNumber("ABC2345");
+        }};
+        var target = new RealCustomer("200286-6666", "Sebbelicious", BANK){{
+            addAccountNumber("ABC1234");
+        }};
+        var amount = 10000L;
+        var targetAccount = target.getAccountNumbers().get(0);
 
-        final Account SOURCE = context.mock(Account.class, "SOURCE");
-        final Account TARGET = context.mock(Account.class, "TARGET");
-
-        var amount = 1000L;
         context.checking(new Expectations(){{
-            oneOf(SOURCE).updateBalance(-amount);
-            oneOf(TARGET).updateBalance(amount);
+            oneOf(BANK).getAccount(targetAccount);
+            will(returnValue(ACCOUNT_TARGET));
 
-            oneOf(BANK).getAccount(customerTarget.getAccountNumbers().get(0));
-            will(returnValue(TARGET));
+            oneOf(ACCOUNT_SOURCE).transfer(amount, ACCOUNT_TARGET);
 
-            oneOf(SOURCE).getBalance();
+            oneOf(ACCOUNT_SOURCE).getBalance();
             will(returnValue(-amount));
 
-            oneOf(TARGET).getBalance();
+            oneOf(ACCOUNT_TARGET).getBalance();
             will(returnValue(amount));
-
         }});
 
-
-
-
-        //Act
-        customerSource.transfer(amount, SOURCE, customerTarget);
-
-        //Assert
-        assertEquals(-1000L, SOURCE.getBalance());
-        assertEquals(1000L, TARGET.getBalance());
+        source.transfer(10000L, ACCOUNT_SOURCE, target);
+        assertEquals(-10000L, ACCOUNT_SOURCE.getBalance());
+        assertEquals(10000L, ACCOUNT_TARGET.getBalance());
     }
-
-
-
 
 }

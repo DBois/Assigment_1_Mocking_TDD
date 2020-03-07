@@ -2,6 +2,7 @@ package dk.cphbusiness;
 
 import dk.cphbusiness.banking.RealAccount;
 import dk.cphbusiness.banking.RealBank;
+import dk.cphbusiness.banking.RealCustomer;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ public class RealBankTest {
     public void testCreateBank() {
         RealBank rb = new RealBank("Nordea");
         assertNotNull(rb);
+        assertEquals("Nordea", rb.getName());
     }
 
     @Test
@@ -46,7 +48,7 @@ public class RealBankTest {
 
     @Test
     public void testGetAccounts() {
-        //Arange
+        //Arrange
         var rb = new RealBank("Nordea");
         var customer = new CustomerStub("100895-6666", "Adam Saidane");
         var account1 = new AccountStub(rb, customer, "2123FEL");
@@ -63,4 +65,5 @@ public class RealBankTest {
         assertEquals(expected, customerAccounts);
         assertEquals(2, customerAccounts.size());
     }
+
 }

@@ -2,8 +2,6 @@ package dk.cphbusiness.miscellaneous;
 
 import dk.cphbusiness.banking.RealAccount;
 import dk.cphbusiness.banking.Bank;
-import dk.cphbusiness.banking.Movement;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,8 +29,8 @@ public class BankTool {
     private void parseAccounts(Bank bank, String line) {
         var parts = line.split(":");
         if (parts.length != 3) throw new RuntimeException();
-        var account = new RealAccount(bank, bank.getCustomer(parts[2]), parts[1]);
-        bank.registerAccount(account);
+        //var account = new RealAccount(bank, bank.getCustomer(parts[2]), parts[1], clock);
+        //bank.registerAccount(account);
     }
 
     private void parseCustomers(Bank bank, String line) {
@@ -50,7 +48,7 @@ public class BankTool {
         var targetNumber = movementParts[1];
         long amount = Integer.parseInt(movementParts[2]);
         long timestamp = Integer.parseInt(movementParts[3]);
-        Movement movement = new Movement(bank.getAccount(sourceNumber), bank.getAccount(targetNumber), amount, timestamp);
+        //Movement movement = new Movement(bank.getAccount(sourceNumber), bank.getAccount(targetNumber), amount, timestamp);
     }
 
     private List<String> ReadFile(String filename) throws IOException {

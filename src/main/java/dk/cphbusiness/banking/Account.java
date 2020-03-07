@@ -1,17 +1,26 @@
 package dk.cphbusiness.banking;
-
+import java.util.*;
 public interface Account {
-    Bank getBank();
 
-    Customer getCustomer();
 
-    String getNumber();
 
-    long getBalance();
+    public Bank getBank();
 
-    void transfer(long amount, Account target);
+    public Customer getCustomer();
 
-    void transfer(long amount, String targetNumber);
+    public String getNumber();
 
-    void updateBalance(Long amount);
+    public long getBalance();
+
+
+
+    public void transfer(long amount, Account target);
+
+    public void transfer(long amount, String targetNumber);
+
+    void updateBalance(long amount);
+
+    List<RealMovement> getMovements();
+
+
 }

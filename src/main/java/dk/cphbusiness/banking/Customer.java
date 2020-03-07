@@ -8,8 +8,6 @@ public interface Customer {
     String getCpr();
     String getName();
     List<String> getAccountNumbers();
-
     void addAccountNumber(String accountNumber);
-
     Bank getBank();
 }

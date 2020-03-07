@@ -4,49 +4,50 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RealCustomer implements Customer {
+    private String cpr, name;
     private Bank bank;
-    private String cpr;
-    private String name;
     private List<String> accountNumbers;
-
     public RealCustomer(String cpr, String name, Bank bank) {
-        accountNumbers = new ArrayList<>();
         this.cpr = cpr;
         this.name = name;
         this.bank = bank;
+        this.accountNumbers = new ArrayList<String>();
     }
 
     @Override
     public void transfer(long amount, Account account, Customer target) {
-        account.updateBalance(-amount);
 
-        //Get customer targets first account
-        var targetAccount = target.getBank().getAccount(target.getAccountNumbers().get(0));
-        targetAccount.updateBalance(amount);
+        var targetBank = target.getBank();
+        var targetAccountNumber = target.getAccountNumbers().get(0);
+        Account targAcc = targetBank.getAccount(targetAccountNumber);
+        account.transfer(amount, targAcc);
+
+
     }
 
     @Override
     public String getCpr() {
-        return cpr;
+        return this.cpr;
     }
 
     @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 
     @Override
     public List<String> getAccountNumbers() {
-        return accountNumbers;
+        return this.accountNumbers;
     }
 
     @Override
-    public void addAccountNumber(String accountNumber){
+    public void addAccountNumber(String accountNumber) {
         accountNumbers.add(accountNumber);
+
     }
 
-    @Override
-    public Bank getBank() {
-        return bank;
+    public Bank getBank(){
+        return this.bank;
     }
+
 }

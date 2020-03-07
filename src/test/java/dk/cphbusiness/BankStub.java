@@ -12,7 +12,7 @@ public class BankStub implements Bank {
     private Account account;
 
 
-    BankStub(Account accountToStub){
+    BankStub(RealAccount accountToStub){
         this.account = accountToStub;
     }
     BankStub(){
@@ -48,7 +48,7 @@ public class BankStub implements Bank {
         return null;
     }
 
-    public void setAccount(RealAccount target) {
+    public void setAccount(Account target) {
         this.account = target;
     }
 }

@@ -1,6 +1,7 @@
 package dk.cphbusiness;
 
 import dk.cphbusiness.banking.Account;
+import dk.cphbusiness.banking.RealAccount;
 import dk.cphbusiness.banking.Bank;
 import dk.cphbusiness.banking.Customer;
 
@@ -8,7 +9,7 @@ import java.util.List;
 
 public class BankDummy implements Bank {
     @Override
-    public Account getAccount(String number) {
+    public RealAccount getAccount(String number) {
         throw new UnsupportedOperationException();
     }
 

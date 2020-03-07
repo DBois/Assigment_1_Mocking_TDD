@@ -10,6 +10,8 @@ import java.util.List;
 public class BaseCustomer implements Customer {
     public BaseCustomer(String number, String name) { }
 
+
+
     @Override
     public void transfer(long amount, Account account, Customer target) {
 
