@@ -46,6 +46,6 @@ public class RealBank implements Bank {
 
     @Override
     public String getName() {
-        return null;
+        return this.name;
     }
 }

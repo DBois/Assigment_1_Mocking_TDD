@@ -1,5 +1,10 @@
 package dk.cphbusiness.banking;
 
-public class Movement {
-    public Movement(Account source, Account target, long amount, long timestamp) {}
+import java.util.Date;
+
+public interface Movement  {
+
+    long getTime();
+    long getAmount();
+    Account getTarget();
 }

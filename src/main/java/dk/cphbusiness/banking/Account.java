@@ -1,5 +1,5 @@
 package dk.cphbusiness.banking;
-
+import java.util.*;
 public interface Account {
 
 
@@ -19,4 +19,8 @@ public interface Account {
     public void transfer(long amount, String targetNumber);
 
     void updateBalance(long amount);
+
+    List<RealMovement> getMovements();
+
+
 }

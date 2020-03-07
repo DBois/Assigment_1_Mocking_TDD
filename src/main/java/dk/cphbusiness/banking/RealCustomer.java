@@ -16,9 +16,11 @@ public class RealCustomer implements Customer {
 
     @Override
     public void transfer(long amount, Account account, Customer target) {
-        Account targAcc = target.getBank().getAccount(target.getAccountNumbers().get(0));
-        account.updateBalance(-amount);
-        targAcc.updateBalance(amount);
+
+        var targetBank = target.getBank();
+        var targetAccountNumber = target.getAccountNumbers().get(0);
+        Account targAcc = targetBank.getAccount(targetAccountNumber);
+        account.transfer(amount, targAcc);
 
 
     }

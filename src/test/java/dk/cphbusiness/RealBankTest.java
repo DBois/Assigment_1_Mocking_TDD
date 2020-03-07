@@ -15,6 +15,7 @@ public class RealBankTest {
     public void testCreateBank() {
         RealBank rb = new RealBank("Nordea");
         assertNotNull(rb);
+        assertEquals("Nordea", rb.getName());
     }
 
     @Test
@@ -47,7 +48,7 @@ public class RealBankTest {
 
     @Test
     public void testGetAccounts() {
-        //Arange
+        //Arrange
         var rb = new RealBank("Nordea");
         var customer = new CustomerStub("100895-6666", "Adam Saidane");
         var account1 = new AccountStub(rb, customer, "2123FEL");

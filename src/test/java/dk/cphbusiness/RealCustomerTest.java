@@ -71,24 +71,23 @@ public class RealCustomerTest {
         }};
         var amount = 10000L;
         var targetAccount = target.getAccountNumbers().get(0);
+
         context.checking(new Expectations(){{
-
-            allowing(BANK).getAccount(targetAccount);
+            oneOf(BANK).getAccount(targetAccount);
             will(returnValue(ACCOUNT_TARGET));
-            allowing(ACCOUNT_SOURCE).updateBalance(-amount);
 
-            allowing(ACCOUNT_TARGET).updateBalance(amount);
+            oneOf(ACCOUNT_SOURCE).transfer(amount, ACCOUNT_TARGET);
 
+            oneOf(ACCOUNT_SOURCE).getBalance();
+            will(returnValue(-amount));
 
-
-            // oneOf(BANK).getName();
+            oneOf(ACCOUNT_TARGET).getBalance();
+            will(returnValue(amount));
         }});
 
         source.transfer(10000L, ACCOUNT_SOURCE, target);
         assertEquals(-10000L, ACCOUNT_SOURCE.getBalance());
         assertEquals(10000L, ACCOUNT_TARGET.getBalance());
     }
-
-
 
 }
