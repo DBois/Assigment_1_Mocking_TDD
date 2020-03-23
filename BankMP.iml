@@ -27,5 +27,6 @@
     <orderEntry type="library" scope="TEST" name="Maven: cglib:cglib:3.2.8" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.jmock:jmock-imposters:2.12.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: net.bytebuddy:byte-buddy:1.9.12" level="project" />
+    <orderEntry type="library" name="Maven: org.postgresql:postgresql:42.2.5" level="project" />
   </component>
 </module>

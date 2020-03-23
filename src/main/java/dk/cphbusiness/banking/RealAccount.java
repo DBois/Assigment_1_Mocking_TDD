@@ -48,19 +48,18 @@ public class RealAccount implements Account {
         balance -= amount;
         target.updateBalance(amount);
         var date = clock.getTime();
-        movements.add(new RealMovement(date, -amount, target));
-        target.getMovements().add(new RealMovement(date, amount, target));
-
-
+        movements.add(new RealMovement(date, -amount, target, this));
+        target.getMovements().add(new RealMovement(date, amount, target, this));
     }
+
     @Override
     public void transfer(long amount, String targetNumber){
         Account target = bank.getAccount(targetNumber);
         transfer(amount, target);
 
         var date = clock.getTime();
-        movements.add(new RealMovement(date, -amount, target));
-        target.getMovements().add(new RealMovement(date, amount, target));
+        movements.add(new RealMovement(date, -amount, target, this));
+        target.getMovements().add(new RealMovement(date, amount, target, this));
     }
 
     @Override
