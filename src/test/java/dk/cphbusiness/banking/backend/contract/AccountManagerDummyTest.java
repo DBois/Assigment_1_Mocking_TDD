@@ -15,6 +15,6 @@ import org.junit.runners.Suite;
 public class AccountManagerDummyTest {
     @BeforeClass
     public static void setupClass(){
-        AccountManagerHolder.manager = new AccountManagerDummy();
+        AccountManagerHolder.accountManager = new AccountManagerDummy();
     }
 }

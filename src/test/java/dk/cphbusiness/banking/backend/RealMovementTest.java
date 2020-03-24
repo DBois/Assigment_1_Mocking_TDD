@@ -41,7 +41,7 @@ public class RealMovementTest {
         var amount = 10000L;
         AccountDummy target = new AccountDummy();
         AccountDummy source = null;
-        var movement = new RealMovement(0, timeStamp, amount, target, source);
+        var movement = new RealMovement(0, timeStamp, amount, source, target);
         assertEquals(target, movement.getTarget());
     }
 
@@ -51,7 +51,7 @@ public class RealMovementTest {
         var amount = 10000L;
         AccountDummy target = new AccountDummy();
         AccountDummy source = new AccountDummy();
-        var movement = new RealMovement(0, timeStamp, amount, target, source);
+        var movement = new RealMovement(0, timeStamp, amount, source, target);
         assertEquals(source, movement.getSource());
     }
 

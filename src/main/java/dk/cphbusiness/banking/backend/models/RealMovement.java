@@ -4,15 +4,15 @@ public class RealMovement implements Movement {
     private long id;
     long time;
     long amount;
-    Account target;
     Account source;
+    Account target;
 
-    public RealMovement(long id, long time, long amount, Account target, Account source) {
+    public RealMovement(long id, long time, long amount, Account source, Account target) {
         this.id = id;
         this.time = time;
         this.amount = amount;
-        this.target = target;
         this.source = source;
+        this.target = target;
     }
 
     @Override

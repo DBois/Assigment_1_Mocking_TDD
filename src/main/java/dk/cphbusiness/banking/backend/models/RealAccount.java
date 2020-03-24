@@ -46,8 +46,8 @@ public class RealAccount implements Account {
         this.balance -= amount;
         target.updateBalance(amount);
         var date = clock.getTime();
-        movements.add(new RealMovement(movementId++, date, -amount, target, this));
-        target.getMovements().add(new RealMovement(movementId++, date, amount, target, this));
+        movements.add(new RealMovement(movementId++, date, -amount, this, target));
+        target.getMovements().add(new RealMovement(movementId++, date, amount, this, target));
     }
 
     @Override
@@ -56,8 +56,8 @@ public class RealAccount implements Account {
         transfer(amount, target);
 
         var date = clock.getTime();
-        movements.add(new RealMovement(movementId++, date, -amount, target, this));
-        target.getMovements().add(new RealMovement(movementId++, date, amount, target, this));
+        movements.add(new RealMovement(movementId++, date, -amount, this, target));
+        target.getMovements().add(new RealMovement(movementId++, date, amount, this, target));
     }
 
     @Override

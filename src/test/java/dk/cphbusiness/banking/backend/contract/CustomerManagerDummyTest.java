@@ -1,4 +1,4 @@
-package dk.cphbusiness.banking.backend;
+package dk.cphbusiness.banking.backend.contract;
 
 import dk.cphbusiness.banking.backend.contract.CustomerManagerDummy;
 import dk.cphbusiness.banking.contract.CustomerManagerHolder;
