@@ -43,7 +43,7 @@ public class RealAccount implements Account {
 
     @Override
     public void transfer(long amount, Account target) {
-        balance -= amount;
+        this.balance -= amount;
         target.updateBalance(amount);
         var date = clock.getTime();
         movements.add(new RealMovement(movementId++, date, -amount, target, this));

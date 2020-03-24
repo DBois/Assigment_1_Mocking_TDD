@@ -50,7 +50,7 @@ public class BankStub implements Bank {
 
     @Override
     public String getCvr() {
-        return this.cvr;
+        return null;
     }
 
     public void setAccount(Account target) {

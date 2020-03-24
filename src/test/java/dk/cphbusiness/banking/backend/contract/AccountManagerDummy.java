@@ -8,6 +8,10 @@ import dk.cphbusiness.banking.backend.models.Bank;
 import dk.cphbusiness.banking.backend.models.RealAccount;
 import dk.cphbusiness.banking.backend.models.RealBank;
 import dk.cphbusiness.banking.contract.AccountManager;
+import org.jmock.Expectations;
+import org.jmock.integration.junit4.JUnitRuleMockery;
+import org.junit.Rule;
+
 import static dk.cphbusiness.banking.contract.MovementManager.*;
 import static dk.cphbusiness.banking.backend.contract.MovementAssembler.*;
 
@@ -17,14 +21,16 @@ import java.util.*;
 
 public class AccountManagerDummy implements AccountManager {
 
+
     Map<String,Account> accounts;
+
     public AccountManagerDummy() {
 
-        var bank = new BankDummy();
-        var customer = new CustomerDummy();
+        var bank = new RealBank("12345678", "Nordea");
+        var customer = new RealCustomer("1008956666", "Adam", bank);
         var clock = new ClockDummy();
         var cpr1 = "0123456789";
-        var cpr2 = "001234567";
+        var cpr2 = "0012345678";
         accounts = new HashMap<>() {{
             put(cpr1, new RealAccount(bank, customer, cpr1, clock));
             put(cpr2, new RealAccount(bank, customer, cpr2, clock));
