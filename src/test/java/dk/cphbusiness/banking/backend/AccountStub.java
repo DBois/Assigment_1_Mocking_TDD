@@ -1,8 +1,8 @@
-package dk.cphbusiness;
+package dk.cphbusiness.banking.backend;
 
-import dk.cphbusiness.banking.RealAccount;
-import dk.cphbusiness.banking.Bank;
-import dk.cphbusiness.banking.Customer;
+import dk.cphbusiness.banking.backend.models.RealAccount;
+import dk.cphbusiness.banking.backend.models.Bank;
+import dk.cphbusiness.banking.backend.models.Customer;
 
 public class AccountStub extends RealAccount {
     public AccountStub(Bank bank, Customer customer, String number) {

@@ -1,6 +1,5 @@
-package dk.cphbusiness;
-import dk.cphbusiness.banking.Movement;
-import dk.cphbusiness.banking.RealMovement;
+package dk.cphbusiness.banking.backend;
+import dk.cphbusiness.banking.backend.models.RealMovement;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

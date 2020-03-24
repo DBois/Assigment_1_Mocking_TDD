@@ -1,7 +1,6 @@
-package dk.cphbusiness.miscellaneous;
+package dk.cphbusiness.banking.backend.miscellaneous;
 
-import dk.cphbusiness.banking.RealAccount;
-import dk.cphbusiness.banking.Bank;
+import dk.cphbusiness.banking.backend.models.Bank;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;

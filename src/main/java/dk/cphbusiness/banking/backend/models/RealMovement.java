@@ -1,6 +1,4 @@
-package dk.cphbusiness.banking;
-
-import java.util.Date;
+package dk.cphbusiness.banking.backend.models;
 
 public class RealMovement implements Movement {
     long time;

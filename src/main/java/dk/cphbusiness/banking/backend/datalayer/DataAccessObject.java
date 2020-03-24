@@ -1,4 +1,4 @@
-package dk.cphbusiness.datalayer;
+package dk.cphbusiness.banking.backend.datalayer;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

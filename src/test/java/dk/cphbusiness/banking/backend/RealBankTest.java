@@ -1,8 +1,7 @@
-package dk.cphbusiness;
+package dk.cphbusiness.banking.backend;
 
-import dk.cphbusiness.banking.RealAccount;
-import dk.cphbusiness.banking.RealBank;
-import dk.cphbusiness.banking.RealCustomer;
+import dk.cphbusiness.banking.backend.models.RealAccount;
+import dk.cphbusiness.banking.backend.models.RealBank;
 import org.junit.Test;
 
 import java.util.ArrayList;

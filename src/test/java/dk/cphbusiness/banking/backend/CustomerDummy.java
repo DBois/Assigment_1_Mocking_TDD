@@ -1,9 +1,8 @@
-package dk.cphbusiness;
+package dk.cphbusiness.banking.backend;
 
-import dk.cphbusiness.banking.Account;
-import dk.cphbusiness.banking.Bank;
-import dk.cphbusiness.banking.RealAccount;
-import dk.cphbusiness.banking.Customer;
+import dk.cphbusiness.banking.backend.models.Account;
+import dk.cphbusiness.banking.backend.models.Bank;
+import dk.cphbusiness.banking.backend.models.Customer;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package dk.cphbusiness.banking;
+package dk.cphbusiness.banking.backend.models;
 
 
 import java.util.List;

@@ -1,9 +1,9 @@
-package dk.cphbusiness;
+package dk.cphbusiness.banking.backend;
 
-import dk.cphbusiness.banking.Clock;
-import dk.cphbusiness.banking.RealAccount;
-import dk.cphbusiness.banking.Bank;
-import dk.cphbusiness.banking.Customer;
+import dk.cphbusiness.banking.backend.models.Clock;
+import dk.cphbusiness.banking.backend.models.RealAccount;
+import dk.cphbusiness.banking.backend.models.Bank;
+import dk.cphbusiness.banking.backend.models.Customer;
 import org.jmock.Expectations;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
