@@ -1,20 +1,10 @@
 package dk.cphbusiness.banking.backend.contract;
 
-import dk.cphbusiness.banking.backend.doubles.BankDummy;
 import dk.cphbusiness.banking.backend.doubles.ClockDummy;
-import dk.cphbusiness.banking.backend.doubles.CustomerDummy;
-import dk.cphbusiness.banking.backend.models.Account;
-import dk.cphbusiness.banking.backend.models.Bank;
-import dk.cphbusiness.banking.backend.models.RealAccount;
-import dk.cphbusiness.banking.backend.models.RealBank;
+import dk.cphbusiness.banking.backend.models.*;
 import dk.cphbusiness.banking.contract.AccountManager;
-import org.jmock.Expectations;
-import org.jmock.integration.junit4.JUnitRuleMockery;
-import org.junit.Rule;
-
 import static dk.cphbusiness.banking.contract.MovementManager.*;
 import static dk.cphbusiness.banking.backend.contract.MovementAssembler.*;
-
 import static dk.cphbusiness.banking.backend.contract.AccountAssembler.*;
 
 import java.util.*;

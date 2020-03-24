@@ -1,7 +1,6 @@
 package dk.cphbusiness.banking.backend.contract;
 
 import dk.cphbusiness.banking.backend.models.Bank;
-
 import java.util.ArrayList;
 import java.util.Collection;
 

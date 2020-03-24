@@ -2,8 +2,6 @@ package dk.cphbusiness.banking.backend.contract;
 import dk.cphbusiness.banking.backend.models.Customer;
 import dk.cphbusiness.banking.contract.CustomerManager.*;
 
-import java.util.List;
-
 import static dk.cphbusiness.banking.backend.contract.BankAssembler.*;
 
 public class CustomerAssembler {

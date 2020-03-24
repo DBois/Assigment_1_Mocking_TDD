@@ -1,10 +1,8 @@
 package dk.cphbusiness.banking.backend.contract;
 
 import dk.cphbusiness.banking.backend.models.Movement;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static dk.cphbusiness.banking.contract.MovementManager.*;
 import static dk.cphbusiness.banking.backend.contract.AccountAssembler.*;
 
