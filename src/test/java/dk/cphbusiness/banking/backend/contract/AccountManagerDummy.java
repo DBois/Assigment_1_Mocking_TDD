@@ -1,8 +1,8 @@
 package dk.cphbusiness.banking.backend.contract;
 
-import dk.cphbusiness.banking.backend.BankDummy;
-import dk.cphbusiness.banking.backend.ClockDummy;
-import dk.cphbusiness.banking.backend.CustomerDummy;
+import dk.cphbusiness.banking.backend.doubles.BankDummy;
+import dk.cphbusiness.banking.backend.doubles.ClockDummy;
+import dk.cphbusiness.banking.backend.doubles.CustomerDummy;
 import dk.cphbusiness.banking.backend.models.Account;
 import dk.cphbusiness.banking.backend.models.Bank;
 import dk.cphbusiness.banking.backend.models.RealAccount;
@@ -41,6 +41,7 @@ public class AccountManagerDummy implements AccountManager {
     public Map<String, AccountSummary> getAccounts(String s) {
         return createAccountSummaries(accounts);
     }
+
 
     @Override
     public MovementDetail transfer(long amount, String sourceNumber, String targetNumber) {

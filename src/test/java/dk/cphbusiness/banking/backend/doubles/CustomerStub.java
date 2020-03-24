@@ -1,31 +1,40 @@
-package dk.cphbusiness.banking.backend;
+package dk.cphbusiness.banking.backend.doubles;
 
 import dk.cphbusiness.banking.backend.models.Account;
 import dk.cphbusiness.banking.backend.models.Bank;
 import dk.cphbusiness.banking.backend.models.Customer;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerDummy implements Customer {
+public class CustomerStub implements Customer {
+
+    String cpr, name;
+    List<String> accountNumbers;
+
+    public CustomerStub(String cpr, String name) {
+        this.cpr = cpr;
+        this.name = name;
+        accountNumbers = new ArrayList<>();
+    }
 
     @Override
     public void transfer(long amount, Account account, Customer target) {
-
     }
 
     @Override
     public String getCpr() {
-        return null;
+        return this.cpr;
     }
 
     @Override
     public String getName() {
-        return null;
+        return this.name;
     }
 
     @Override
     public List<String> getAccountNumbers() {
-        return null;
+        return accountNumbers;
     }
 
     @Override
@@ -37,4 +46,6 @@ public class CustomerDummy implements Customer {
     public Bank getBank() {
         return null;
     }
+
+
 }

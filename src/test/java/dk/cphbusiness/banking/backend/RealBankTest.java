@@ -1,5 +1,7 @@
 package dk.cphbusiness.banking.backend;
 
+import dk.cphbusiness.banking.backend.doubles.AccountStub;
+import dk.cphbusiness.banking.backend.doubles.CustomerStub;
 import dk.cphbusiness.banking.backend.models.RealAccount;
 import dk.cphbusiness.banking.backend.models.RealBank;
 import org.junit.Test;

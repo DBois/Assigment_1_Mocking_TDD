@@ -1,4 +1,4 @@
-package dk.cphbusiness.banking.backend;
+package dk.cphbusiness.banking.backend.doubles;
 
 import dk.cphbusiness.banking.backend.models.RealAccount;
 import dk.cphbusiness.banking.backend.models.Bank;

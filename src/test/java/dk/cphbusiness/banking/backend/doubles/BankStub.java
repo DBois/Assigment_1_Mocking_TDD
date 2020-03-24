@@ -1,4 +1,4 @@
-package dk.cphbusiness.banking.backend;
+package dk.cphbusiness.banking.backend.doubles;
 
 import dk.cphbusiness.banking.backend.models.Account;
 import dk.cphbusiness.banking.backend.models.RealAccount;
@@ -7,14 +7,24 @@ import dk.cphbusiness.banking.backend.models.Customer;
 
 import java.util.List;
 
-public class BankDummy implements Bank {
-    @Override
-    public RealAccount getAccount(String number) {
-        throw new UnsupportedOperationException();
+public class BankStub implements Bank {
+
+    private Account account;
+    private String cvr;
+
+    public BankStub(RealAccount accountToStub){
+        this.account = accountToStub;
+    }
+    public BankStub(){
     }
 
     @Override
-    public void registerAccount(Account account) {
+    public Account getAccount(String number) {
+        return this.account;
+    }
+
+    @Override
+    public void registerAccount(Account Account) {
 
     }
 
@@ -40,6 +50,10 @@ public class BankDummy implements Bank {
 
     @Override
     public String getCvr() {
-        return null;
+        return this.cvr;
+    }
+
+    public void setAccount(Account target) {
+        this.account = target;
     }
 }

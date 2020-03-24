@@ -1,4 +1,5 @@
 package dk.cphbusiness.banking.backend;
+import dk.cphbusiness.banking.backend.doubles.BankDummy;
 import dk.cphbusiness.banking.backend.models.Account;
 import dk.cphbusiness.banking.backend.models.Bank;
 import dk.cphbusiness.banking.backend.models.RealCustomer;
