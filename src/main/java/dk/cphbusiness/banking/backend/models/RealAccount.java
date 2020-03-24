@@ -8,7 +8,7 @@ public class RealAccount implements Account {
     private Customer customer;
     private String number;
     private long balance;
-    private List<RealMovement> movements;
+    private List<Movement> movements;
     private Clock clock;
     private static long movementId;
 
@@ -66,7 +66,7 @@ public class RealAccount implements Account {
     }
 
     @Override
-    public List<RealMovement> getMovements() {
+    public List<Movement> getMovements() {
         return this.movements;
     }
 

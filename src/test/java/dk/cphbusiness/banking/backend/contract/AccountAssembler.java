@@ -4,6 +4,7 @@ import dk.cphbusiness.banking.backend.models.Bank;
 import static dk.cphbusiness.banking.contract.AccountManager.*;
 import static dk.cphbusiness.banking.backend.contract.BankAssembler.*;
 import static dk.cphbusiness.banking.backend.contract.CustomerAssembler.*;
+import static dk.cphbusiness.banking.backend.contract.MovementAssembler.*;
 
 import java.util.*;
 
@@ -26,6 +27,6 @@ public class AccountAssembler {
                 createBankSummary(account.getBank()),
                 createCustomerSummary(account.getCustomer()),
                 account.getBalance(),
-                null);
+                createMovementDetails(account.getMovements()));
     }
 }

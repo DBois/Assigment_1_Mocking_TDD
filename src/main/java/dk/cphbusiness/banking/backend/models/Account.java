@@ -11,7 +11,7 @@ public interface Account {
     public void transfer(long amount, Account target);
     public void transfer(long amount, String targetNumber);
     void updateBalance(long amount);
-    List<RealMovement> getMovements();
+    List<Movement> getMovements();
 
 
 

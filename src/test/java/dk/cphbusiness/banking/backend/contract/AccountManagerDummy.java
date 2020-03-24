@@ -8,6 +8,9 @@ import dk.cphbusiness.banking.backend.models.Bank;
 import dk.cphbusiness.banking.backend.models.RealAccount;
 import dk.cphbusiness.banking.backend.models.RealBank;
 import dk.cphbusiness.banking.contract.AccountManager;
+import static dk.cphbusiness.banking.contract.MovementManager.*;
+import static dk.cphbusiness.banking.backend.contract.MovementAssembler.*;
+
 import static dk.cphbusiness.banking.backend.contract.AccountAssembler.*;
 
 import java.util.*;
@@ -31,7 +34,7 @@ public class AccountManagerDummy implements AccountManager {
 
     @Override
     public AccountDetail getAccount(String s) {
-        return null;
+        return createAccountDetail(accounts.get(s));
     }
 
     @Override
@@ -40,7 +43,12 @@ public class AccountManagerDummy implements AccountManager {
     }
 
     @Override
-    public void transfer(long l, String s) {
-
+    public MovementDetail transfer(long amount, String sourceNumber, String targetNumber) {
+        var source = accounts.get(sourceNumber);
+        var target = accounts.get(targetNumber);
+        source.transfer(amount, target);
+        var movements = createMovementDetails(source.getMovements());
+        var detail = movements.get(movements.size() - 1);
+        return detail;
     }
 }
