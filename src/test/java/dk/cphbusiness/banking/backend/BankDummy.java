@@ -37,4 +37,9 @@ public class BankDummy implements Bank {
     public String getName() {
         return null;
     }
+
+    @Override
+    public String getCvr() {
+        return null;
+    }
 }

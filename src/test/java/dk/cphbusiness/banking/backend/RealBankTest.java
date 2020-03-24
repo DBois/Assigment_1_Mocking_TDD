@@ -12,7 +12,8 @@ public class RealBankTest {
 
     @Test
     public void testCreateBank() {
-        RealBank rb = new RealBank("Nordea");
+        String cvr = "12345678";
+        RealBank rb = new RealBank(cvr, "Nordea");
         assertNotNull(rb);
         assertEquals("Nordea", rb.getName());
     }
@@ -20,7 +21,8 @@ public class RealBankTest {
     @Test
     public void testRegisterAndGetAccount() {
         //Arrange
-        var rb = new RealBank("Nordea");
+        String cvr = "12345678";
+        RealBank rb = new RealBank(cvr, "Nordea");
         var customerStub = new CustomerStub("100895-6666", "Adam Saidane");
         var account1 = new AccountStub(rb, customerStub, "2123FEL");
         var account2 = new AccountStub(rb, customerStub, "3345FEL");
@@ -37,7 +39,8 @@ public class RealBankTest {
     @Test
     public void testRegisterAndGetCustomer() {
         //Arrange
-        var rb = new RealBank("Nordea");
+        String cvr = "12345678";
+        RealBank rb = new RealBank(cvr, "Nordea");
         var customer = new CustomerStub("100895-6666", "Adam Saidane");
         //Act
         rb.registerCustomer(customer);
@@ -48,7 +51,8 @@ public class RealBankTest {
     @Test
     public void testGetAccounts() {
         //Arrange
-        var rb = new RealBank("Nordea");
+        String cvr = "12345678";
+        RealBank rb = new RealBank(cvr, "Nordea");
         var customer = new CustomerStub("100895-6666", "Adam Saidane");
         var account1 = new AccountStub(rb, customer, "2123FEL");
         var account2 = new AccountStub(rb, customer, "3345FEL");

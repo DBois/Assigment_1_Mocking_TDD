@@ -1,5 +1,4 @@
 package dk.cphbusiness.banking.backend.models;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,9 +7,10 @@ import java.util.Map;
 public class RealBank implements Bank {
     private Map<String, Account> accounts = new HashMap<>();
     private Map<String, Customer> customers = new HashMap<>();
-    private String name;
+    private String cvr, name;
 
-    public RealBank(String name) {
+    public RealBank(String cvr, String name) {
+        this.cvr = cvr;
         this.name = name;
     }
 
@@ -47,5 +47,10 @@ public class RealBank implements Bank {
     @Override
     public String getName() {
         return this.name;
+    }
+
+    @Override
+    public String getCvr() {
+        return this.cvr;
     }
 }

@@ -6,4 +6,6 @@ public interface Movement  {
     long getAmount();
     Account getTarget();
     Account getSource();
+    long getId();
+
 }

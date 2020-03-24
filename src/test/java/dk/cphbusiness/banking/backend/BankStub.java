@@ -10,7 +10,7 @@ import java.util.List;
 public class BankStub implements Bank {
 
     private Account account;
-
+    private String cvr;
 
     BankStub(RealAccount accountToStub){
         this.account = accountToStub;
@@ -46,6 +46,11 @@ public class BankStub implements Bank {
     @Override
     public String getName() {
         return null;
+    }
+
+    @Override
+    public String getCvr() {
+        return this.cvr;
     }
 
     public void setAccount(Account target) {

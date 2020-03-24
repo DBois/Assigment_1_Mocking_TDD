@@ -10,4 +10,5 @@ public interface Customer {
     List<String> getAccountNumbers();
     void addAccountNumber(String accountNumber);
     Bank getBank();
+
 }

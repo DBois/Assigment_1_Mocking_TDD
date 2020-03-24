@@ -1,12 +1,14 @@
 package dk.cphbusiness.banking.backend.models;
 
 public class RealMovement implements Movement {
+    private long id;
     long time;
     long amount;
     Account target;
     Account source;
 
-    public RealMovement(long time, long amount, Account target, Account source) {
+    public RealMovement(long id, long time, long amount, Account target, Account source) {
+        this.id = id;
         this.time = time;
         this.amount = amount;
         this.target = target;
@@ -31,6 +33,11 @@ public class RealMovement implements Movement {
     @Override
     public Account getSource() {
         return this.source;
+    }
+
+    @Override
+    public long getId() {
+        return this.id;
     }
 }
 
