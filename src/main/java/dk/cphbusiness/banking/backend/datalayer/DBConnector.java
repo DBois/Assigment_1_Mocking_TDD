@@ -19,7 +19,6 @@ public class DBConnector {
             currentDbName = databaseName;
             String filePath = new File("").getAbsolutePath();
             filePath += "\\gorilla.txt";
-            System.out.println(filePath);
             String password = Files.readString(Paths.get(filePath));
             singleton = DriverManager.getConnection(url, "postgres", password);
         }
