@@ -7,16 +7,16 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
 
 public class DBConnector {
 
-    private static String url = "jdbc:postgresql://localhost:5432/test_bank";
     private static Connection singleton;
+    private static String currentDbName;
 
-    public static Connection connection() throws IOException, SQLException {
-
-        if(singleton == null){
+    public static Connection connection(String databaseName) throws IOException, SQLException {
+        var url = "jdbc:postgresql://localhost:5432/" + databaseName;
+        if(singleton == null || !currentDbName.equals(databaseName)){
+            currentDbName = databaseName;
             String filePath = new File("").getAbsolutePath();
             filePath += "\\gorilla.txt";
             System.out.println(filePath);
