@@ -15,11 +15,10 @@ public class DBConnector {
 
     public static Connection connection(String databaseName) throws IOException, SQLException {
         var url = "jdbc:postgresql://localhost:5432/" + databaseName;
-        if(singleton == null || !currentDbName.equals(databaseName)){
+        if(singleton == null || !currentDbName.equals(databaseName) || singleton.isClosed()){
             currentDbName = databaseName;
             String filePath = new File("").getAbsolutePath();
             filePath += "\\gorilla.txt";
-            System.out.println(filePath);
             String password = Files.readString(Paths.get(filePath));
             singleton = DriverManager.getConnection(url, "postgres", password);
         }

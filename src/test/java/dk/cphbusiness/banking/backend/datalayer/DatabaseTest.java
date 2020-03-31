@@ -7,15 +7,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import static dk.cphbusiness.banking.backend.datalayer.TestDatabaseUtility.createTestDatabase;
+import static dk.cphbusiness.banking.backend.datalayer.TestDatabaseUtility.deleteDatabase;
 import static org.junit.Assert.*;
 
 public class DatabaseTest {
+
+
 
 
     @Test
     public void testConnection() throws IOException, SQLException {
         Connection conn = DBConnector.connection("");
         assertNotNull(conn);
+        conn.close();
     }
 
     @Test
@@ -38,5 +42,7 @@ public class DatabaseTest {
         assertTrue(tableNames.contains("bank"));
         assertTrue(tableNames.contains("movement"));
         assertEquals(tableNames.size(), 4);
+        conn.close();
+        deleteDatabase();
     }
 }
