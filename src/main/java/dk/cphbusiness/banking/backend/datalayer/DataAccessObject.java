@@ -1,28 +1,47 @@
 package dk.cphbusiness.banking.backend.datalayer;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import dk.cphbusiness.banking.backend.models.Account;
+import dk.cphbusiness.banking.backend.models.Bank;
+import dk.cphbusiness.banking.backend.models.Customer;
+import dk.cphbusiness.banking.contract.AccountManager;
+import dk.cphbusiness.banking.contract.BankManager;
+import dk.cphbusiness.banking.contract.CustomerManager;
+import dk.cphbusiness.banking.contract.MovementManager;
+import net.sourceforge.plantuml.graph.Move;
 
-public class DataAccessObject {
+import static dk.cphbusiness.banking.contract.AccountManager.*;
+import static dk.cphbusiness.banking.contract.BankManager.*;
+import static dk.cphbusiness.banking.contract.MovementManager.*;
+import static dk.cphbusiness.banking.contract.CustomerManager.*;
 
-    private static String databaseName = "test_bank";
+import java.util.List;
+import java.util.Map;
+
+public interface DataAccessObject {
+    //Account
+    AccountDetail createAccount(Account account);
+    AccountDetail getAccount(String accountNumber);
+    List<AccountSummary> getAccountsFromCustomer(String CPR);
+    List<AccountSummary> getAccountsFromBank(String CVR);
+    AccountDetail updateAccount(Account Account);
+    void deleteAccount(String accountNumber);
+
+    //Bank
+    BankDetail createBank(Bank bank);
+    BankDetail getBank(String CVR);
+    List<BankSummary> getBanks();
+    BankDetail updateBank(Bank bank);
+    void deleteBank(String CVR);
+
+    //Customer
+    CustomerDetail createCustomer(Customer customer);
+    CustomerDetail getCustomer(String CPR);
+    List<CustomerSummary> getCustomers();
+    CustomerDetail updateCustomer();
+    void deleteCustomer();
+
+    //Movement
+    List<MovementDetail> getMovements(String accountName);
 
 
-    public static void CreatUser() {
-        try {
-            Connection conn = DBConnector.connection(databaseName);
-            String SQL = "INSERT INTO customer (cpr, name) VALUES (?,?)";
-            PreparedStatement ps = conn.prepareStatement(SQL);
-            ps.setString(1, "1049560293");
-            ps.setString(2, "Adam");
-            ResultSet rs = ps.executeQuery();
-        } catch (Exception e) {
-
-        }
-    }
-
-//    public static void main(String[] args) {
-//        CreatUser();
-//    }
 }

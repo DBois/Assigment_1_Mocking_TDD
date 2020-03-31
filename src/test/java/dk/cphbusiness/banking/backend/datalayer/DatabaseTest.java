@@ -24,6 +24,7 @@ public class DatabaseTest {
         createTestDatabase();
         var conn = DBConnector.connection("test");
         var statement = conn.createStatement();
+
         // Get table names
         statement.execute("SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE';");
 
