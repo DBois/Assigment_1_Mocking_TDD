@@ -138,11 +138,12 @@ public class DAO implements DataAccessObject {
 
             //Create Movement
             var movement = source.getMovements().get(source.getMovements().size()-1); //gets last movement to insert into DB
-            var SQL2 = "INSERT INTO movement (amount, account_source, account_target) VALUES (?, ?, ?)";
+            var SQL2 = "INSERT INTO movement (time, amount, account_source, account_target) VALUES (?, ?, ?, ?)";
             PreparedStatement ps3 = conn.prepareStatement(SQL2, Statement.RETURN_GENERATED_KEYS);
-            ps3.setLong(1, movement.getAmount());
-            ps3.setString(2, movement.getSource().getNumber());
-            ps3.setString(3, movement.getTarget().getNumber());
+            ps3.setLong(1, movement.getTime());
+            ps3.setLong(2, movement.getAmount());
+            ps3.setString(3, movement.getSource().getNumber());
+            ps3.setString(4, movement.getTarget().getNumber());
 
             ps1.executeUpdate();
             ps2.executeUpdate();
@@ -164,14 +165,7 @@ public class DAO implements DataAccessObject {
             ps4.executeQuery();
             rs = ps4.getResultSet();
 
-
-            var time = 0L;
-            if (rs.next())
-            {
-                time = rs.getTimestamp("time").getTime();
-            }
-
-            var movement2 = new RealMovement(id, time, movement.getAmount(), movement.getSource(), movement.getTarget());
+            var movement2 = new RealMovement(id, movement.getTime(), movement.getAmount(), movement.getSource(), movement.getTarget());
 
 
             return movement2;
