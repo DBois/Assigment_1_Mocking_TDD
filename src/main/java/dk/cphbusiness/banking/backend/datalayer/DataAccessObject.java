@@ -20,7 +20,7 @@ import java.util.Map;
 public interface DataAccessObject {
     //Account
     RealAccount createAccount(Account account);
-    RealAccount getAccount(String accountNumber);
+    RealAccount getAccount(String accountNumber) throws Exception;
     List<RealAccount> getAccountsFromCustomer(String CPR);
     List<RealAccount> getAccountsFromBank(String CVR);
     RealAccount updateAccount(Account Account);

@@ -42,8 +42,63 @@ public class DAO implements DataAccessObject {
     }
 
     @Override
-    public RealAccount getAccount(String accountNumber) {
-        return null;
+    public RealAccount getAccount(String accountNumber) throws Exception {
+        RealAccount account = null;
+        Connection conn = DBConnector.connection(databaseName);
+
+        try {
+            conn.setAutoCommit(false);
+            String SQL = "SELECT * FROM account WHERE number=?";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+
+            ps.setString(1, accountNumber);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next())
+            {
+
+                long balance = rs.getLong("balance");
+                String cpr = rs.getString("customer_cpr");
+                String bankCvr = rs.getString("bank_cvr");
+                String SQL2 = "SELECT * FROM bank WHERE cvr=?";
+
+                PreparedStatement ps2 = conn.prepareStatement(SQL2);
+
+                ps2.setString(1, bankCvr);
+
+                ResultSet rs2 = ps.executeQuery();
+
+                RealBank bank = null;
+                if (rs2.next())
+                {
+                    String bankName = rs2.getString("name");
+                    bank = new RealBank(bankCvr, bankName);
+                }
+
+                String SQL3 = "SELECT * FROM customer WHERE cpr=?";
+                PreparedStatement ps3 = conn.prepareStatement(SQL3);
+
+                ps3.setString(1, cpr);
+
+                ResultSet rs3 = ps.executeQuery();
+
+                RealCustomer customer = null;
+                if (rs3.next())
+                {
+                    String customerName = rs3.getString("name");
+                    customer = new RealCustomer(cpr, customerName, bank);
+                }
+                RealClock clock = new RealClock();
+                account = new RealAccount(bank, customer, accountNumber, clock);
+            }
+
+        } catch (Exception ex)
+        {
+            conn.rollback();
+            throw new Exception("Something went wrong getting account from database");
+        }
+        return account;
     }
 
     @Override

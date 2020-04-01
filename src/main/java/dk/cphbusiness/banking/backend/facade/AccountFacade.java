@@ -2,6 +2,7 @@ package dk.cphbusiness.banking.backend.facade;
 
 import dk.cphbusiness.banking.backend.datalayer.DAO;
 import dk.cphbusiness.banking.backend.models.RealMovement;
+import dk.cphbusiness.banking.backend.utility.AccountAssembler;
 import dk.cphbusiness.banking.backend.utility.MovementAssembler;
 
 import static dk.cphbusiness.banking.contract.AccountManager.*;
@@ -18,9 +19,9 @@ public class AccountFacade  {
         this.DAO = new DAO("test_bank");
     }
 
-    public AccountDetail getAccount(String accountName) {
-        DAO.getAccount(accountName);
-        return null;
+    public AccountDetail getAccount(String accountName) throws Exception {
+        var account = DAO.getAccount(accountName);
+        return AccountAssembler.createAccountDetail(account);
     }
 
     public Map<String, AccountSummary> getAccounts(String CPR) {
