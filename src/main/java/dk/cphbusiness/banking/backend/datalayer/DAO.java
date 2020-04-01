@@ -69,7 +69,7 @@ public class DAO implements DataAccessObject {
             conn.setAutoCommit(false);
 
             //Update accounts with correct pricing
-            String SQL = "UPDATE INTO account (balance) VALUES (?) WHERE number=?";
+            String SQL = "UPDATE account SET balance = ? WHERE number=?";
 
             //Update source
             PreparedStatement ps1 = conn.prepareStatement(SQL);

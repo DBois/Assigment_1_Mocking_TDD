@@ -1,4 +1,4 @@
-package dk.cphbusiness.banking.backend.contract;
+package dk.cphbusiness.banking.backend.utility;
 
 import dk.cphbusiness.banking.backend.models.Bank;
 import java.util.ArrayList;

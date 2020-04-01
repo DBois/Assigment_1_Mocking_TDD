@@ -2,6 +2,7 @@ package dk.cphbusiness.banking.backend.contract;
 
 import dk.cphbusiness.banking.backend.doubles.ClockDummy;
 import dk.cphbusiness.banking.backend.models.*;
+import dk.cphbusiness.banking.backend.utility.MovementAssembler;
 import dk.cphbusiness.banking.contract.MovementManager;
 
 import java.util.ArrayList;

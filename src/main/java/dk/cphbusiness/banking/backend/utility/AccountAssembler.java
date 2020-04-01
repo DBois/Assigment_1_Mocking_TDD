@@ -1,14 +1,12 @@
-package dk.cphbusiness.banking.backend.contract;
+package dk.cphbusiness.banking.backend.utility;
 import dk.cphbusiness.banking.backend.models.Account;
-import dk.cphbusiness.banking.backend.models.Bank;
+
+import static dk.cphbusiness.banking.backend.utility.BankAssembler.createBankSummary;
 import static dk.cphbusiness.banking.contract.AccountManager.*;
-import static dk.cphbusiness.banking.backend.contract.BankAssembler.*;
-import static dk.cphbusiness.banking.backend.contract.CustomerAssembler.*;
-import static dk.cphbusiness.banking.backend.contract.MovementAssembler.*;
+import static dk.cphbusiness.banking.backend.utility.CustomerAssembler.*;
+import static dk.cphbusiness.banking.backend.utility.MovementAssembler.*;
 
 import java.util.*;
-
-import static dk.cphbusiness.banking.contract.AccountManager.*;
 
 public class AccountAssembler {
 

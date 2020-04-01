@@ -4,6 +4,7 @@ import dk.cphbusiness.banking.backend.doubles.BankDummy;
 import dk.cphbusiness.banking.backend.models.Customer;
 import dk.cphbusiness.banking.backend.models.RealBank;
 import dk.cphbusiness.banking.backend.models.RealCustomer;
+import dk.cphbusiness.banking.backend.utility.CustomerAssembler;
 import dk.cphbusiness.banking.contract.CustomerManager;
 
 import java.util.*;
