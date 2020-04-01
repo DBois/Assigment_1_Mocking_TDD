@@ -1,118 +1,197 @@
 package dk.cphbusiness.banking.backend.datalayer;
 
-import dk.cphbusiness.banking.backend.models.Account;
-import dk.cphbusiness.banking.backend.models.Bank;
-import dk.cphbusiness.banking.backend.models.Customer;
+import dk.cphbusiness.banking.backend.models.*;
+
 import static dk.cphbusiness.banking.contract.AccountManager.*;
 import static dk.cphbusiness.banking.contract.BankManager.*;
 import static dk.cphbusiness.banking.contract.CustomerManager.*;
 import static dk.cphbusiness.banking.contract.MovementManager.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.io.IOException;
+import java.sql.*;
 import java.util.List;
 
 public class DAO implements DataAccessObject {
+    private String databaseName;
 
-    private static String databaseName = "test_bank";
+    public DAO(String databaseName) {
+        this.databaseName = databaseName;
+    }
 
+//    public void structureMethod() throws IOException, SQLException {
+//        Connection conn = DBConnector.connection(databaseName);
+//
+//        try {
+//            conn.setAutoCommit(false);
+//            String SQL = "INSERT INTO customer (cpr, name) VALUES (?,?)";
+//            PreparedStatement ps = conn.prepareStatement(SQL);
+//            ps.setString(1, "1049560293");
+//            ps.setString(2, "Adam");
+//            ResultSet rs = ps.executeQuery();
+//            conn.commit();
+//        } catch (Exception e) {
+//            conn.rollback();
+//        } finally {
+//            conn.close();
+//        }
+//    }
 
-    public static void CreatUser() {
+    @Override
+    public RealAccount createAccount(Account account) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public RealAccount getAccount(String accountNumber) {
+        return null;
+    }
+
+    @Override
+    public List<RealAccount> getAccountsFromCustomer(String CPR) {
+        return null;
+    }
+
+    @Override
+    public List<RealAccount> getAccountsFromBank(String CVR) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public RealAccount updateAccount(Account Account) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public MovementDetail transfer(RealAccount source, RealAccount target) throws Exception {
+        Connection conn = DBConnector.connection(databaseName);
+
         try {
-            Connection conn = DBConnector.connection(databaseName);
-            String SQL = "INSERT INTO customer (cpr, name) VALUES (?,?)";
-            PreparedStatement ps = conn.prepareStatement(SQL);
-            ps.setString(1, "1049560293");
-            ps.setString(2, "Adam");
-            ResultSet rs = ps.executeQuery();
+            conn.setAutoCommit(false);
+
+            //Update accounts with correct pricing
+            String SQL = "UPDATE INTO account (balance) VALUES (?) WHERE number=?";
+
+            //Update source
+            PreparedStatement ps1 = conn.prepareStatement(SQL);
+            ps1.setLong(1, source.getBalance());
+            ps1.setString(2, source.getNumber());
+
+            //Update target
+            PreparedStatement ps2 = conn.prepareStatement(SQL);
+            ps2.setLong(1, source.getBalance());
+            ps2.setString(2, source.getNumber());
+
+            //Create Movement
+            var movement = source.getMovements().get(source.getMovements().size()-1); //gets last movement to insert into DB
+            SQL = "INSERT INTO movement (amount, account_source, account_target) VALUES (?, ?, ?)";
+            PreparedStatement ps3 = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            ps3.setLong(1, movement.getAmount());
+            ps3.setString(2, movement.getSource().getNumber());
+            ps3.setString(3, movement.getTarget().getNumber());
+
+            ps1.executeUpdate();
+            ps2.executeUpdate();
+            ps3.executeUpdate();
+            ps1.close();
+            ps2.close();
+            ps3.close();
+            conn.commit();
+
+            var rs = ps3.getGeneratedKeys();
+            int id = 0;
+            if(rs.next()) id = rs.getInt(1);
+
+            SQL = "SELECT * from movement WHERE id=?";
+
+            //Update source
+            PreparedStatement ps4 = conn.prepareStatement(SQL);
+            ps4.setLong(1, id);
+            ps4.executeQuery();
+            rs = ps4.getResultSet();
+
+            if (rs.next())
+            {
+                String accountSource = rs.getString("account_source");
+                String accountTarget = rs.getString("account_target");
+
+            }
+
+
+//            return
         } catch (Exception e) {
-
+            conn.rollback();
+            throw new Exception("Transfer went wrong");
+        } finally {
+            conn.close();
         }
-    }
 
-    @Override
-    public AccountDetail createAccount(Account account) {
-        return null;
-    }
-
-    @Override
-    public AccountDetail getAccount(String accountNumber) {
-        return null;
-    }
-
-    @Override
-    public List<AccountSummary> getAccountsFromCustomer(String CPR) {
-        return null;
-    }
-
-    @Override
-    public List<AccountSummary> getAccountsFromBank(String CVR) {
-        return null;
-    }
-
-    @Override
-    public AccountDetail updateAccount(Account Account) {
-        return null;
     }
 
     @Override
     public void deleteAccount(String accountNumber) {
+        throw new UnsupportedOperationException();
+    }
 
+
+    @Override
+    public RealBank createBank(Bank bank) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public BankDetail createBank(Bank bank) {
-        return null;
+    public RealBank getBank(String CVR) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public BankDetail getBank(String CVR) {
-        return null;
+    public List<RealBank> getBanks() {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public List<BankSummary> getBanks() {
-        return null;
-    }
-
-    @Override
-    public BankDetail updateBank(Bank bank) {
-        return null;
+    public RealBank updateBank(Bank bank) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void deleteBank(String CVR) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public CustomerDetail createCustomer(Customer customer) {
-        return null;
+    public RealCustomer createCustomer(Customer customer) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public CustomerDetail getCustomer(String CPR) {
-        return null;
+    public RealCustomer getCustomer(String CPR) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public List<CustomerSummary> getCustomers() {
-        return null;
+    public List<RealCustomer> getCustomers() {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public CustomerDetail updateCustomer() {
-        return null;
+    public RealCustomer updateCustomer() {
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void deleteCustomer() {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public List<MovementDetail> getMovements(String accountName) {
+    public List<RealMovement> getMovements(String accountName) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public RealMovement createMovement(Movement movement) {
         return null;
     }
+
+
 }

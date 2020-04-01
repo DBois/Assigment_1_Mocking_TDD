@@ -1,8 +1,6 @@
 package dk.cphbusiness.banking.backend.datalayer;
 
-import dk.cphbusiness.banking.backend.models.Account;
-import dk.cphbusiness.banking.backend.models.Bank;
-import dk.cphbusiness.banking.backend.models.Customer;
+import dk.cphbusiness.banking.backend.models.*;
 import dk.cphbusiness.banking.contract.AccountManager;
 import dk.cphbusiness.banking.contract.BankManager;
 import dk.cphbusiness.banking.contract.CustomerManager;
@@ -14,34 +12,38 @@ import static dk.cphbusiness.banking.contract.BankManager.*;
 import static dk.cphbusiness.banking.contract.MovementManager.*;
 import static dk.cphbusiness.banking.contract.CustomerManager.*;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
 public interface DataAccessObject {
     //Account
-    AccountDetail createAccount(Account account);
-    AccountDetail getAccount(String accountNumber);
-    List<AccountSummary> getAccountsFromCustomer(String CPR);
-    List<AccountSummary> getAccountsFromBank(String CVR);
-    AccountDetail updateAccount(Account Account);
+    RealAccount createAccount(Account account);
+    RealAccount getAccount(String accountNumber);
+    List<RealAccount> getAccountsFromCustomer(String CPR);
+    List<RealAccount> getAccountsFromBank(String CVR);
+    RealAccount updateAccount(Account Account);
     void deleteAccount(String accountNumber);
+    MovementDetail transfer(RealAccount acc1, RealAccount acc2) throws Exception;
 
     //Bank
-    BankDetail createBank(Bank bank);
-    BankDetail getBank(String CVR);
-    List<BankSummary> getBanks();
-    BankDetail updateBank(Bank bank);
+    RealBank createBank(Bank bank);
+    RealBank getBank(String CVR);
+    List<RealBank> getBanks();
+    RealBank updateBank(Bank bank);
     void deleteBank(String CVR);
 
     //Customer
-    CustomerDetail createCustomer(Customer customer);
-    CustomerDetail getCustomer(String CPR);
-    List<CustomerSummary> getCustomers();
-    CustomerDetail updateCustomer();
+    RealCustomer createCustomer(Customer customer);
+    RealCustomer getCustomer(String CPR);
+    List<RealCustomer> getCustomers();
+    RealCustomer updateCustomer();
     void deleteCustomer();
 
     //Movement
-    List<MovementDetail> getMovements(String accountName);
+    List<RealMovement> getMovements(String accountName);
+    RealMovement createMovement(Movement movement);
 
 
 }
