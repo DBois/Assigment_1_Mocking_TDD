@@ -1,6 +1,8 @@
 package dk.cphbusiness.banking.backend.facade;
 
 import dk.cphbusiness.banking.backend.datalayer.DAO;
+import dk.cphbusiness.banking.backend.models.RealMovement;
+import dk.cphbusiness.banking.backend.utility.MovementAssembler;
 
 import static dk.cphbusiness.banking.contract.AccountManager.*;
 import static dk.cphbusiness.banking.contract.MovementManager.*;
@@ -26,13 +28,14 @@ public class AccountFacade  {
         return null;
     }
 
-    public MovementDetail transfer(long amount, String sourceNumber, String targetNumber) throws IOException, SQLException {
+    public MovementDetail transfer(long amount, String sourceNumber, String targetNumber) throws Exception {
         var acc1 = DAO.getAccount(sourceNumber);
         var acc2 = DAO.getAccount(targetNumber);
 
         acc1.transfer(amount, acc2);
 
-        DAO.transfer(acc1, acc2);
-        return null;
+        RealMovement rm = DAO.transfer(acc1, acc2);
+
+        return MovementAssembler.createMovementDetail(rm);
     }
 }

@@ -62,7 +62,7 @@ public class DAO implements DataAccessObject {
     }
 
     @Override
-    public MovementDetail transfer(RealAccount source, RealAccount target) throws Exception {
+    public RealMovement transfer(RealAccount source, RealAccount target) throws Exception {
         Connection conn = DBConnector.connection(databaseName);
 
         try {
@@ -83,8 +83,8 @@ public class DAO implements DataAccessObject {
 
             //Create Movement
             var movement = source.getMovements().get(source.getMovements().size()-1); //gets last movement to insert into DB
-            SQL = "INSERT INTO movement (amount, account_source, account_target) VALUES (?, ?, ?)";
-            PreparedStatement ps3 = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            var SQL2 = "INSERT INTO movement (amount, account_source, account_target) VALUES (?, ?, ?)";
+            PreparedStatement ps3 = conn.prepareStatement(SQL2, Statement.RETURN_GENERATED_KEYS);
             ps3.setLong(1, movement.getAmount());
             ps3.setString(2, movement.getSource().getNumber());
             ps3.setString(3, movement.getTarget().getNumber());
@@ -101,23 +101,25 @@ public class DAO implements DataAccessObject {
             int id = 0;
             if(rs.next()) id = rs.getInt(1);
 
-            SQL = "SELECT * from movement WHERE id=?";
+            var SQL3 = "SELECT * from movement WHERE id=?";
 
             //Update source
-            PreparedStatement ps4 = conn.prepareStatement(SQL);
+            PreparedStatement ps4 = conn.prepareStatement(SQL3);
             ps4.setLong(1, id);
             ps4.executeQuery();
             rs = ps4.getResultSet();
 
+
+            var time = 0L;
             if (rs.next())
             {
-                String accountSource = rs.getString("account_source");
-                String accountTarget = rs.getString("account_target");
-
+                time = rs.getTimestamp("time").getTime();
             }
 
+            var movement2 = new RealMovement(id, time, movement.getAmount(), movement.getSource(), movement.getTarget());
 
-//            return
+
+            return movement2;
         } catch (Exception e) {
             conn.rollback();
             throw new Exception("Transfer went wrong");
