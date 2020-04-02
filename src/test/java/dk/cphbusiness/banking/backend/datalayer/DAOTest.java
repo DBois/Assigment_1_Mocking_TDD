@@ -74,7 +74,7 @@ public class DAOTest {
 
     @Test
     public void testTransfer() throws Exception {
-        //Assert
+        //Assemble
         var DAO = new DAO(dbName);
         var source = DAO.getAccount("0000000000");
         var target = DAO.getAccount("1111111111");
@@ -83,7 +83,7 @@ public class DAOTest {
 
         //Act
         source.transfer(amount, target, time);
-        var actual = DAO.transfer(source,target, time);
+        var actual = DAO.transfer(source, target, time);
 
 
         //Assert
@@ -133,7 +133,30 @@ public class DAOTest {
 
         assertNull(customer);
         assertEquals(0, accounts.size());
+    }
 
+    @Test
+    public void getMovements() throws Exception {
+        //Assemble
+        var DAO = new DAO(dbName);
+        var source = DAO.getAccount("0000000000");
+        var target = DAO.getAccount("1111111111");
+        var time = new ClockStub().getTime();
+        var amount = 1000L;
+
+        //Act
+        for (int i = 0; i < 5; i++) {
+            source.transfer(amount, target, time);
+            DAO.transfer(source, target, time);
+        }
+        var movementsSource = DAO.getMovements("0000000000");
+        var movementsTarget = DAO.getMovements("1111111111");
+
+
+        //Assert
+        assertNotNull(movementsSource);
+        assertEquals(5, movementsSource.size());
+        assertEquals(5, movementsTarget.size());
     }
 
 }
