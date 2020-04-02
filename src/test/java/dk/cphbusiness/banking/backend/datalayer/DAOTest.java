@@ -3,10 +3,9 @@ package dk.cphbusiness.banking.backend.datalayer;
 import static dk.cphbusiness.banking.backend.datalayer.TestDatabaseUtility.createTestDatabase;
 
 
-import dk.cphbusiness.banking.backend.doubles.BankDummy;
+import dk.cphbusiness.banking.backend.models.RealCustomer;
 import dk.cphbusiness.banking.backend.doubles.ClockStub;
-import dk.cphbusiness.banking.backend.doubles.CustomerDummy;
-import dk.cphbusiness.banking.backend.models.*;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import static dk.cphbusiness.banking.backend.datalayer.TestDatabaseUtility.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,7 +25,6 @@ public class DAOTest {
     @BeforeAll
     public static void setupBefore() throws IOException, SQLException {
         System.out.println("Before");
-
         createTestDatabase();
     }
 
@@ -52,6 +51,27 @@ public class DAOTest {
     }
 
     @Test
+    public void testGetCustomer() throws Exception {
+        var DAO = new DAO(dbName);
+        var cpr = "1234560004";
+        var customer = DAO.getCustomer(cpr);
+        assertNotNull(customer);
+        assertEquals(cpr, customer.getCpr());
+    }
+
+    @Test
+    public void testUpdateCustomer() throws Exception {
+        var DAO = new DAO(dbName);
+        var customer = DAO.getCustomer("1234560001");
+        var newCustomer = new RealCustomer(customer.getCpr(), "Emilio");
+        var updatedCustomer = DAO.updateCustomer(newCustomer);
+
+        assertNotNull(updatedCustomer);
+        assertEquals(customer.getCpr(), updatedCustomer.getCpr());
+        assertEquals(updatedCustomer.getName(), newCustomer.getName());
+    }
+
+    @Test
     public void testTransfer() throws Exception {
         //Assemble
         var DAO = new DAO(dbName);
@@ -67,10 +87,33 @@ public class DAOTest {
 
         //Assert
         assertNotNull(actual);
-        assertEquals(actual.getSource(), source);
-        assertEquals(actual.getTarget(), target);
-        assertEquals(actual.getTime(), time);
-        assertEquals(actual.getAmount(), amount);
+        assertEquals(source, actual.getSource());
+        assertEquals(target, actual.getTarget());
+        assertEquals(time, actual.getTime());
+        assertEquals(-amount, actual.getAmount());
+    }
+
+    @Test
+    public void testGetAccountsFromCustomer() throws Exception {
+        String cpr = "1234560001";
+        String accountNumber1 = "0000000000";
+        String accountNumber2 = "1111111111";
+        var expectedAccountNumbers = new ArrayList<String>() {{
+            add(accountNumber1);
+            add(accountNumber2);
+        }};
+        var expectedSize = 2;
+
+        var DAO = new DAO(dbName);
+        var accounts = DAO.getAccountsFromCustomer(cpr);
+        
+        assertNotNull(accounts);
+        assertEquals(expectedSize, accounts.size());
+        for (var i = 0; i < accounts.size(); i++) {
+            var currAccount = accounts.get(i);
+            assertNotNull(currAccount);
+            assertTrue(expectedAccountNumbers.contains(accounts.get(i).getNumber()));
+        }
     }
 
     @Test

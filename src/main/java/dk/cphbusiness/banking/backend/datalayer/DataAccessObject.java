@@ -21,7 +21,7 @@ public interface DataAccessObject {
     //Account
     RealAccount createAccount(Account account);
     RealAccount getAccount(String accountNumber) throws Exception;
-    List<RealAccount> getAccountsFromCustomer(String CPR);
+    List<RealAccount> getAccountsFromCustomer(String CPR) throws Exception;
     List<RealAccount> getAccountsFromBank(String CVR);
     RealAccount updateAccount(Account Account);
     void deleteAccount(String accountNumber);
@@ -36,9 +36,10 @@ public interface DataAccessObject {
 
     //Customer
     RealCustomer createCustomer(Customer customer);
-    RealCustomer getCustomer(String CPR);
+    RealCustomer getCustomer(String CPR) throws Exception;
     List<RealCustomer> getCustomers();
-    RealCustomer updateCustomer();
+    RealCustomer updateCustomer(RealCustomer customer) throws Exception;
+
     void deleteCustomer();
 
     //Movement

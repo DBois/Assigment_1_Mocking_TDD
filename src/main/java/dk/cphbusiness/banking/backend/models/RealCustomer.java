@@ -14,6 +14,11 @@ public class RealCustomer implements Customer {
         this.accountNumbers = new ArrayList<String>();
     }
 
+    public RealCustomer(String cpr, String name) {
+        this.cpr = cpr;
+        this.name = name;
+    }
+
     @Override
     public void transfer(long amount, Account account, Customer target, long timeStamp) {
 
