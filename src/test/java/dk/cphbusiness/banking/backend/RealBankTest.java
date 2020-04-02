@@ -14,8 +14,13 @@ public class RealBankTest {
 
     @Test
     public void testCreateBank() {
+        //Assemble
         String cvr = "12345678";
+
+        //Act
         RealBank rb = new RealBank(cvr, "Nordea");
+
+        //Assert
         assertNotNull(rb);
         assertEquals("Nordea", rb.getName());
     }
@@ -44,8 +49,10 @@ public class RealBankTest {
         String cvr = "12345678";
         RealBank rb = new RealBank(cvr, "Nordea");
         var customer = new CustomerStub("100895-6666", "Adam Saidane");
+
         //Act
         rb.registerCustomer(customer);
+
         //Assert
         assertEquals(customer, rb.getCustomer("100895-6666"));
     }
@@ -58,10 +65,12 @@ public class RealBankTest {
         var customer = new CustomerStub("100895-6666", "Adam Saidane");
         var account1 = new AccountStub(rb, customer, "2123FEL");
         var account2 = new AccountStub(rb, customer, "3345FEL");
+
         //Act
         rb.registerAccount(account1);
         rb.registerAccount(account2);
         var customerAccounts = rb.getAccounts(customer);
+
         //Assert
         var expected = new ArrayList<RealAccount>() {{
            add(account1);

@@ -24,21 +24,21 @@ public class DatabaseTest {
 
     @Test
     public void testCreateDatabase() throws IOException, SQLException {
-        // Set up
+        //Assemble
         createTestDatabase();
         createTables(dbName);
         var conn = DBConnector.connection(dbName);
         var statement = conn.createStatement();
 
-        // Get table names
+        //Act
         statement.execute("SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE';");
-
         var resultsSet = statement.getResultSet();
         var tableNames = new ArrayList<String>();
         while(resultsSet.next()){
             tableNames.add(resultsSet.getString(1));
         }
 
+        //Assert
         assertTrue(tableNames.contains("customer"));
         assertTrue(tableNames.contains("account"));
         assertTrue(tableNames.contains("bank"));
@@ -50,10 +50,15 @@ public class DatabaseTest {
 
     @Test
     public void testDeleteDatabase() throws IOException, SQLException {
+        //Assemble
         createTestDatabase();
         createTables(dbName);
         populateDatabase(dbName);
+
+        //Act
         deleteDatabase();
+
+        //Assert
         assertThrows(PSQLException.class, () -> {
             DBConnector.connection(dbName);
         });

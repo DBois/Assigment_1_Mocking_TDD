@@ -19,24 +19,6 @@ public class DAO implements DataAccessObject {
         this.databaseName = databaseName;
     }
 
-//    public void structureMethod() throws IOException, SQLException {
-//        Connection conn = DBConnector.connection(databaseName);
-//
-//        try {
-//            conn.setAutoCommit(false);
-//            String SQL = "INSERT INTO customer (cpr, name) VALUES (?,?)";
-//            PreparedStatement ps = conn.prepareStatement(SQL);
-//            ps.setString(1, "1049560293");
-//            ps.setString(2, "Adam");
-//            ResultSet rs = ps.executeQuery();
-//            conn.commit();
-//        } catch (Exception e) {
-//            conn.rollback();
-//        } finally {
-//            conn.close();
-//        }
-//    }
-
     @Override
     public RealAccount createAccount(Account account) {
         throw new UnsupportedOperationException();
@@ -44,52 +26,10 @@ public class DAO implements DataAccessObject {
 
     @Override
     public RealAccount getAccount(String accountNumber) throws Exception {
-        RealAccount account = null;
         Connection conn = DBConnector.connection(databaseName);
 
         try {
-            conn.setAutoCommit(false);
-            String SQL = "SELECT * FROM account WHERE number=?";
-            PreparedStatement ps = conn.prepareStatement(SQL);
-
-            ps.setString(1, accountNumber);
-
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next())
-            {
-
-                long balance = rs.getLong("balance");
-                String cpr = rs.getString("customer_cpr");
-                String bankCvr = rs.getString("bank_cvr");
-                String SQL2 = "SELECT * FROM \"bank\" WHERE cvr=?";
-
-                PreparedStatement ps2 = conn.prepareStatement(SQL2);
-                ps2.setString(1, bankCvr);
-
-                ResultSet rs2 = ps2.executeQuery();
-                RealBank bank = null;
-                if (rs2.next())
-                {
-                    String bankName = rs2.getString("name");
-                    bank = new RealBank(bankCvr, bankName);
-                }
-
-                String SQL3 = "SELECT * FROM \"customer\" WHERE cpr=?";
-                PreparedStatement ps3 = conn.prepareStatement(SQL3);
-                ps3.setString(1, cpr);
-                ResultSet rs3 = ps3.executeQuery();
-
-                RealCustomer customer = null;
-                if (rs3.next())
-                {
-                    String customerName = rs3.getString("name");
-                    customer = new RealCustomer(cpr, customerName, bank);
-                }
-                account = new RealAccount(bank, customer, accountNumber, balance);
-
-            }
-            return account;
+            return getAccountHelper(accountNumber, conn);
         } catch (Exception ex)
         {
             conn.rollback();
@@ -441,7 +381,7 @@ public class DAO implements DataAccessObject {
         } catch (Exception ex)
         {
             conn.rollback();
-            System.out.println("Hello" + ex);
+            System.out.println(ex);
             throw new Exception("Something went wrong getting account from database");
         }
         finally {

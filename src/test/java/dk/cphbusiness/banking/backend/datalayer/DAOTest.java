@@ -24,13 +24,11 @@ public class DAOTest {
 
     @BeforeAll
     public static void setupBefore() throws IOException, SQLException {
-        System.out.println("Before");
         createTestDatabase();
     }
 
     @BeforeEach
     public void setupBeforeEach() throws IOException, SQLException {
-        System.out.println("Before each");
         createTables(dbName);
         populateDatabase(dbName);
     }
@@ -43,18 +41,28 @@ public class DAOTest {
 
     @Test
     public void testGetAccount() throws Exception {
+        //Assemble
         var DAO = new DAO(dbName);
         var accountNumber = "0000000000";
+
+        //Act
         var acc = DAO.getAccount(accountNumber);
+
+        //Assert
         assertNotNull(acc);
         assertEquals(accountNumber, acc.getNumber());
     }
 
     @Test
     public void testGetCustomer() throws Exception {
+        //Assemble
         var DAO = new DAO(dbName);
         var cpr = "1234560004";
+
+        //Act
         var customer = DAO.getCustomer(cpr);
+
+        //Assert
         assertNotNull(customer);
         assertEquals(cpr, customer.getCpr());
 
@@ -62,11 +70,15 @@ public class DAOTest {
 
     @Test
     public void testUpdateCustomer() throws Exception {
+        //Assemble
         var DAO = new DAO(dbName);
         var customer = DAO.getCustomer("1234560001");
         var newCustomer = new RealCustomer(customer.getCpr(), "Emilio");
+
+        //Act
         var updatedCustomer = DAO.updateCustomer(newCustomer);
 
+        //Assert
         assertNotNull(updatedCustomer);
         assertEquals(customer.getCpr(), updatedCustomer.getCpr());
         assertEquals(updatedCustomer.getName(), newCustomer.getName());
@@ -96,6 +108,8 @@ public class DAOTest {
 
     @Test
     public void testGetAccountsFromCustomer() throws Exception {
+        //Assemble
+        var DAO = new DAO(dbName);
         String cpr = "1234560001";
         String accountNumber1 = "0000000000";
         String accountNumber2 = "1111111111";
@@ -105,15 +119,16 @@ public class DAOTest {
         }};
         var expectedSize = 2;
 
-        var DAO = new DAO(dbName);
+        //Act
         var accounts = DAO.getAccountsFromCustomer(cpr);
-        
+
+        //Assert
         assertNotNull(accounts);
         assertEquals(expectedSize, accounts.size());
         for (var i = 0; i < accounts.size(); i++) {
             var currAccount = accounts.get(i);
             assertNotNull(currAccount);
-            assertTrue(expectedAccountNumbers.contains(accounts.get(i).getNumber()));
+            assertTrue(expectedAccountNumbers.contains(currAccount.getNumber()));
         }
     }
 
@@ -125,12 +140,12 @@ public class DAOTest {
         var target = DAO.getAccount("1111111111");
         var time = new ClockStub().getTime();
         var amount = 1000L;
-
-        //Act
         for (int i = 0; i < 5; i++) {
             source.transfer(amount, target, time);
             DAO.transfer(source, target, time);
         }
+
+        //Act
         var movementsSource = DAO.getMovements("0000000000");
         var movementsTarget = DAO.getMovements("1111111111");
 
