@@ -220,6 +220,8 @@ public class DAO implements DataAccessObject {
                 var name = rs.getString("name");
                 customer = new RealCustomer(cpr, name);
             }
+            ps.close();
+            conn.commit();
             return customer;
         } catch (Exception ex) {
 
