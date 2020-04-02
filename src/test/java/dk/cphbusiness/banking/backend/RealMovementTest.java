@@ -15,6 +15,7 @@ public class RealMovementTest {
         AccountDummy source = null;
         var movement = new RealMovement(0, timeStamp, amount, target, source);
         assertNotNull(movement);
+
     }
     @Test
     public void testGetTimestamp(){

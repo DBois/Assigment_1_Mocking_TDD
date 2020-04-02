@@ -55,6 +55,7 @@ public class DAOTest {
         var customer = DAO.getCustomer(cpr);
         assertNotNull(customer);
         assertEquals(cpr, customer.getCpr());
+
     }
 
     @Test

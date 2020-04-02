@@ -39,8 +39,7 @@ public interface DataAccessObject {
     RealCustomer getCustomer(String CPR) throws Exception;
     List<RealCustomer> getCustomers();
     RealCustomer updateCustomer(RealCustomer customer) throws Exception;
-
-    void deleteCustomer();
+    void deleteCustomer(String cpr) throws Exception;
 
     //Movement
     List<RealMovement> getMovements(String accountName);
