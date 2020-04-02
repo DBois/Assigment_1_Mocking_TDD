@@ -1,10 +1,8 @@
 package dk.cphbusiness.banking.backend.datalayer;
 
 import static dk.cphbusiness.banking.backend.datalayer.TestDatabaseUtility.createTestDatabase;
-import static org.junit.Assert.*;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.sql.SQLException;
 import static dk.cphbusiness.banking.backend.datalayer.TestDatabaseUtility.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DAOTest {
 
@@ -35,11 +34,7 @@ public class DAOTest {
 
     @AfterAll
     public static void dropDatabase() throws IOException, SQLException {
-        System.out.println("After");
-        var conn = DBConnector.connection("");
-        var statement = conn.createStatement();
-        statement.executeUpdate("DROP DATABASE IF EXISTS test");
-        conn.close();
+        deleteDatabase();
     }
 
     @Test
