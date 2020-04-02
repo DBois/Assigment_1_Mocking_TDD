@@ -6,7 +6,10 @@ import static org.junit.Assert.*;
 import org.junit.*;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 
 public class DAOTest {
@@ -17,7 +20,15 @@ public class DAOTest {
     }
 
     @BeforeEach
-    public void populateDatabase(){
-        
+    public void populateDatabase() throws IOException, SQLException {
+        var conn = DBConnector.connection("test");
+        String filePath = new File("").getAbsolutePath() + "\\populateScript.sql";
+        String sqlString = Files.readString(Paths.get(filePath));
+        conn.prepareStatement(sqlString);
+    }
+
+    @Test
+    public void testGetAccount(){
+
     }
 }
