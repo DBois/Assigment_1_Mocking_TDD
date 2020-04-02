@@ -20,6 +20,14 @@ public class RealAccount implements Account {
         movements = new ArrayList<>();
     }
 
+    public RealAccount(Bank bank, Customer customer, String number, long balance){
+        this.bank = bank;
+        this.customer = customer;
+        this.number = number;
+        this.balance = balance;
+        movements = new ArrayList<>();
+    }
+
     @Override
     public Bank getBank() {
         return bank;

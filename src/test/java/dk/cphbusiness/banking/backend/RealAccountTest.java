@@ -143,7 +143,6 @@ public class RealAccountTest {
     @Test
     public void testGetMovements(){
         var bank = new BankDummy();
-        final var CLOCK = context.mock(Clock.class);
 
         var customerSource = new CustomerStub("100895-6666", "Adam");
         var customerTarget = new CustomerStub("100885-6666", "Adam2");

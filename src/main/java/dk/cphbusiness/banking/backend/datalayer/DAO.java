@@ -64,11 +64,9 @@ public class DAO implements DataAccessObject {
                 String SQL2 = "SELECT * FROM bank WHERE cvr=?";
 
                 PreparedStatement ps2 = conn.prepareStatement(SQL2);
-
                 ps2.setString(1, bankCvr);
 
                 ResultSet rs2 = ps.executeQuery();
-
                 RealBank bank = null;
                 if (rs2.next())
                 {
@@ -78,9 +76,7 @@ public class DAO implements DataAccessObject {
 
                 String SQL3 = "SELECT * FROM customer WHERE cpr=?";
                 PreparedStatement ps3 = conn.prepareStatement(SQL3);
-
                 ps3.setString(1, cpr);
-
                 ResultSet rs3 = ps.executeQuery();
 
                 RealCustomer customer = null;
@@ -89,15 +85,18 @@ public class DAO implements DataAccessObject {
                     String customerName = rs3.getString("name");
                     customer = new RealCustomer(cpr, customerName, bank);
                 }
-                account = new RealAccount(bank, customer, accountNumber);
-            }
+                account = new RealAccount(bank, customer, accountNumber, balance);
 
+            }
+            return account;
         } catch (Exception ex)
         {
             conn.rollback();
             throw new Exception("Something went wrong getting account from database");
         }
-        return account;
+        finally {
+            conn.close();
+        }
     }
 
     @Override
@@ -155,9 +154,9 @@ public class DAO implements DataAccessObject {
             var rs = ps3.getGeneratedKeys();
             int id = 0;
             if(rs.next()) id = rs.getInt(1);
-
             return new RealMovement(id, movement.getTime(), movement.getAmount(), movement.getSource(), movement.getTarget());
         } catch (Exception e) {
+
             conn.rollback();
             throw new Exception("Transfer went wrong");
         } finally {
