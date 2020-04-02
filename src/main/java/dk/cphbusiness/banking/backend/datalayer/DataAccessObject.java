@@ -21,7 +21,7 @@ public interface DataAccessObject {
     //Account
     RealAccount createAccount(Account account);
     RealAccount getAccount(String accountNumber) throws Exception;
-    List<RealAccount> getAccountsFromCustomer(String CPR);
+    List<RealAccount> getAccountsFromCustomer(String CPR) throws Exception;
     List<RealAccount> getAccountsFromBank(String CVR);
     RealAccount updateAccount(Account Account);
     void deleteAccount(String accountNumber);
