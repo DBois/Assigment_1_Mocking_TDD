@@ -49,6 +49,15 @@ public class DAOTest {
     }
 
     @Test
+    public void testGetCustomer() throws Exception {
+        var DAO = new DAO(dbName);
+        var cpr = "1234560004";
+        var customer = DAO.getCustomer(cpr);
+        assertNotNull(customer);
+        assertEquals(cpr, customer.getCpr());
+    }
+
+    @Test
     public void testUpdateCustomer() throws Exception {
         var DAO = new DAO(dbName);
         var customer = DAO.getCustomer("1234560001");
