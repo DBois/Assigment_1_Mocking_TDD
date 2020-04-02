@@ -43,7 +43,7 @@ create table movement
     id serial not null
         constraint movement_pk
             primary key,
-    time timestamp default CURRENT_TIMESTAMP not null,
+    time bigint not null,
     amount bigint not null,
     account_source varchar(10)
         constraint movement_account_number_fk

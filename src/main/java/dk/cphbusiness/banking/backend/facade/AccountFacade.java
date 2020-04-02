@@ -36,7 +36,7 @@ public class AccountFacade  {
         var clock = new RealClock();
         acc1.transfer(amount, acc2, clock.getTime());
 
-        RealMovement rm = DAO.transfer(acc1, acc2);
+        RealMovement rm = DAO.transfer(acc1, acc2, clock.getTime());
 
         return MovementAssembler.createMovementDetail(rm);
     }

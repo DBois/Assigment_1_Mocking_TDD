@@ -25,7 +25,7 @@ public interface DataAccessObject {
     List<RealAccount> getAccountsFromBank(String CVR);
     RealAccount updateAccount(Account Account);
     void deleteAccount(String accountNumber);
-    RealMovement transfer(RealAccount acc1, RealAccount acc2) throws Exception;
+    RealMovement transfer(RealAccount acc1, RealAccount acc2, long timestamp) throws Exception;
 
     //Bank
     RealBank createBank(Bank bank);
@@ -43,7 +43,4 @@ public interface DataAccessObject {
 
     //Movement
     List<RealMovement> getMovements(String accountName);
-    RealMovement createMovement(Movement movement);
-
-
 }

@@ -116,7 +116,7 @@ public class DAO implements DataAccessObject {
     }
 
     @Override
-    public RealMovement transfer(RealAccount source, RealAccount target) throws Exception {
+    public RealMovement transfer(RealAccount source, RealAccount target, long timestamp) throws Exception {
         Connection conn = DBConnector.connection(databaseName);
 
         try {
@@ -139,7 +139,7 @@ public class DAO implements DataAccessObject {
             var movement = source.getMovements().get(source.getMovements().size()-1); //gets last movement to insert into DB
             var SQL2 = "INSERT INTO movement (time, amount, account_source, account_target) VALUES (?, ?, ?, ?)";
             PreparedStatement ps3 = conn.prepareStatement(SQL2, Statement.RETURN_GENERATED_KEYS);
-            ps3.setLong(1, movement.getTime());
+            ps3.setLong(1, timestamp);
             ps3.setLong(2, movement.getAmount());
             ps3.setString(3, movement.getSource().getNumber());
             ps3.setString(4, movement.getTarget().getNumber());
@@ -147,18 +147,21 @@ public class DAO implements DataAccessObject {
             ps1.executeUpdate();
             ps2.executeUpdate();
             ps3.executeUpdate();
-            ps1.close();
-            ps2.close();
-            ps3.close();
             conn.commit();
 
             var rs = ps3.getGeneratedKeys();
             int id = 0;
             if(rs.next()) id = rs.getInt(1);
+
+            ps1.close();
+            ps2.close();
+            ps3.close();
+
             return new RealMovement(id, movement.getTime(), movement.getAmount(), movement.getSource(), movement.getTarget());
         } catch (Exception e) {
 
             conn.rollback();
+            System.out.println(e);
             throw new Exception("Transfer went wrong");
         } finally {
             conn.close();
@@ -203,7 +206,7 @@ public class DAO implements DataAccessObject {
 
     @Override
     public RealCustomer getCustomer(String CPR) {
-        throw new UnsupportedOperationException();
+        return null;
     }
 
     @Override
@@ -213,7 +216,7 @@ public class DAO implements DataAccessObject {
 
     @Override
     public RealCustomer updateCustomer() {
-        throw new UnsupportedOperationException();
+        return null;
     }
 
     @Override
@@ -223,13 +226,6 @@ public class DAO implements DataAccessObject {
 
     @Override
     public List<RealMovement> getMovements(String accountName) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public RealMovement createMovement(Movement movement) {
         return null;
     }
-
-
 }

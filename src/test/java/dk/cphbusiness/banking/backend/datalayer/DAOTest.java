@@ -3,6 +3,10 @@ package dk.cphbusiness.banking.backend.datalayer;
 import static dk.cphbusiness.banking.backend.datalayer.TestDatabaseUtility.createTestDatabase;
 
 
+import dk.cphbusiness.banking.backend.doubles.BankDummy;
+import dk.cphbusiness.banking.backend.doubles.ClockStub;
+import dk.cphbusiness.banking.backend.doubles.CustomerDummy;
+import dk.cphbusiness.banking.backend.models.*;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,7 +44,32 @@ public class DAOTest {
     @Test
     public void testGetAccount() throws Exception {
         var DAO = new DAO(dbName);
-        var acc = DAO.getAccount("0000000000");
+        var accountNumber = "0000000000";
+        var acc = DAO.getAccount(accountNumber);
         assertNotNull(acc);
+        assertEquals(accountNumber, acc.getNumber());
     }
+
+    @Test
+    public void testTransfer() throws Exception {
+        //Assert
+        var DAO = new DAO(dbName);
+        var source = DAO.getAccount("0000000000");
+        var target = DAO.getAccount("1111111111");
+        var time = new ClockStub().getTime();
+        var amount = 1000L;
+
+        //Act
+        source.transfer(amount, target, time);
+        var actual = DAO.transfer(source,target, time);
+
+
+        //Assert
+        assertNotNull(actual);
+        assertEquals(actual.getSource(), source);
+        assertEquals(actual.getTarget(), target);
+        assertEquals(actual.getTime(), time);
+        assertEquals(actual.getAmount(), amount);
+    }
+
 }
