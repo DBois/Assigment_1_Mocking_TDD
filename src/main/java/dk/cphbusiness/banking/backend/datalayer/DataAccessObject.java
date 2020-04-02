@@ -42,5 +42,5 @@ public interface DataAccessObject {
     void deleteCustomer();
 
     //Movement
-    List<RealMovement> getMovements(String accountName);
+    List<RealMovement> getMovements(String accountName) throws Exception;
 }

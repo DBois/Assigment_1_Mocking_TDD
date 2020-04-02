@@ -9,6 +9,7 @@ import static dk.cphbusiness.banking.contract.MovementManager.*;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DAO implements DataAccessObject {
@@ -149,9 +150,7 @@ public class DAO implements DataAccessObject {
             ps3.executeUpdate();
             conn.commit();
 
-            var rs = ps3.getGeneratedKeys();
-            int id = 0;
-            if(rs.next()) id = rs.getInt(1);
+            var id = getIdentifier(ps3.getGeneratedKeys());
 
             ps1.close();
             ps2.close();
@@ -225,7 +224,103 @@ public class DAO implements DataAccessObject {
     }
 
     @Override
-    public List<RealMovement> getMovements(String accountName) {
-        return null;
+    public List<RealMovement> getMovements(String accountName) throws Exception {
+        List<RealMovement> movements = new ArrayList<>();
+        Connection conn = DBConnector.connection(databaseName);
+
+        try {
+            conn.setAutoCommit(false);
+            String SQL = "SELECT * FROM movement WHERE account_source=? OR account_target=?";
+            PreparedStatement ps = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, accountName);
+            ps.setString(2, accountName);
+            ResultSet rs = ps.executeQuery();
+
+
+            while (rs.next())
+            {
+                //Get fields for movement
+                var id = getIdentifier(ps.getGeneratedKeys());
+                var accountSource = getAccountHelper(rs.getString("account_source"), conn);
+                var accountTarget = getAccountHelper(rs.getString("account_target"), conn);
+                var time = rs.getLong("time");
+                long amount = rs.getLong("amount");
+
+                RealMovement movement = new RealMovement(id, time, amount, accountSource, accountTarget);
+                movements.add(movement);
+            }
+            return movements;
+        } catch (Exception ex)
+        {
+            conn.rollback();
+            throw new Exception("Something went wrong getting account from database");
+        }
+        finally {
+            conn.close();
+        }
+
+
     }
+
+    private long getIdentifier(ResultSet rs) throws SQLException {
+        var id = 0;
+        if(rs.next()) id = rs.getInt(1);
+        return id;
+    }
+
+    private RealAccount getAccountHelper(String accountNumber, Connection conn) throws Exception {
+        RealAccount account = null;
+        try {
+            conn.setAutoCommit(false);
+            String SQL = "SELECT * FROM account WHERE number=?";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+
+            ps.setString(1, accountNumber);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next())
+            {
+
+                long balance = rs.getLong("balance");
+                String cpr = rs.getString("customer_cpr");
+                String bankCvr = rs.getString("bank_cvr");
+                String SQL2 = "SELECT * FROM \"bank\" WHERE cvr=?";
+
+                PreparedStatement ps2 = conn.prepareStatement(SQL2);
+                ps2.setString(1, bankCvr);
+
+                ResultSet rs2 = ps2.executeQuery();
+                RealBank bank = null;
+                if (rs2.next())
+                {
+                    String bankName = rs2.getString("name");
+                    bank = new RealBank(bankCvr, bankName);
+                }
+
+                String SQL3 = "SELECT * FROM \"customer\" WHERE cpr=?";
+                PreparedStatement ps3 = conn.prepareStatement(SQL3);
+                ps3.setString(1, cpr);
+                ResultSet rs3 = ps3.executeQuery();
+
+                RealCustomer customer = null;
+                if (rs3.next())
+                {
+                    String customerName = rs3.getString("name");
+                    customer = new RealCustomer(cpr, customerName, bank);
+                }
+                account = new RealAccount(bank, customer, accountNumber, balance);
+
+            }
+            return account;
+        } catch (Exception ex)
+        {
+            conn.rollback();
+            System.out.println("Hello" + ex);
+            throw new Exception("Something went wrong getting account from database");
+        }
+        finally {
+        }
+    }
+
 }

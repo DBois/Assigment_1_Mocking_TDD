@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.sql.SQLException;
+
 import static dk.cphbusiness.banking.backend.datalayer.TestDatabaseUtility.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -52,7 +53,7 @@ public class DAOTest {
 
     @Test
     public void testTransfer() throws Exception {
-        //Assert
+        //Assemble
         var DAO = new DAO(dbName);
         var source = DAO.getAccount("0000000000");
         var target = DAO.getAccount("1111111111");
@@ -61,7 +62,7 @@ public class DAOTest {
 
         //Act
         source.transfer(amount, target, time);
-        var actual = DAO.transfer(source,target, time);
+        var actual = DAO.transfer(source, target, time);
 
 
         //Assert
@@ -70,6 +71,30 @@ public class DAOTest {
         assertEquals(actual.getTarget(), target);
         assertEquals(actual.getTime(), time);
         assertEquals(actual.getAmount(), amount);
+    }
+
+    @Test
+    public void getMovements() throws Exception {
+        //Assemble
+        var DAO = new DAO(dbName);
+        var source = DAO.getAccount("0000000000");
+        var target = DAO.getAccount("1111111111");
+        var time = new ClockStub().getTime();
+        var amount = 1000L;
+
+        //Act
+        for (int i = 0; i < 5; i++) {
+            source.transfer(amount, target, time);
+            DAO.transfer(source, target, time);
+        }
+        var movementsSource = DAO.getMovements("0000000000");
+        var movementsTarget = DAO.getMovements("1111111111");
+
+
+        //Assert
+        assertNotNull(movementsSource);
+        assertEquals(5, movementsSource.size());
+        assertEquals(5, movementsTarget.size());
     }
 
 }
