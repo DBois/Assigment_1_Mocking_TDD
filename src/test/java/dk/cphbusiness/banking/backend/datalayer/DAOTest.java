@@ -117,4 +117,23 @@ public class DAOTest {
         }
     }
 
+    @Test
+    public void testDeleteCustomer() throws Exception {
+        var DAO = new DAO(dbName);
+        var cpr = "1234560001";
+        var customer = DAO.getCustomer(cpr);
+        var accounts = DAO.getAccountsFromCustomer(cpr);
+
+        assertNotNull(customer);
+        assertEquals(2, accounts.size());
+
+        DAO.deleteCustomer(cpr);
+        customer = DAO.getCustomer(cpr);
+        accounts = DAO.getAccountsFromCustomer(cpr);
+
+        assertNull(customer);
+        assertEquals(0, accounts.size());
+
+    }
+
 }
