@@ -36,9 +36,10 @@ public interface DataAccessObject {
 
     //Customer
     RealCustomer createCustomer(Customer customer);
-    RealCustomer getCustomer(String CPR);
+    RealCustomer getCustomer(String CPR) throws Exception;
     List<RealCustomer> getCustomers();
-    RealCustomer updateCustomer();
+    RealCustomer updateCustomer(RealCustomer customer) throws Exception;
+
     void deleteCustomer();
 
     //Movement

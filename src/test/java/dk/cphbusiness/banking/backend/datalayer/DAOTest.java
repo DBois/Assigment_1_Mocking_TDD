@@ -3,6 +3,7 @@ package dk.cphbusiness.banking.backend.datalayer;
 import static dk.cphbusiness.banking.backend.datalayer.TestDatabaseUtility.createTestDatabase;
 
 
+import dk.cphbusiness.banking.backend.models.RealCustomer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +21,6 @@ public class DAOTest {
     @BeforeAll
     public static void setupBefore() throws IOException, SQLException {
         System.out.println("Before");
-
         createTestDatabase();
     }
 
@@ -42,5 +42,17 @@ public class DAOTest {
         var DAO = new DAO(dbName);
         var acc = DAO.getAccount("0000000000");
         assertNotNull(acc);
+    }
+
+    @Test
+    public void testUpdateCustomer() throws Exception {
+        var DAO = new DAO(dbName);
+        var customer = DAO.getCustomer("1234560001");
+        var newCustomer = new RealCustomer(customer.getCpr(), "Emilio");
+        var updatedCustomer = DAO.updateCustomer(newCustomer);
+
+        assertNotNull(updatedCustomer);
+        assertEquals(customer.getCpr(), updatedCustomer.getCpr());
+        assertEquals(updatedCustomer.getName(), newCustomer.getName());
     }
 }

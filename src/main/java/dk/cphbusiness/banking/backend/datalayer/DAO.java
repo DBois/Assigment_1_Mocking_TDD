@@ -202,8 +202,30 @@ public class DAO implements DataAccessObject {
     }
 
     @Override
-    public RealCustomer getCustomer(String CPR) {
-        throw new UnsupportedOperationException();
+    public RealCustomer getCustomer(String CPR) throws Exception {
+        Connection conn = DBConnector.connection(databaseName);
+        try {
+            conn.setAutoCommit(false);
+            var SQL = "SELECT * FROM CUSTOMER WHERE cpr = ?";
+
+            var ps = conn.prepareStatement(SQL);
+            ps.setString(1, CPR);
+            var rs = ps.executeQuery();
+            RealCustomer customer = null;
+            if (rs.next())  {
+                var cpr = rs.getString("cpr");
+                var name = rs.getString("name");
+                customer = new RealCustomer(cpr, name);
+            }
+            return customer;
+        } catch (Exception ex) {
+
+            conn.rollback();
+            System.out.println(ex);
+            throw new Exception("Transfer went wrong");
+        }  finally {
+            conn.close();
+        }
     }
 
     @Override
@@ -212,8 +234,32 @@ public class DAO implements DataAccessObject {
     }
 
     @Override
-    public RealCustomer updateCustomer() {
-        throw new UnsupportedOperationException();
+    public RealCustomer updateCustomer(RealCustomer customer) throws Exception {
+        var conn = DBConnector.connection(databaseName);
+        try {
+            conn.setAutoCommit(false);
+            //Update accounts with correct pricing
+            String SQL = "UPDATE customer SET name = ? WHERE cpr=?";
+
+            //Update customer
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setString(1, customer.getName());
+            ps.setString(2, customer.getCpr());
+
+            var updated = ps.executeUpdate();
+            ps.close();
+
+            if(updated == 0)
+                throw new Exception("Transfer went wrong");
+            conn.commit();
+            return customer;
+        } catch (Exception e) {
+
+            conn.rollback();
+            throw new Exception("Transfer went wrong");
+        } finally {
+            conn.close();
+        }
     }
 
     @Override
