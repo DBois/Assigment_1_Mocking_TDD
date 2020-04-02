@@ -305,26 +305,47 @@ public class DAO implements DataAccessObject {
             ps.setString(1, customer.getName());
             ps.setString(2, customer.getCpr());
 
-            var updated = ps.executeUpdate();
+            var hasUpdated = ps.executeUpdate();
             ps.close();
 
-            if(updated == 0)
-                throw new Exception("Transfer went wrong");
+            if(hasUpdated == 0)
+                throw new Exception("Update on customer went wrong");
             conn.commit();
             return customer;
         } catch (Exception e) {
 
             conn.rollback();
-            throw new Exception("Transfer went wrong");
+            throw new Exception("Update on customer went wrong");
         } finally {
             conn.close();
         }
-        }
+    }
 
 
     @Override
-    public void deleteCustomer() {
-        throw new UnsupportedOperationException();
+    public void deleteCustomer(String cpr) throws Exception {
+        var conn = DBConnector.connection(databaseName);
+        try {
+            conn.setAutoCommit(false);
+            //Update accounts with correct pricing
+            String SQL = "DELETE FROM customer WHERE cpr=?";
+
+            //Update customer
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setString(1, cpr);
+
+            var hasDeleted = ps.executeUpdate();
+            ps.close();
+
+            if(hasDeleted == 0)
+                throw new Exception("Deletion of customer went wrong");
+            conn.commit();
+        } catch (Exception e) {
+            conn.rollback();
+            throw new Exception("Deletion of customer went wrong");
+        } finally {
+            conn.close();
+        }
     }
 
     @Override
