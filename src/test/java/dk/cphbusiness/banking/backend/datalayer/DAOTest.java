@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import static dk.cphbusiness.banking.backend.datalayer.TestDatabaseUtility.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -89,6 +91,29 @@ public class DAOTest {
         assertEquals(target, actual.getTarget());
         assertEquals(time, actual.getTime());
         assertEquals(-amount, actual.getAmount());
+    }
+
+    @Test
+    public void testGetAccountsFromCustomer() throws Exception {
+        String cpr = "1234560001";
+        String accountNumber1 = "0000000000";
+        String accountNumber2 = "1111111111";
+        var expectedAccountNumbers = new ArrayList<String>() {{
+            add(accountNumber1);
+            add(accountNumber2);
+        }};
+        var expectedSize = 2;
+
+        var DAO = new DAO(dbName);
+        var accounts = DAO.getAccountsFromCustomer(cpr);
+        
+        assertNotNull(accounts);
+        assertEquals(expectedSize, accounts.size());
+        for (var i = 0; i < accounts.size(); i++) {
+            var currAccount = accounts.get(i);
+            assertNotNull(currAccount);
+            assertTrue(expectedAccountNumbers.contains(accounts.get(i).getNumber()));
+        }
     }
 
 }

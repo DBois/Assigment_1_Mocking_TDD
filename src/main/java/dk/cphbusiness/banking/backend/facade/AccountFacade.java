@@ -25,7 +25,7 @@ public class AccountFacade  {
         return AccountAssembler.createAccountDetail(account);
     }
 
-    public Map<String, AccountSummary> getAccounts(String CPR) {
+    public Map<String, AccountSummary> getAccounts(String CPR) throws Exception {
         DAO.getAccountsFromCustomer(CPR);
         return null;
     }
