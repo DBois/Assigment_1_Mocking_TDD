@@ -6,13 +6,13 @@ import static org.junit.Assert.*;
 import org.junit.*;
 import org.junit.jupiter.api.BeforeEach;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.SQLException;
+import static dk.cphbusiness.banking.backend.datalayer.TestDatabaseUtility.*;
 
 public class DAOTest {
+
+    private static String dbName = "test";
 
     @Before
     public void setupBefore() throws IOException, SQLException {
@@ -20,15 +20,27 @@ public class DAOTest {
     }
 
     @BeforeEach
-    public void populateDatabase() throws IOException, SQLException {
-        var conn = DBConnector.connection("test");
-        String filePath = new File("").getAbsolutePath() + "\\populateScript.sql";
-        String sqlString = Files.readString(Paths.get(filePath));
-        conn.prepareStatement(sqlString);
+    public void setupBeforeEach() throws IOException, SQLException {
+        createTables(dbName);
+        populateDatabase(dbName);
     }
 
+
+//    @After
+//    public void dropDatabase() throws IOException, SQLException {
+//        var conn = DBConnector.connection(dbName);
+//        var statement = conn.createStatement();
+//        statement.executeUpdate("DROP DATABASE IF EXISTS test");
+//        conn.close();
+//    }
+
     @Test
-    public void testGetAccount(){
+    public void testGetAccount() throws Exception {
+        var conn = DBConnector.connection(dbName);
+        var statement = conn.createStatement();
+        var DAO = new DAO(dbName);
+        var acc = DAO.getAccount("0000000000");
+        assertNotNull(acc);
 
     }
 }

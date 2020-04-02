@@ -15,22 +15,36 @@ public class TestDatabaseUtility {
         statement.executeUpdate("DROP DATABASE IF EXISTS test");
         statement.executeUpdate("CREATE DATABASE test");
         conn.close();
-        conn = DBConnector.connection("test");
-        statement = conn.createStatement();
-
-        // Read SQL File
-        String filePath = new File("").getAbsolutePath() + "\\createDatabase.sql";
-        String sqlString = Files.readString(Paths.get(filePath));
-
-        // Execute SQL file
-        statement.execute(sqlString);
-        conn.close();
     }
 
     public static void deleteDatabase() throws IOException, SQLException {
         var conn = DBConnector.connection("");
         var statement = conn.createStatement();
         statement.executeUpdate("DROP DATABASE IF EXISTS test");
+        conn.close();
+    }
+
+    public static void populateDatabase(String databaseName) throws IOException, SQLException {
+        var conn = DBConnector.connection(databaseName);
+        var statement = conn.createStatement();
+
+        var filePath = new File("").getAbsolutePath() + "\\populateScript.sql";
+        var sqlString = Files.readString(Paths.get(filePath));
+
+        statement.execute(sqlString);
+        conn.close();
+    }
+
+    public static void createTables(String databaseName) throws IOException, SQLException {
+        var conn = DBConnector.connection(databaseName);
+        var statement = conn.createStatement();
+
+        // Read SQL File
+        var filePath = new File("").getAbsolutePath() + "\\createTable.sql";
+        var sqlString = Files.readString(Paths.get(filePath));
+
+        // Execute SQL file
+        statement.execute(sqlString);
         conn.close();
     }
 }

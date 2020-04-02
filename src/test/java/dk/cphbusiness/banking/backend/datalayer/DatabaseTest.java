@@ -6,14 +6,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import static dk.cphbusiness.banking.backend.datalayer.TestDatabaseUtility.createTestDatabase;
-import static dk.cphbusiness.banking.backend.datalayer.TestDatabaseUtility.deleteDatabase;
+import static dk.cphbusiness.banking.backend.datalayer.TestDatabaseUtility.*;
 import static org.junit.Assert.*;
 
 public class DatabaseTest {
 
-
-
+    private static String dbName = "test";
 
     @Test
     public void testConnection() throws IOException, SQLException {
@@ -26,7 +24,8 @@ public class DatabaseTest {
     public void testCreateDatabase() throws IOException, SQLException {
         // Set up
         createTestDatabase();
-        var conn = DBConnector.connection("test");
+        createTables(dbName);
+        var conn = DBConnector.connection(dbName);
         var statement = conn.createStatement();
 
         // Get table names

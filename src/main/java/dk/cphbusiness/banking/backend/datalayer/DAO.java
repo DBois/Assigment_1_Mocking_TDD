@@ -61,12 +61,12 @@ public class DAO implements DataAccessObject {
                 long balance = rs.getLong("balance");
                 String cpr = rs.getString("customer_cpr");
                 String bankCvr = rs.getString("bank_cvr");
-                String SQL2 = "SELECT * FROM bank WHERE cvr=?";
+                String SQL2 = "SELECT * FROM \"bank\" WHERE cvr=?";
 
                 PreparedStatement ps2 = conn.prepareStatement(SQL2);
                 ps2.setString(1, bankCvr);
 
-                ResultSet rs2 = ps.executeQuery();
+                ResultSet rs2 = ps2.executeQuery();
                 RealBank bank = null;
                 if (rs2.next())
                 {
@@ -74,10 +74,10 @@ public class DAO implements DataAccessObject {
                     bank = new RealBank(bankCvr, bankName);
                 }
 
-                String SQL3 = "SELECT * FROM customer WHERE cpr=?";
+                String SQL3 = "SELECT * FROM \"customer\" WHERE cpr=?";
                 PreparedStatement ps3 = conn.prepareStatement(SQL3);
                 ps3.setString(1, cpr);
-                ResultSet rs3 = ps.executeQuery();
+                ResultSet rs3 = ps3.executeQuery();
 
                 RealCustomer customer = null;
                 if (rs3.next())
@@ -92,6 +92,7 @@ public class DAO implements DataAccessObject {
         } catch (Exception ex)
         {
             conn.rollback();
+            System.out.println(ex);
             throw new Exception("Something went wrong getting account from database");
         }
         finally {

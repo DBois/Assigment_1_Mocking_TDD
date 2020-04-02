@@ -1,5 +1,5 @@
 drop table if exists customer, bank, account, movement cascade;
-
+alter sequence if exists movement_id_seq restart with 1;
 create table customer
 (
     cpr varchar(10) not null
