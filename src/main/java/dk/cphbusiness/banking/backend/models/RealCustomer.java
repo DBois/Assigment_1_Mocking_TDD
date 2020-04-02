@@ -15,12 +15,12 @@ public class RealCustomer implements Customer {
     }
 
     @Override
-    public void transfer(long amount, Account account, Customer target) {
+    public void transfer(long amount, Account account, Customer target, long timeStamp) {
 
         var targetBank = target.getBank();
         var targetAccountNumber = target.getAccountNumbers().get(0);
         Account targAcc = targetBank.getAccount(targetAccountNumber);
-        account.transfer(amount, targAcc);
+        account.transfer(amount, targAcc, timeStamp);
 
 
     }

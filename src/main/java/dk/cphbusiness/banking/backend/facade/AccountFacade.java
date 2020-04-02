@@ -1,6 +1,7 @@
 package dk.cphbusiness.banking.backend.facade;
 
 import dk.cphbusiness.banking.backend.datalayer.DAO;
+import dk.cphbusiness.banking.backend.models.RealClock;
 import dk.cphbusiness.banking.backend.models.RealMovement;
 import dk.cphbusiness.banking.backend.utility.AccountAssembler;
 import dk.cphbusiness.banking.backend.utility.MovementAssembler;
@@ -32,8 +33,8 @@ public class AccountFacade  {
     public MovementDetail transfer(long amount, String sourceNumber, String targetNumber) throws Exception {
         var acc1 = DAO.getAccount(sourceNumber);
         var acc2 = DAO.getAccount(targetNumber);
-
-        acc1.transfer(amount, acc2);
+        var clock = new RealClock();
+        acc1.transfer(amount, acc2, clock.getTime());
 
         RealMovement rm = DAO.transfer(acc1, acc2);
 

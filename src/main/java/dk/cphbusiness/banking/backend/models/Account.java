@@ -8,8 +8,8 @@ public interface Account {
     public Customer getCustomer();
     public String getNumber();
     public long getBalance();
-    public void transfer(long amount, Account target);
-    public void transfer(long amount, String targetNumber);
+    void transfer(long amount, Account target, long timeStamp);
+    void transfer(long amount, String targetNumber, long timeStamp);
     void updateBalance(long amount);
     List<Movement> getMovements();
 

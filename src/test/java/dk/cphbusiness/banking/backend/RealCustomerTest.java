@@ -1,5 +1,6 @@
 package dk.cphbusiness.banking.backend;
 import dk.cphbusiness.banking.backend.doubles.BankDummy;
+import dk.cphbusiness.banking.backend.doubles.ClockStub;
 import dk.cphbusiness.banking.backend.models.Account;
 import dk.cphbusiness.banking.backend.models.Bank;
 import dk.cphbusiness.banking.backend.models.RealCustomer;
@@ -70,12 +71,13 @@ public class RealCustomerTest {
         }};
         var amount = 10000L;
         var targetAccount = target.getAccountNumbers().get(0);
+        var clock = new ClockStub();
 
         context.checking(new Expectations(){{
             oneOf(BANK).getAccount(targetAccount);
             will(returnValue(ACCOUNT_TARGET));
 
-            oneOf(ACCOUNT_SOURCE).transfer(amount, ACCOUNT_TARGET);
+            oneOf(ACCOUNT_SOURCE).transfer(amount, ACCOUNT_TARGET, clock.getTime());
 
             oneOf(ACCOUNT_SOURCE).getBalance();
             will(returnValue(-amount));
@@ -84,7 +86,7 @@ public class RealCustomerTest {
             will(returnValue(amount));
         }});
 
-        source.transfer(10000L, ACCOUNT_SOURCE, target);
+        source.transfer(10000L, ACCOUNT_SOURCE, target, clock.getTime());
         assertEquals(-10000L, ACCOUNT_SOURCE.getBalance());
         assertEquals(10000L, ACCOUNT_TARGET.getBalance());
     }

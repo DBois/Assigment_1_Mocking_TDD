@@ -19,7 +19,7 @@ public class CustomerStub implements Customer {
     }
 
     @Override
-    public void transfer(long amount, Account account, Customer target) {
+    public void transfer(long amount, Account account, Customer target, long timeStamp) {
     }
 
     @Override

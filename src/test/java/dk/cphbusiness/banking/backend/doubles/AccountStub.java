@@ -6,7 +6,7 @@ import dk.cphbusiness.banking.backend.models.Customer;
 
 public class AccountStub extends RealAccount {
     public AccountStub(Bank bank, Customer customer, String number) {
-        super(bank, customer, number, new ClockDummy());
+        super(bank, customer, number);
         customer.getAccountNumbers().add(number);
     }
 }

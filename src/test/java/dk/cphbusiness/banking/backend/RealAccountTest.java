@@ -1,10 +1,7 @@
 package dk.cphbusiness.banking.backend;
 
 import dk.cphbusiness.banking.backend.doubles.*;
-import dk.cphbusiness.banking.backend.models.Clock;
-import dk.cphbusiness.banking.backend.models.RealAccount;
-import dk.cphbusiness.banking.backend.models.Bank;
-import dk.cphbusiness.banking.backend.models.Customer;
+import dk.cphbusiness.banking.backend.models.*;
 import org.jmock.Expectations;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
@@ -21,10 +18,7 @@ public class RealAccountTest {
         Bank bank = null;
         Customer customer =  new CustomerDummy();
         String number = null;
-        var clock = new ClockDummy();
-
-        RealAccount account = new RealAccount(bank, customer, number, clock);
-
+        RealAccount account = new RealAccount(bank, customer, number);
         assertNotNull(account);
     }
 
@@ -33,10 +27,7 @@ public class RealAccountTest {
         Bank bank = new BankDummy();
         Customer customer = new CustomerDummy();
         String number = null;
-        var clock = new ClockDummy();
-
-        RealAccount account = new RealAccount(bank, customer, number, clock);
-
+        RealAccount account = new RealAccount(bank, customer, number);
         assertEquals(bank, account.getBank());
         assertNotNull(account.getBank());
     }
@@ -46,10 +37,7 @@ public class RealAccountTest {
         Bank bank = new BankDummy();
         Customer customer = new CustomerDummy();
         String number = null;
-        var clock = new ClockDummy();
-
-        RealAccount account = new RealAccount(bank, customer, number, clock);
-
+        RealAccount account = new RealAccount(bank, customer, number);
         assertEquals(customer, account.getCustomer());
         assertNotNull(account.getCustomer());
     }
@@ -59,10 +47,7 @@ public class RealAccountTest {
         Bank bank = new BankDummy();
         Customer customer = new CustomerDummy();
         String number = "ABC12345";
-        var clock = new ClockDummy();
-
-        RealAccount account = new RealAccount(bank, customer, number, clock);
-
+        RealAccount account = new RealAccount(bank, customer, number);
         assertEquals(number, account.getNumber());
         assertNotNull(account.getNumber());
     }
@@ -72,10 +57,7 @@ public class RealAccountTest {
         Bank bank = new BankDummy();
         Customer customer = new CustomerDummy();
         String number = "ABC12345";
-        var clock = new ClockDummy();
-
-        RealAccount account = new RealAccount(bank, customer, number, clock);
-
+        RealAccount account = new RealAccount(bank, customer, number);
         assertEquals(0L, account.getBalance());
         assertNotNull(account.getNumber());
     }
@@ -84,12 +66,12 @@ public class RealAccountTest {
     public void testTransferPositiveAmount(){
         Bank bank = new BankDummy();
         Customer customer = new CustomerDummy();
-        var clock = new ClockDummy();
+        var clock = new ClockStub();
 
-        RealAccount source = new RealAccount(bank, customer, "SRC12345", clock);
-        RealAccount target = new RealAccount(bank, customer, "TGT12345", clock);
+        RealAccount source = new RealAccount(bank, customer, "SRC12345");
+        RealAccount target = new RealAccount(bank, customer, "TGT12345");
 
-        source.transfer(10000L, target);
+        source.transfer(10000L, target, clock.getTime());
         assertEquals(-10000L, source.getBalance());
         assertEquals(10000L, target.getBalance());
     }
@@ -101,13 +83,13 @@ public class RealAccountTest {
 
         Customer customer = new CustomerDummy();
         String targetNumber = "SRC12345";
-        var clock = new ClockDummy();
+        var clock = new ClockStub();
 
-        RealAccount target = new RealAccount(bankDummy, customer, targetNumber, clock);
-        RealAccount source = new RealAccount(bank, customer, "EWQEW21321", clock);
+        RealAccount target = new RealAccount(bankDummy, customer, targetNumber);
+        RealAccount source = new RealAccount(bank, customer, "EWQEW21321");
         bank.setAccount(target);
 
-        source.transfer(10000L, targetNumber);
+        source.transfer(10000L, targetNumber, clock.getTime());
         assertEquals(-10000L, source.getBalance());
         assertEquals(10000L, target.getBalance());
     }
@@ -117,9 +99,9 @@ public class RealAccountTest {
         final Customer CUSTOMER = context.mock(Customer.class);
         final Bank BANK = context.mock(Bank.class);
         final String TARGET_NUMBER = "TGT54321";
-        var clock = new ClockDummy();
-        RealAccount source = new RealAccount(BANK, CUSTOMER, "DPG43212", clock);
-        RealAccount target = new RealAccount(BANK, CUSTOMER, TARGET_NUMBER, clock);
+        var clock = new ClockStub();
+        RealAccount source = new RealAccount(BANK, CUSTOMER, "DPG43212");
+        RealAccount target = new RealAccount(BANK, CUSTOMER, TARGET_NUMBER);
 
         context.checking(new Expectations(){{
             oneOf(BANK).getAccount(TARGET_NUMBER);
@@ -127,7 +109,7 @@ public class RealAccountTest {
             // oneOf(BANK).getName();
         }});
 
-        source.transfer(10000L, TARGET_NUMBER);
+        source.transfer(10000L, TARGET_NUMBER, clock.getTime());
         assertEquals(-10000L, source.getBalance());
         assertEquals(10000L, target.getBalance());
     }
@@ -137,11 +119,11 @@ public class RealAccountTest {
         final Customer CUSTOMER = context.mock(Customer.class);
         final Bank BANK = context.mock(Bank.class);
         final String TARGET_NUMBER = "TGT54321";
-        var clock = new ClockDummy();
+        var clock = new ClockStub();
 
-        RealAccount source = new RealAccount(BANK, CUSTOMER, "DPG43212", clock);
-        RealAccount target = new RealAccount(BANK, CUSTOMER, TARGET_NUMBER, clock);
-        source.transfer(10000L, target);
+        RealAccount source = new RealAccount(BANK, CUSTOMER, "DPG43212");
+        RealAccount target = new RealAccount(BANK, CUSTOMER, TARGET_NUMBER);
+        source.transfer(10000L, target, clock.getTime());
 
         assertEquals(-10000L, source.getBalance());
         assertEquals(10000L, target.getBalance());
@@ -152,7 +134,7 @@ public class RealAccountTest {
         final Customer CUSTOMER = context.mock(Customer.class);
         final Bank BANK = context.mock(Bank.class);
 
-        var account = new RealAccount(BANK, CUSTOMER, "12345697", new ClockDummy());
+        var account = new RealAccount(BANK, CUSTOMER, "12345697");
         account.updateBalance(200);
 
         assertEquals(200, account.getBalance());
@@ -165,25 +147,20 @@ public class RealAccountTest {
 
         var customerSource = new CustomerStub("100895-6666", "Adam");
         var customerTarget = new CustomerStub("100885-6666", "Adam2");
-        var source = new RealAccount(bank, customerSource, "12345", CLOCK);
-        var target = new RealAccount(bank, customerTarget, "12045", CLOCK);
-        var target2 = new RealAccount(bank, customerTarget, "12046", CLOCK);
+        var source = new RealAccount(bank, customerSource, "12345");
+        var target = new RealAccount(bank, customerTarget, "12045");
+        var target2 = new RealAccount(bank, customerTarget, "12046");
+        var clock = new ClockStub();
 
-        context.checking(new Expectations(){{
-            allowing(CLOCK).getTime();
-            will(returnValue(1234567890L));
-            // oneOf(BANK).getName();
-        }});
-
-        source.transfer(500L, target);
-        source.transfer(5000L, target);
-        source.transfer(5000L, target2);
+        source.transfer(500L, target, clock.getTime());
+        source.transfer(5000L, target, clock.getTime());
+        source.transfer(5000L, target2, clock.getTime());
 
         var expectedAccountNumber = source.getMovements().get(2).getTarget().getNumber();
         var expectedTime = source.getMovements().get(2).getTime();
 
         assertEquals(3, source.getMovements().size());
         assertEquals("12046",expectedAccountNumber );
-        assertEquals(1234567890L ,expectedTime );
+        assertEquals(1585812373273L, expectedTime );
     }
 }

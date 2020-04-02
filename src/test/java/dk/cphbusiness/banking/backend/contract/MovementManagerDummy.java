@@ -1,6 +1,6 @@
 package dk.cphbusiness.banking.backend.contract;
 
-import dk.cphbusiness.banking.backend.doubles.ClockDummy;
+import dk.cphbusiness.banking.backend.doubles.ClockStub;
 import dk.cphbusiness.banking.backend.models.*;
 import dk.cphbusiness.banking.backend.utility.MovementAssembler;
 import dk.cphbusiness.banking.contract.MovementManager;
@@ -25,9 +25,9 @@ public class MovementManagerDummy implements MovementManager {
         var adam = new RealCustomer(cpr1, "Adam", bank);
         var emil = new RealCustomer(cpr2, "Emil", bank);
 
-        var clock = new ClockDummy();
-        var source = new RealAccount(bank, adam, "0123456789", clock);
-        var target = new RealAccount(bank, emil, "9876543210", clock);
+        var clock = new ClockStub();
+        var source = new RealAccount(bank, adam, "0123456789");
+        var target = new RealAccount(bank, emil, "9876543210");
 
 
         var mvmt1 = new RealMovement(1, clock.getTime(), 10000L, source, target);

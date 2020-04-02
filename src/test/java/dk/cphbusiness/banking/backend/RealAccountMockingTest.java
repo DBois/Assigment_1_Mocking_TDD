@@ -23,8 +23,8 @@ public class RealAccountMockingTest {
         final Bank BANK = context.mock(Bank.class);
         final String TARGET_NUMBER = "TGT54321";
         var clock = new RealClock();
-        RealAccount source = new RealAccount(BANK, CUSTOMER, "DPG43212", clock);
-        RealAccount target = new RealAccount(BANK, CUSTOMER, TARGET_NUMBER, clock);
+        RealAccount source = new RealAccount(BANK, CUSTOMER, "DPG43212");
+        RealAccount target = new RealAccount(BANK, CUSTOMER, TARGET_NUMBER);
         context.checking(new Expectations(){{
             oneOf(BANK).getAccount(TARGET_NUMBER);
             will(returnValue(target));
@@ -32,7 +32,7 @@ public class RealAccountMockingTest {
         }});
 
         //Act
-        source.transfer(10000L, TARGET_NUMBER);
+        source.transfer(10000L, TARGET_NUMBER, clock.getTime());
 
         //Assert
         assertEquals(-10000L, source.getBalance());
@@ -47,11 +47,11 @@ public class RealAccountMockingTest {
         final Bank BANK = context.mock(Bank.class);
         final String TARGET_NUMBER = "TGT54321";
         var clock = new RealClock();
-        RealAccount source = new RealAccount(BANK, CUSTOMER, "DPG43212", clock);
-        RealAccount target = new RealAccount(BANK, CUSTOMER, TARGET_NUMBER, clock);
+        RealAccount source = new RealAccount(BANK, CUSTOMER, "DPG43212");
+        RealAccount target = new RealAccount(BANK, CUSTOMER, TARGET_NUMBER);
 
         //Act
-        source.transfer(10000L, target);
+        source.transfer(10000L, target, clock.getTime());
 
         //Assert
         assertEquals(-10000L, source.getBalance());

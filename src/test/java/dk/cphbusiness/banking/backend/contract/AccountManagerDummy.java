@@ -1,6 +1,5 @@
 package dk.cphbusiness.banking.backend.contract;
 
-import dk.cphbusiness.banking.backend.doubles.ClockDummy;
 import dk.cphbusiness.banking.backend.models.*;
 import dk.cphbusiness.banking.contract.AccountManager;
 import static dk.cphbusiness.banking.contract.MovementManager.*;
@@ -18,12 +17,12 @@ public class AccountManagerDummy implements AccountManager {
 
         var bank = new RealBank("12345678", "Nordea");
         var customer = new RealCustomer("1008956666", "Adam", bank);
-        var clock = new ClockDummy();
+        
         var cpr1 = "0123456789";
         var cpr2 = "0012345678";
         accounts = new HashMap<>() {{
-            put(cpr1, new RealAccount(bank, customer, cpr1, clock));
-            put(cpr2, new RealAccount(bank, customer, cpr2, clock));
+            put(cpr1, new RealAccount(bank, customer, cpr1));
+            put(cpr2, new RealAccount(bank, customer, cpr2));
         }};
 
     }
@@ -43,7 +42,8 @@ public class AccountManagerDummy implements AccountManager {
     public MovementDetail transfer(long amount, String sourceNumber, String targetNumber) {
         var source = accounts.get(sourceNumber);
         var target = accounts.get(targetNumber);
-        source.transfer(amount, target);
+        var clock = new RealClock();
+        source.transfer(amount, target, clock.getTime());
         var movements = createMovementDetails(source.getMovements());
         var detail = movements.get(movements.size() - 1);
         return detail;

@@ -26,12 +26,12 @@ public class AccountDummy implements Account {
     }
 
     @Override
-    public void transfer(long amount, Account target) {
+    public void transfer(long amount, Account target, long timeStamp) {
 
     }
 
     @Override
-    public void transfer(long amount, String targetNumber) {
+    public void transfer(long amount, String targetNumber, long timeStamp) {
 
     }
 

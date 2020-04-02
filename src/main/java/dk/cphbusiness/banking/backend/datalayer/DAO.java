@@ -89,8 +89,7 @@ public class DAO implements DataAccessObject {
                     String customerName = rs3.getString("name");
                     customer = new RealCustomer(cpr, customerName, bank);
                 }
-                RealClock clock = new RealClock();
-                account = new RealAccount(bank, customer, accountNumber, clock);
+                account = new RealAccount(bank, customer, accountNumber);
             }
 
         } catch (Exception ex)
@@ -157,25 +156,13 @@ public class DAO implements DataAccessObject {
             int id = 0;
             if(rs.next()) id = rs.getInt(1);
 
-            var SQL3 = "SELECT * from movement WHERE id=?";
-
-            //Update source
-            PreparedStatement ps4 = conn.prepareStatement(SQL3);
-            ps4.setLong(1, id);
-            ps4.executeQuery();
-            rs = ps4.getResultSet();
-
-            var movement2 = new RealMovement(id, movement.getTime(), movement.getAmount(), movement.getSource(), movement.getTarget());
-
-
-            return movement2;
+            return new RealMovement(id, movement.getTime(), movement.getAmount(), movement.getSource(), movement.getTarget());
         } catch (Exception e) {
             conn.rollback();
             throw new Exception("Transfer went wrong");
         } finally {
             conn.close();
         }
-
     }
 
     @Override

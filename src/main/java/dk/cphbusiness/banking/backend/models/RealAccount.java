@@ -9,18 +9,15 @@ public class RealAccount implements Account {
     private String number;
     private long balance;
     private List<Movement> movements;
-    private Clock clock;
     private static long movementId;
 
 
-    public RealAccount(Bank bank, Customer customer, String number, Clock clock){
+    public RealAccount(Bank bank, Customer customer, String number){
         this.bank = bank;
         this.customer = customer;
         this.number = number;
         this.balance = 0;
         movements = new ArrayList<>();
-        this.clock = clock;
-
     }
 
     @Override
@@ -42,22 +39,19 @@ public class RealAccount implements Account {
 
 
     @Override
-    public void transfer(long amount, Account target) {
+    public void transfer(long amount, Account target, long timeStamp) {
         this.balance -= amount;
         target.updateBalance(amount);
-        var date = clock.getTime();
-        movements.add(new RealMovement(movementId++, date, -amount, this, target));
-        target.getMovements().add(new RealMovement(movementId++, date, amount, this, target));
+        movements.add(new RealMovement(movementId++, timeStamp, -amount, this, target));
+        target.getMovements().add(new RealMovement(movementId++, timeStamp, amount, this, target));
     }
 
     @Override
-    public void transfer(long amount, String targetNumber){
+    public void transfer(long amount, String targetNumber, long timeStamp){
         Account target = bank.getAccount(targetNumber);
-        transfer(amount, target);
-
-        var date = clock.getTime();
-        movements.add(new RealMovement(movementId++, date, -amount, this, target));
-        target.getMovements().add(new RealMovement(movementId++, date, amount, this, target));
+        transfer(amount, target, timeStamp);
+        movements.add(new RealMovement(movementId++, timeStamp, -amount, this, target));
+        target.getMovements().add(new RealMovement(movementId++, timeStamp, amount, this, target));
     }
 
     @Override
