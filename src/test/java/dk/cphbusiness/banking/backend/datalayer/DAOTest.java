@@ -17,10 +17,11 @@ import java.util.ArrayList;
 
 import static dk.cphbusiness.banking.backend.datalayer.TestDatabaseUtility.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static dk.cphbusiness.banking.backend.settings.Settings.*;
 
 public class DAOTest {
 
-    private static String dbName = "test";
+    private static String dbName = DB_NAME;
 
     @BeforeAll
     public static void setupBefore() throws IOException, SQLException {
@@ -42,7 +43,7 @@ public class DAOTest {
     @Test
     public void testGetAccount() throws Exception {
         //Assemble
-        var DAO = new DAO(dbName);
+        var DAO = new DAO();
         var accountNumber = "0000000000";
 
         //Act
@@ -56,7 +57,7 @@ public class DAOTest {
     @Test
     public void testGetCustomer() throws Exception {
         //Assemble
-        var DAO = new DAO(dbName);
+        var DAO = new DAO();
         var cpr = "1234560004";
 
         //Act
@@ -71,7 +72,7 @@ public class DAOTest {
     @Test
     public void testUpdateCustomer() throws Exception {
         //Assemble
-        var DAO = new DAO(dbName);
+        var DAO = new DAO();
         var customer = DAO.getCustomer("1234560001");
         var newCustomer = new RealCustomer(customer.getCpr(), "Emilio");
 
@@ -87,7 +88,7 @@ public class DAOTest {
     @Test
     public void testTransfer() throws Exception {
         //Assemble
-        var DAO = new DAO(dbName);
+        var DAO = new DAO();
         var source = DAO.getAccount("0000000000");
         var target = DAO.getAccount("1111111111");
         var time = new ClockStub().getTime();
@@ -109,7 +110,7 @@ public class DAOTest {
     @Test
     public void testGetAccountsFromCustomer() throws Exception {
         //Assemble
-        var DAO = new DAO(dbName);
+        var DAO = new DAO();
         String cpr = "1234560001";
         String accountNumber1 = "0000000000";
         String accountNumber2 = "1111111111";
@@ -134,7 +135,7 @@ public class DAOTest {
 
     @Test
     public void testDeleteCustomer() throws Exception {
-        var DAO = new DAO(dbName);
+        var DAO = new DAO();
         var cpr = "1234560001";
         var customer = DAO.getCustomer(cpr);
         var accounts = DAO.getAccountsFromCustomer(cpr);
@@ -153,7 +154,7 @@ public class DAOTest {
     @Test
     public void getMovements() throws Exception {
         //Assemble
-        var DAO = new DAO(dbName);
+        var DAO = new DAO();
         var source = DAO.getAccount("0000000000");
         var target = DAO.getAccount("1111111111");
         var time = new ClockStub().getTime();

@@ -12,12 +12,13 @@ import static dk.cphbusiness.banking.contract.MovementManager.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Map;
+import static dk.cphbusiness.banking.backend.settings.Settings.*;
 
 public class AccountFacade  {
     private DAO DAO;
 
     public AccountFacade(DAO DAO) {
-        this.DAO = new DAO("test_bank");
+        this.DAO = new DAO();
     }
 
     public AccountDetail getAccount(String accountName) throws Exception {
