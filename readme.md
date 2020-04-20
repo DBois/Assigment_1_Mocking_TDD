@@ -10,10 +10,10 @@ Inside the `src.main.java.dk.cphbusiness.banking.backend.datalayer` you will fin
 
 Results for the tests:  
 ![](./db_test_results.png)
- 
+## Assignment 1. Test coverage and results
+
 Our proposed solution of [this assignment](https://datsoftlyngby.github.io/soft2020spring/resources/85f09312-01-assignment-mocking.pdf).
 
-## Assignment 1. Test coverage and results
 
 ### Our test coverage of the classes used for the project
 

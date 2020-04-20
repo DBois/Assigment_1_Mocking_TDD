@@ -1,21 +1,7 @@
 package dk.cphbusiness.banking.backend.datalayer;
 
 import dk.cphbusiness.banking.backend.models.*;
-import dk.cphbusiness.banking.contract.AccountManager;
-import dk.cphbusiness.banking.contract.BankManager;
-import dk.cphbusiness.banking.contract.CustomerManager;
-import dk.cphbusiness.banking.contract.MovementManager;
-import net.sourceforge.plantuml.graph.Move;
-
-import static dk.cphbusiness.banking.contract.AccountManager.*;
-import static dk.cphbusiness.banking.contract.BankManager.*;
-import static dk.cphbusiness.banking.contract.MovementManager.*;
-import static dk.cphbusiness.banking.contract.CustomerManager.*;
-
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
 public interface DataAccessObject {
     //Account
