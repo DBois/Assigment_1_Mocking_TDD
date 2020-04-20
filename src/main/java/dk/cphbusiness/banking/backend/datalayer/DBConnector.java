@@ -17,7 +17,7 @@ public class DBConnector {
         var url = "jdbc:postgresql://localhost:5432/" + databaseName;
         if(singleton == null || !currentDbName.equals(databaseName) || singleton.isClosed()){
             currentDbName = databaseName;
-            String filePath = new File("").getAbsolutePath();
+            String filePath = System.getenv("ABSOLUTE_PATH");
             filePath += "\\gorilla.txt";
             String password = Files.readString(Paths.get(filePath));
             singleton = DriverManager.getConnection(url, "postgres", password);

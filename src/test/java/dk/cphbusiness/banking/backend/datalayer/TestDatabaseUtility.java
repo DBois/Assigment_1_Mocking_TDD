@@ -28,7 +28,7 @@ public class TestDatabaseUtility {
         var conn = DBConnector.connection(databaseName);
         var statement = conn.createStatement();
 
-        var filePath = new File("").getAbsolutePath() + "\\populateScript.sql";
+        var filePath = System.getenv("ABSOLUTE_PATH") + "\\populateScript.sql";
         var sqlString = Files.readString(Paths.get(filePath));
 
         statement.execute(sqlString);
@@ -40,7 +40,7 @@ public class TestDatabaseUtility {
         var statement = conn.createStatement();
 
         // Read SQL File
-        var filePath = new File("").getAbsolutePath() + "\\createTable.sql";
+        var filePath = System.getenv("ABSOLUTE_PATH") + "\\createTable.sql";
         var sqlString = Files.readString(Paths.get(filePath));
 
         // Execute SQL file

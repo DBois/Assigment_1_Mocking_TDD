@@ -23,7 +23,7 @@ public class AccountREST {
             var acc = af.getAccount(number);
             return Response.ok().entity(GSON.toJson(acc)).build();
         } catch (Exception e) {
-            return Response.status(404).entity(e).build();
+            return Response.status(404).entity(GSON.toJson(e)).build();
         }
     }
 
