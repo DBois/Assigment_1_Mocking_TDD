@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import static dk.cphbusiness.banking.backend.settings.Settings.*;
 
 public class DAO implements DataAccessObject {

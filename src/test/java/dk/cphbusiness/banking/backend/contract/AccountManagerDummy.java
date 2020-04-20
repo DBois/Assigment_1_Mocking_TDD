@@ -22,6 +22,7 @@ public class AccountManagerDummy implements AccountManager {
         var cpr2 = "0012345678";
         accounts = new HashMap<>() {{
             put(cpr1, new RealAccount(bank, customer, cpr1));
+            put(cpr1, new RealAccount(bank, customer, cpr1));
             put(cpr2, new RealAccount(bank, customer, cpr2));
         }};
 
@@ -33,8 +34,12 @@ public class AccountManagerDummy implements AccountManager {
     }
 
     @Override
-    public Map<String, AccountSummary> getAccounts(String s) {
-        return createAccountSummaries(accounts);
+    public List<AccountSummary> getAccountsFromCustomer(String s) {
+        var result = new ArrayList<AccountSummary>();
+        accounts.forEach((k,v) -> {
+            if(v.getCustomer().getCpr().equals(s)) result.add(createAccountSummary(v));
+        });
+        return result;
     }
 
 
