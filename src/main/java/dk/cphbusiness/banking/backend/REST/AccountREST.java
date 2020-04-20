@@ -27,5 +27,16 @@ public class AccountREST {
         }
     }
 
+    @GET
+    @Path("")
+    public Response getAccounts(String s) {
+        return null;
+    }
+
+
+    public Response transfer(long l, String s, String s1) {
+        return null;
+    }
+
 
 }
