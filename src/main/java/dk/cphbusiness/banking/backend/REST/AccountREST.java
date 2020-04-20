@@ -1,27 +1,44 @@
 package dk.cphbusiness.banking.backend.REST;
 
-import dk.cphbusiness.banking.contract.AccountManager;
-import dk.cphbusiness.banking.contract.BankManager;
-import dk.cphbusiness.banking.contract.CustomerManager;
-import dk.cphbusiness.banking.contract.MovementManager;
+import dk.cphbusiness.banking.backend.facade.AccountFacade;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Response;
 
-import java.util.List;
-import java.util.Map;
 
-public class AccountREST implements AccountManager{
+@Path("/accounts")
+public class AccountREST{
+    AccountFacade af;
 
-    @Override
-    public AccountDetail getAccount(String s) {
+    public AccountREST() {
+        this.af = new AccountFacade();
+    }
+
+    @GET
+    @Path("/get/{id}")
+    public Response getAccount(@PathParam("id") String accountName) {
+        try {
+            var acc = af.getAccount(accountName);
+            return Response.ok()
+                    .entity(acc)
+                    .build();
+
+        } catch (Exception e) {
+            return Response.serverError()
+                    .entity(e)
+                    .build();
+        }
+    }
+
+    @GET
+    @Path("/get")
+    public Response getAccounts(String s) {
         return null;
     }
 
-    @Override
-    public Map<String, AccountSummary> getAccounts(String s) {
-        return null;
-    }
 
-    @Override
-    public MovementManager.MovementDetail transfer(long l, String s, String s1) {
+    public Response transfer(long l, String s, String s1) {
         return null;
     }
 }
