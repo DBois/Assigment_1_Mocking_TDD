@@ -1,27 +1,31 @@
 package dk.cphbusiness.banking.backend.REST;
 
-import dk.cphbusiness.banking.contract.AccountManager;
-import dk.cphbusiness.banking.contract.BankManager;
-import dk.cphbusiness.banking.contract.CustomerManager;
-import dk.cphbusiness.banking.contract.MovementManager;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import dk.cphbusiness.banking.backend.facade.AccountFacade;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Response;
 
-import java.util.List;
-import java.util.Map;
 
-public class AccountREST implements AccountManager{
 
-    @Override
-    public AccountDetail getAccount(String s) {
-        return null;
+@Path("/account")
+public class AccountREST {
+    AccountFacade af = new AccountFacade();
+    private final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+
+    @GET
+    @Path("/{number}")
+    public Response getAccount(@PathParam("number") String number) {
+
+        try {
+            var acc = af.getAccount(number);
+            return Response.ok().entity(GSON.toJson(acc)).build();
+        } catch (Exception e) {
+            return Response.status(404).entity(e).build();
+        }
     }
 
-    @Override
-    public Map<String, AccountSummary> getAccounts(String s) {
-        return null;
-    }
 
-    @Override
-    public MovementManager.MovementDetail transfer(long l, String s, String s1) {
-        return null;
-    }
 }

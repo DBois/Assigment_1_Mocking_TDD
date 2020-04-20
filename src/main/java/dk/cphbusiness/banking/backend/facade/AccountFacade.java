@@ -23,8 +23,8 @@ public class AccountFacade implements AccountManager {
         this.DAO = new DAO();
     }
 
-    public AccountDetail getAccount(String accountName) throws Exception {
-        var account = DAO.getAccount(accountName);
+    public AccountDetail getAccount(String accountNumber) throws Exception {
+        var account = DAO.getAccount(accountNumber);
         return AccountAssembler.createAccountDetail(account);
     }
 
