@@ -11,12 +11,13 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import static dk.cphbusiness.banking.backend.settings.Settings.*;
 
 public class DAO implements DataAccessObject {
     private String databaseName;
 
-    public DAO(String databaseName) {
-        this.databaseName = databaseName;
+    public DAO() {
+        this.databaseName = DB_NAME;
     }
 
     @Override
