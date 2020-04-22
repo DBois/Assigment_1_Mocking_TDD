@@ -3,6 +3,8 @@ package dk.cphbusiness.banking.backend.rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import static dk.cphbusiness.banking.contract.AccountManager.*;
+
+import com.google.gson.reflect.TypeToken;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 
@@ -17,6 +19,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static dk.cphbusiness.banking.backend.datalayer.TestDatabaseUtility.*;
 import static dk.cphbusiness.banking.backend.settings.Settings.DB_NAME;
@@ -43,14 +47,14 @@ public class AccountRestTest {
     @Test
     public void testAccountDoesntExist()
             throws IOException {
-        // Given
+        // Assemble
         var id = 1;
         HttpUriRequest request = new HttpGet(URI + id);
 
-        // When
+        // Act
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
 
-        // Then
+        // Assert
         assertThat(httpResponse.getStatusLine().getStatusCode(),
                 equalTo(HttpStatus.SC_NOT_FOUND));
     }
@@ -59,22 +63,42 @@ public class AccountRestTest {
     public void testGetAccount()
             throws IOException {
 
-        // Given
+        // Assemble
         String expectedAccountNumber = "0000000000";
         HttpUriRequest request = new HttpGet(URI + expectedAccountNumber);
 
-        // When
-        HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
+        // Act
+        var httpResponse = HttpClientBuilder.create().build().execute(request);
         var jsonResponse = EntityUtils.toString(httpResponse.getEntity());
         var result = GSON.fromJson(jsonResponse, AccountDetail.class);
         var expectedCustomer = "Emil";
 
-        // Then
+        // Assert
         System.out.println(jsonResponse);
         assertThat(httpResponse.getStatusLine().getStatusCode(),
                 equalTo(HttpStatus.SC_OK));
         assertEquals(expectedCustomer, result.getCustomer().getName());
         assertEquals(expectedAccountNumber, result.getNumber());
 
+    }
+
+    @Test
+    public void testGetAccounts() throws IOException {
+        // Assemble
+        var cpr = "1234560002";
+        var request = new HttpGet(URI + "customer=" + cpr);
+
+        // Act
+        var httpResponse = HttpClientBuilder.create().build().execute(request);
+        var jsonResponse = EntityUtils.toString(httpResponse.getEntity());
+        System.out.println(jsonResponse);
+        var listType = new TypeToken<ArrayList<AccountSummary>>(){}.getType();
+        List<AccountSummary> result = GSON.fromJson(jsonResponse, listType);
+        var expectedSize = 2;
+
+        // Assert
+        assertThat(httpResponse.getStatusLine().getStatusCode(),
+                equalTo(HttpStatus.SC_OK));
+        assertEquals(expectedSize, result.size());
     }
 }

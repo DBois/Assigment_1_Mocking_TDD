@@ -28,9 +28,15 @@ public class AccountREST {
     }
 
     @GET
-    @Path("/customer?={cpr}")
-    public Response getAccounts(String cpr) {
-        return null;
+    @Path("/customer={cpr}")
+    public Response getAccounts(@PathParam("cpr") String cpr) {
+        try {
+            System.out.println(cpr);
+            var accounts = af.getAccountsFromCustomer(cpr);
+            return Response.ok().entity(GSON.toJson(accounts)).build();
+        } catch (Exception e){
+            return Response.status(404).entity(GSON.toJson(e)).build();
+        }
     }
 
 

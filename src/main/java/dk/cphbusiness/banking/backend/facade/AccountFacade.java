@@ -1,6 +1,7 @@
 package dk.cphbusiness.banking.backend.facade;
 
 import dk.cphbusiness.banking.backend.datalayer.DAO;
+import dk.cphbusiness.banking.backend.models.Account;
 import dk.cphbusiness.banking.backend.models.RealAccount;
 import dk.cphbusiness.banking.backend.models.RealClock;
 import dk.cphbusiness.banking.backend.models.RealMovement;
@@ -13,6 +14,7 @@ import static dk.cphbusiness.banking.contract.MovementManager.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,9 +38,10 @@ public class AccountFacade implements AccountManager {
         }
     }
 
-    public List<AccountSummary> getAccountsFromCustomer(String CPR) throws Exception {
-        DAO.getAccountsFromCustomer(CPR);
-        return null;
+    public List<AccountSummary> getAccountsFromCustomer(String CPR) throws Exception
+    {
+        var accounts = DAO.getAccountsFromCustomer(CPR);
+        return AccountAssembler.createAccountSummaries(accounts);
     }
 
     public MovementDetail transfer(long amount, String sourceNumber, String targetNumber) throws Exception {
