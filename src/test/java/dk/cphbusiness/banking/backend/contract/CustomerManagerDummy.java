@@ -13,10 +13,9 @@ public class CustomerManagerDummy implements CustomerManager {
     Map<String, Customer> customers;
 
     public CustomerManagerDummy() {
-        RealBank rb = new RealBank("12345678", "Nordea");
-        Customer cust1 = new RealCustomer("0101010001", "Kurt Wonnegut", rb);
-        Customer cust2 = new RealCustomer("0101010002", "Michael Sebastiansen", new BankDummy());
-        Customer cust3 = new RealCustomer("0101010003", "Adam Emilsen", new BankDummy());
+        Customer cust1 = new RealCustomer("0101010001", "Kurt Wonnegut");
+        Customer cust2 = new RealCustomer("0101010002", "Michael Sebastiansen");
+        Customer cust3 = new RealCustomer("0101010003", "Adam Emilsen");
 
         customers = new HashMap<>(){{
             put(cust1.getCpr(), cust1);

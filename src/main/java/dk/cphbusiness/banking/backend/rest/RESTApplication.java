@@ -13,6 +13,7 @@ public class RESTApplication extends Application {
         Class.forName("org.postgresql.Driver");
         singletons.add(new HelloRestService());
         singletons.add(new AccountREST());
+        singletons.add(new CustomerREST());
     }
     @Override
     public Set<Object> getSingletons() {

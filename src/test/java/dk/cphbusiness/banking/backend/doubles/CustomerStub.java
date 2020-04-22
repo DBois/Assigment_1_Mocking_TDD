@@ -19,10 +19,6 @@ public class CustomerStub implements Customer {
     }
 
     @Override
-    public void transfer(long amount, Account account, Customer target, long timeStamp) {
-    }
-
-    @Override
     public String getCpr() {
         return this.cpr;
     }
@@ -41,11 +37,5 @@ public class CustomerStub implements Customer {
     public void addAccountNumber(String accountNumber) {
 
     }
-
-    @Override
-    public Bank getBank() {
-        return null;
-    }
-
 
 }

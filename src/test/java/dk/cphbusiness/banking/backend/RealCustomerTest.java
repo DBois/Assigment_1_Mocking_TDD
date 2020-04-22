@@ -24,7 +24,7 @@ public class RealCustomerTest {
         var bank = new BankDummy();
 
         //Act
-        var customer = new RealCustomer("100895-6666", "Adam", bank);
+        var customer = new RealCustomer("100895-6666", "Adam");
 
         //Assert
         assertNotNull(customer);
@@ -34,7 +34,7 @@ public class RealCustomerTest {
     public void testGetName(){
         //Assemble
         var bank = new BankDummy();
-        var customer = new RealCustomer("100895-6666", "Adam", bank);
+        var customer = new RealCustomer("100895-6666", "Adam");
 
         //Act
         var name = customer.getName();
@@ -47,7 +47,7 @@ public class RealCustomerTest {
     public void testGetCpr(){
         //Assemble
         var bank = new BankDummy();
-        var customer = new RealCustomer("100895-6666", "Adam", bank);
+        var customer = new RealCustomer("100895-6666", "Adam");
 
         //Act
         var cpr = customer.getCpr();
@@ -62,7 +62,7 @@ public class RealCustomerTest {
         var bank = new BankDummy();
 
         //Act
-        var customer = new RealCustomer("100895-6666", "Adam", bank){{
+        var customer = new RealCustomer("100895-6666", "Adam"){{
             addAccountNumber("123abc");
             addAccountNumber("321abc");
         }};
@@ -77,41 +77,5 @@ public class RealCustomerTest {
         assertEquals(expected.size(), actual.size());
     }
 
-    @Test
-    public void testTransfer(){
-        //Assemble
-        final Account ACCOUNT_SOURCE = context.mock(Account.class, "account source");
-        final Account ACCOUNT_TARGET = context.mock(Account.class, "account target");
-        final Bank BANK = context.mock(Bank.class);
-        var source = new RealCustomer("100895-6666", "Adam", BANK){{
-            addAccountNumber("ABC2345");
-        }};
-        var target = new RealCustomer("200286-6666", "Sebbelicious", BANK){{
-            addAccountNumber("ABC1234");
-        }};
-        var amount = 10000L;
-        var targetAccount = target.getAccountNumbers().get(0);
-        var clock = new ClockStub();
-
-        context.checking(new Expectations(){{
-            oneOf(BANK).getAccount(targetAccount);
-            will(returnValue(ACCOUNT_TARGET));
-
-            oneOf(ACCOUNT_SOURCE).transfer(amount, ACCOUNT_TARGET, clock.getTime());
-
-            oneOf(ACCOUNT_SOURCE).getBalance();
-            will(returnValue(-amount));
-
-            oneOf(ACCOUNT_TARGET).getBalance();
-            will(returnValue(amount));
-        }});
-
-        //Act
-        source.transfer(10000L, ACCOUNT_SOURCE, target, clock.getTime());
-
-        //Assert
-        assertEquals(-10000L, ACCOUNT_SOURCE.getBalance());
-        assertEquals(10000L, ACCOUNT_TARGET.getBalance());
-    }
 
 }

@@ -5,29 +5,13 @@ import java.util.List;
 
 public class RealCustomer implements Customer {
     private String cpr, name;
-    private Bank bank;
     private List<String> accountNumbers;
-    public RealCustomer(String cpr, String name, Bank bank) {
-        this.cpr = cpr;
-        this.name = name;
-        this.bank = bank;
-        this.accountNumbers = new ArrayList<String>();
-    }
+
 
     public RealCustomer(String cpr, String name) {
         this.cpr = cpr;
         this.name = name;
-    }
-
-    @Override
-    public void transfer(long amount, Account account, Customer target, long timeStamp) {
-
-        var targetBank = target.getBank();
-        var targetAccountNumber = target.getAccountNumbers().get(0);
-        Account targAcc = targetBank.getAccount(targetAccountNumber);
-        account.transfer(amount, targAcc, timeStamp);
-
-
+        this.accountNumbers = new ArrayList<String>();
     }
 
     @Override
@@ -49,10 +33,6 @@ public class RealCustomer implements Customer {
     public void addAccountNumber(String accountNumber) {
         accountNumbers.add(accountNumber);
 
-    }
-
-    public Bank getBank(){
-        return this.bank;
     }
 
 }

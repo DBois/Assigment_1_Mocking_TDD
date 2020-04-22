@@ -22,8 +22,8 @@ public class MovementManagerDummy implements MovementManager {
         var cpr1 = "1008956666";
         var cpr2 = "0101010001";
 
-        var adam = new RealCustomer(cpr1, "Adam", bank);
-        var emil = new RealCustomer(cpr2, "Emil", bank);
+        var adam = new RealCustomer(cpr1, "Adam");
+        var emil = new RealCustomer(cpr2, "Emil");
 
         var clock = new ClockStub();
         var source = new RealAccount(bank, adam, "0123456789");

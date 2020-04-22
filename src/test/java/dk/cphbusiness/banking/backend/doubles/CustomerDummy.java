@@ -8,10 +8,6 @@ import java.util.List;
 
 public class CustomerDummy implements Customer {
 
-    @Override
-    public void transfer(long amount, Account account, Customer target, long timeStamp) {
-
-    }
 
     @Override
     public String getCpr() {
@@ -31,10 +27,5 @@ public class CustomerDummy implements Customer {
     @Override
     public void addAccountNumber(String accountNumber) {
 
-    }
-
-    @Override
-    public Bank getBank() {
-        return null;
     }
 }

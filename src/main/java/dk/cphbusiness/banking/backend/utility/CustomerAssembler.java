@@ -9,8 +9,7 @@ public class CustomerAssembler {
     public static CustomerSummary createCustomerSummary(Customer customer) {
         return new CustomerSummary(
                 customer.getCpr(),
-                customer.getName(),
-                createBankSummary(customer.getBank())
+                customer.getName()
         );
     }
 
@@ -18,7 +17,6 @@ public class CustomerAssembler {
         return new CustomerDetail(
                 customer.getCpr(),
                 customer.getName(),
-                createBankSummary(customer.getBank()),
                 customer.getAccountNumbers()
         );
     }

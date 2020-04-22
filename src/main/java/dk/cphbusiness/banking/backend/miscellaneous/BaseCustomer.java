@@ -11,10 +11,6 @@ public class BaseCustomer implements Customer {
 
 
 
-    @Override
-    public void transfer(long amount, Account account, Customer target, long timeStamp) {
-
-    }
 
     @Override
     public String getCpr() {
@@ -36,8 +32,4 @@ public class BaseCustomer implements Customer {
 
     }
 
-    @Override
-    public Bank getBank() {
-        return null;
-    }
 }

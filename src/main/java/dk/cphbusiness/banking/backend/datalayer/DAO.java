@@ -33,13 +33,11 @@ public class DAO implements DataAccessObject {
 
         try {
             return getAccountHelper(accountNumber, conn);
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             conn.rollback();
             System.out.println(ex);
             throw new Exception("Something went wrong getting account from database");
-        }
-        finally {
+        } finally {
             conn.close();
         }
     }
@@ -59,8 +57,7 @@ public class DAO implements DataAccessObject {
             ResultSet rs = ps.executeQuery();
 
             RealAccount account = null;
-            while (rs.next())
-            {
+            while (rs.next()) {
                 long balance = rs.getLong("balance");
                 String cpr = rs.getString("customer_cpr");
                 String bankCvr = rs.getString("bank_cvr");
@@ -72,8 +69,7 @@ public class DAO implements DataAccessObject {
 
                 ResultSet rs2 = ps2.executeQuery();
                 RealBank bank = null;
-                if (rs2.next())
-                {
+                if (rs2.next()) {
                     String bankName = rs2.getString("name");
                     bank = new RealBank(bankCvr, bankName);
                 }
@@ -84,22 +80,19 @@ public class DAO implements DataAccessObject {
                 ResultSet rs3 = ps3.executeQuery();
 
                 RealCustomer customer = null;
-                if (rs3.next())
-                {
+                if (rs3.next()) {
                     String customerName = rs3.getString("name");
-                    customer = new RealCustomer(cpr, customerName, bank);
+                    customer = new RealCustomer(cpr, customerName);
                 }
                 account = new RealAccount(bank, customer, accountNumber, balance);
                 accounts.add(account);
             }
             return accounts;
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             conn.rollback();
             System.out.println(ex);
             throw new Exception("Something went wrong getting account from database");
-        }
-        finally {
+        } finally {
             conn.close();
         }
     }
@@ -135,7 +128,7 @@ public class DAO implements DataAccessObject {
             ps2.setString(2, source.getNumber());
 
             //Create Movement
-            var movement = source.getMovements().get(source.getMovements().size()-1); //gets last movement to insert into DB
+            var movement = source.getMovements().get(source.getMovements().size() - 1); //gets last movement to insert into DB
             var SQL2 = "INSERT INTO movement (time, amount, account_source, account_target) VALUES (?, ?, ?, ?)";
             PreparedStatement ps3 = conn.prepareStatement(SQL2, Statement.RETURN_GENERATED_KEYS);
             ps3.setLong(1, timestamp);
@@ -212,20 +205,29 @@ public class DAO implements DataAccessObject {
             ps.setString(1, CPR);
             var rs = ps.executeQuery();
             RealCustomer customer = null;
-            if (rs.next())  {
+            if (rs.next()) {
                 var cpr = rs.getString("cpr");
                 var name = rs.getString("name");
                 customer = new RealCustomer(cpr, name);
+
+                //Query and add account numbers to RealCustomer
+                var SQL1 = "SELECT number as \"number\" FROM account WHERE customer_cpr=?";
+                var ps1 = conn.prepareStatement(SQL1);
+                ps1.setString(1, cpr);
+                var rs1 = ps1.executeQuery();
+                while (rs1.next()) {
+                    var number = rs1.getString("number");
+                    customer.addAccountNumber(number);
+                }
             }
             ps.close();
             conn.commit();
             return customer;
         } catch (Exception ex) {
-
             conn.rollback();
-            System.out.println(ex);
+            System.out.println(ex.getMessage());
             throw new Exception("Transfer went wrong");
-        }  finally {
+        } finally {
             conn.close();
         }
     }
@@ -251,7 +253,7 @@ public class DAO implements DataAccessObject {
             var hasUpdated = ps.executeUpdate();
             ps.close();
 
-            if(hasUpdated == 0)
+            if (hasUpdated == 0)
                 throw new Exception("Update on customer went wrong");
             conn.commit();
             return customer;
@@ -280,7 +282,7 @@ public class DAO implements DataAccessObject {
             var hasDeleted = ps.executeUpdate();
             ps.close();
 
-            if(hasDeleted == 0)
+            if (hasDeleted == 0)
                 throw new Exception("Deletion of customer went wrong");
             conn.commit();
         } catch (Exception e) {
@@ -305,8 +307,7 @@ public class DAO implements DataAccessObject {
             ResultSet rs = ps.executeQuery();
 
 
-            while (rs.next())
-            {
+            while (rs.next()) {
                 //Get fields for movement
                 var id = getIdentifier(ps.getGeneratedKeys());
                 var accountSource = getAccountHelper(rs.getString("account_source"), conn);
@@ -318,12 +319,10 @@ public class DAO implements DataAccessObject {
                 movements.add(movement);
             }
             return movements;
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             conn.rollback();
             throw new Exception("Something went wrong getting account from database");
-        }
-        finally {
+        } finally {
             conn.close();
         }
 
@@ -332,7 +331,7 @@ public class DAO implements DataAccessObject {
 
     private long getIdentifier(ResultSet rs) throws SQLException {
         var id = 0;
-        if(rs.next()) id = rs.getInt(1);
+        if (rs.next()) id = rs.getInt(1);
         return id;
     }
 
@@ -347,8 +346,7 @@ public class DAO implements DataAccessObject {
 
             ResultSet rs = ps.executeQuery();
 
-            if (rs.next())
-            {
+            if (rs.next()) {
 
                 long balance = rs.getLong("balance");
                 String cpr = rs.getString("customer_cpr");
@@ -360,8 +358,7 @@ public class DAO implements DataAccessObject {
 
                 ResultSet rs2 = ps2.executeQuery();
                 RealBank bank = null;
-                if (rs2.next())
-                {
+                if (rs2.next()) {
                     String bankName = rs2.getString("name");
                     bank = new RealBank(bankCvr, bankName);
                 }
@@ -372,22 +369,19 @@ public class DAO implements DataAccessObject {
                 ResultSet rs3 = ps3.executeQuery();
 
                 RealCustomer customer = null;
-                if (rs3.next())
-                {
+                if (rs3.next()) {
                     String customerName = rs3.getString("name");
-                    customer = new RealCustomer(cpr, customerName, bank);
+                    customer = new RealCustomer(cpr, customerName);
                 }
                 account = new RealAccount(bank, customer, accountNumber, balance);
 
             }
             return account;
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             conn.rollback();
             System.out.println(ex);
             throw new Exception("Something went wrong getting account from database");
-        }
-        finally {
+        } finally {
         }
     }
 

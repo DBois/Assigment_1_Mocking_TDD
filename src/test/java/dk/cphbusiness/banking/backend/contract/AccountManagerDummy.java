@@ -16,7 +16,7 @@ public class AccountManagerDummy implements AccountManager {
     public AccountManagerDummy() {
 
         var bank = new RealBank("12345678", "Nordea");
-        var customer = new RealCustomer("1008956666", "Adam", bank);
+        var customer = new RealCustomer("1008956666", "Adam");
         
         var cpr1 = "0123456789";
         var cpr2 = "0012345678";
