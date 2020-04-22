@@ -41,7 +41,7 @@ public class AccountDummy implements Account {
     }
 
     @Override
-    public List<Movement> getMovements() {
+    public List<RealMovement> getMovements() {
         return null;
     }
 }

@@ -1,5 +1,6 @@
 package dk.cphbusiness.banking.backend.utility;
 import dk.cphbusiness.banking.backend.models.Account;
+import dk.cphbusiness.banking.backend.models.RealAccount;
 
 import static dk.cphbusiness.banking.backend.utility.BankAssembler.createBankSummary;
 import static dk.cphbusiness.banking.contract.AccountManager.*;
@@ -14,9 +15,9 @@ public class AccountAssembler {
         return new AccountSummary(account.getNumber(), createBankSummary(account.getBank()), account.getBalance());
     }
 
-    public static Map<String, AccountSummary> createAccountSummaries(Map<String, Account> accounts){
-        var summaries = new HashMap<String, AccountSummary>();
-        accounts.forEach((k,v) -> summaries.put(k, createAccountSummary(v)));
+    public static List<AccountSummary> createAccountSummaries(List<RealAccount> accounts){
+        var summaries = new ArrayList<AccountSummary>();
+        accounts.forEach((v) -> summaries.add(createAccountSummary(v)));
         return summaries;
     }
 
