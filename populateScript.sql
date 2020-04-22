@@ -17,3 +17,4 @@ INSERT INTO public.account (number, balance, customer_cpr, bank_cvr) VALUES ('66
 INSERT INTO public.account (number, balance, customer_cpr, bank_cvr) VALUES ('7777777777', 10000, '1234560004', '87654321');
 INSERT INTO public.account (number, balance, customer_cpr, bank_cvr) VALUES ('8888888888', 10000, '1234560005', '87654321');
 INSERT INTO public.account (number, balance, customer_cpr, bank_cvr) VALUES ('9999999999', 10000, '1234560005', '87654321');
+

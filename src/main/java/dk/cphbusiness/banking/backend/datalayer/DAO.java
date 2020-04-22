@@ -131,8 +131,8 @@ public class DAO implements DataAccessObject {
 
             //Update target
             PreparedStatement ps2 = conn.prepareStatement(SQL);
-            ps2.setLong(1, source.getBalance());
-            ps2.setString(2, source.getNumber());
+            ps2.setLong(1, target.getBalance());
+            ps2.setString(2, target.getNumber());
 
             //Create Movement
             var movement = source.getMovements().get(source.getMovements().size()-1); //gets last movement to insert into DB
@@ -154,7 +154,7 @@ public class DAO implements DataAccessObject {
             ps2.close();
             ps3.close();
 
-            return new RealMovement(id, movement.getTime(), movement.getAmount(), movement.getSource(), movement.getTarget());
+            return new RealMovement(id, movement.getTime(), movement.getAmount(), source, target);
         } catch (Exception e) {
 
             conn.rollback();
