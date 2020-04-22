@@ -1,8 +1,8 @@
 package dk.cphbusiness.banking.backend.app;
 
 // import the rest service you created!
-import dk.cphbusiness.banking.backend.REST.HelloRestService;
-import dk.cphbusiness.banking.backend.REST.AccountREST;
+import dk.cphbusiness.banking.backend.rest.HelloRestService;
+import dk.cphbusiness.banking.backend.rest.AccountREST;
 
 import javax.ws.rs.core.Application;
 import java.util.HashSet;

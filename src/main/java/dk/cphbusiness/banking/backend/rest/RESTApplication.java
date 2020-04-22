@@ -1,4 +1,4 @@
-package dk.cphbusiness.banking.backend.REST;
+package dk.cphbusiness.banking.backend.rest;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

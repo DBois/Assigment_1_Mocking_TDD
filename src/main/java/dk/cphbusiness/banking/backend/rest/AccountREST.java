@@ -1,4 +1,4 @@
-package dk.cphbusiness.banking.backend.REST;
+package dk.cphbusiness.banking.backend.rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -10,7 +10,7 @@ import javax.ws.rs.core.Response;
 
 
 
-@Path("/account")
+@Path("/accounts")
 public class AccountREST {
     AccountFacade af = new AccountFacade();
     private final Gson GSON = new GsonBuilder().setPrettyPrinting().create();

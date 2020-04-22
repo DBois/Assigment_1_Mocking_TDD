@@ -17,7 +17,7 @@
         </servlet-class>
         <init-param>
             <param-name>javax.ws.rs.Application</param-name>
-            <param-value>dk.cphbusiness.banking.backend.REST.RESTApplication</param-value>
+            <param-value>dk.cphbusiness.banking.backend.rest.RESTApplication</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>

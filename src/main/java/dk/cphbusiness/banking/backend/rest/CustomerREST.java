@@ -1,4 +1,4 @@
-package dk.cphbusiness.banking.backend.REST;
+package dk.cphbusiness.banking.backend.rest;
 
 import static dk.cphbusiness.banking.contract.CustomerManager.*;
 
