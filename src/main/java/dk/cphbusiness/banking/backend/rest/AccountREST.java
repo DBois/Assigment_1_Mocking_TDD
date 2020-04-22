@@ -28,8 +28,8 @@ public class AccountREST {
     }
 
     @GET
-    @Path("")
-    public Response getAccounts(String s) {
+    @Path("/customer?={cpr}")
+    public Response getAccounts(String cpr) {
         return null;
     }
 

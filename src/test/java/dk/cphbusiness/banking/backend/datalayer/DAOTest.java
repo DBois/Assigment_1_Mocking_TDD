@@ -35,11 +35,6 @@ public class DAOTest {
     }
 
 
-    @AfterAll
-    public static void dropDatabase() throws IOException, SQLException {
-        deleteDatabase();
-    }
-
     @Test
     public void testGetAccount() throws Exception {
         //Assemble

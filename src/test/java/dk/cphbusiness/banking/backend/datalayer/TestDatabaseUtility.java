@@ -17,12 +17,7 @@ public class TestDatabaseUtility {
         conn.close();
     }
 
-    public static void deleteDatabase() throws IOException, SQLException {
-        var conn = DBConnector.connection("");
-        var statement = conn.createStatement();
-        statement.executeUpdate("DROP DATABASE IF EXISTS test");
-        conn.close();
-    }
+
 
     public static void populateDatabase(String databaseName) throws IOException, SQLException {
         var conn = DBConnector.connection(databaseName);

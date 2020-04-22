@@ -45,22 +45,5 @@ public class DatabaseTest {
         assertTrue(tableNames.contains("movement"));
         assertEquals(tableNames.size(), 4);
         conn.close();
-        deleteDatabase();
-    }
-
-    @Test
-    public void testDeleteDatabase() throws IOException, SQLException {
-        //Assemble
-        createTestDatabase();
-        createTables(dbName);
-        populateDatabase(dbName);
-
-        //Act
-        deleteDatabase();
-
-        //Assert
-        assertThrows(PSQLException.class, () -> {
-            DBConnector.connection(dbName);
-        });
     }
 }

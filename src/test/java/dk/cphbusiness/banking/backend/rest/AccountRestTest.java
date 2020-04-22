@@ -19,15 +19,14 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import static dk.cphbusiness.banking.backend.datalayer.TestDatabaseUtility.*;
-import static dk.cphbusiness.banking.backend.datalayer.TestDatabaseUtility.deleteDatabase;
 import static dk.cphbusiness.banking.backend.settings.Settings.DB_NAME;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
-public class accountRestTest {
+public class AccountRestTest {
     private static String dbName = DB_NAME;
-    private final String URI = "http://localhost:8081/accounts/";
+    private static final String URI = "http://localhost:8081/accounts/";
     private final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     @BeforeAll
@@ -41,11 +40,6 @@ public class accountRestTest {
         populateDatabase(dbName);
     }
 
-
-    @AfterAll
-    public static void dropDatabase() throws IOException, SQLException {
-        deleteDatabase();
-    }
     @Test
     public void testAccountDoesntExist()
             throws IOException {

@@ -8,8 +8,9 @@ import java.util.Set;
 @ApplicationPath("/api")
 public class RESTApplication extends Application {
     private Set<Object> singletons = new HashSet<Object>();
-    public RESTApplication() {
-        // Register our hello service
+    public RESTApplication() throws ClassNotFoundException {
+        // Load database driver so it initialises
+        Class.forName("org.postgresql.Driver");
         singletons.add(new HelloRestService());
         singletons.add(new AccountREST());
     }
