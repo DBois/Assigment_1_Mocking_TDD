@@ -5,6 +5,8 @@ import com.google.gson.GsonBuilder;
 import static dk.cphbusiness.banking.contract.AccountManager.*;
 
 import com.google.gson.reflect.TypeToken;
+import dk.cphbusiness.banking.backend.models.RealAccount;
+import dk.cphbusiness.banking.backend.models.RealCustomer;
 import dk.cphbusiness.banking.contract.CustomerManager;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -81,10 +83,11 @@ public class CustomerRestTest {
         // Assemble
         var expectedName = "It works!";
         var CPR = "123456001";
+        RealCustomer customer = new RealCustomer(CPR, expectedName);
+
         CloseableHttpClient client = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(URI + "/customer");
-        String json = "{\"cpr\":\"" + CPR + "\" , \"name\":\"" + expectedName + "\"}";
-        StringEntity entity = new StringEntity(json);
+        StringEntity entity = new StringEntity(GSON.toJson(customer));
         httpPost.setEntity(entity);
         httpPost.setHeader("Accept", "application/json");
         httpPost.setHeader("Content-type", "application/json");

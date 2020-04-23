@@ -21,6 +21,7 @@ public class CustomerREST {
     @GET
     @Path("/{cpr}")
     public Response getCustomer(@PathParam("cpr") String cpr) {
+
         try {
             var customer = cf.getCustomer(cpr);
             return Response.ok().entity(GSON.toJson(customer)).build();
@@ -37,8 +38,8 @@ public class CustomerREST {
     @Path("/customer")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateCustomer(RealCustomer customer) {
-        System.out.println(customer.toString());
+    public Response updateCustomer(String customerString) {
+        RealCustomer customer = GSON.fromJson(customerString, RealCustomer.class);
         try {
             var customerDetail = cf.updateCustomer(customer);
             return Response.ok().entity(GSON.toJson(customerDetail)).build();

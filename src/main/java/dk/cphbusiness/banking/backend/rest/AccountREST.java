@@ -52,9 +52,9 @@ public class AccountREST {
     @Path("/transfer")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response transfer(String t) {
+    public Response transfer(String transferString) {
         try {
-            var transferDTO = GSON.fromJson(t, TransferDTO.class);
+            var transferDTO = GSON.fromJson(transferString, TransferDTO.class);
             var movement = af.transfer(transferDTO.getAmount(), transferDTO.getSource(), transferDTO.getTarget());
             return Response.ok().entity(GSON.toJson(movement)).build();
         } catch (Exception e) {
