@@ -2,6 +2,7 @@ package dk.cphbusiness.banking.backend.rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dk.cphbusiness.banking.backend.exceptions.RestException;
 import dk.cphbusiness.banking.backend.facade.AccountFacade;
 import dk.cphbusiness.banking.backend.facade.CustomerFacade;
 import dk.cphbusiness.banking.backend.models.RealCustomer;
@@ -13,7 +14,7 @@ import javax.ws.rs.core.Response;
 import static dk.cphbusiness.banking.contract.CustomerManager.*;
 
 @Path("/customers")
-public class CustomerREST{
+public class CustomerREST {
     CustomerFacade cf = new CustomerFacade();
     private final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
@@ -23,6 +24,8 @@ public class CustomerREST{
         try {
             var customer = cf.getCustomer(cpr);
             return Response.ok().entity(GSON.toJson(customer)).build();
+        } catch (RestException ex) {
+            return ex.toResponse(GSON);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return Response.status(404).entity(GSON.toJson(e)).build();

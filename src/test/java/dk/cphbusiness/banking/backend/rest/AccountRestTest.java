@@ -53,7 +53,6 @@ public class AccountRestTest {
 
         // Act
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
-
         // Assert
         assertThat(httpResponse.getStatusLine().getStatusCode(),
                 equalTo(HttpStatus.SC_NOT_FOUND));
