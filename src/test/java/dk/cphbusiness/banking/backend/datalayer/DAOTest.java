@@ -99,7 +99,7 @@ public class DAOTest {
         assertEquals(source.getNumber(), actual.getSource());
         assertEquals(target.getNumber(), actual.getTarget());
         assertEquals(time, actual.getTime());
-        assertEquals(-amount, actual.getAmount());
+        assertEquals(amount, actual.getAmount());
     }
 
     @Test

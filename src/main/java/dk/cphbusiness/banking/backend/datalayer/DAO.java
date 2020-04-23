@@ -302,8 +302,8 @@ public class DAO implements DataAccessObject {
             conn.setAutoCommit(false);
             String SQL = "SELECT * FROM movement WHERE account_source=? OR account_target=?";
             PreparedStatement ps = conn.prepareStatement(SQL);
-            ps.setString(1, accountName);
-            ps.setString(2, accountName);
+            ps.setString(1, accountNumber);
+            ps.setString(2, accountNumber);
             ResultSet rs = ps.executeQuery();
 
 

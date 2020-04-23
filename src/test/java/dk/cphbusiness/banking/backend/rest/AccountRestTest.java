@@ -119,18 +119,6 @@ public class AccountRestTest {
         TransferDTO t = new TransferDTO(amount, source, target);
 
         // When
-//        String payload = "data=" + GSON.toJson(t, AccountREST.TransferDTO.class);
-//        StringEntity entity = new StringEntity(payload, ContentType.APPLICATION_FORM_URLENCODED);
-//
-//        HttpPost request = new HttpPost(URI + "/transfer");
-//        request.setEntity(entity);
-//
-//        HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
-//        var jsonResponse = EntityUtils.toString(httpResponse.getEntity());
-//        var result = GSON.fromJson(jsonResponse, MovementManager.MovementDetail.class);
-
-
-        //new
         String       postUrl       = URI + "transfer";// put in your url
         Gson         gson          = new Gson();
         HttpClient   httpClient    = HttpClientBuilder.create().build();
