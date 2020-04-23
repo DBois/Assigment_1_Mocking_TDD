@@ -1,7 +1,7 @@
 # Mocking and TDD  
   * [Contract](https://github.com/DBois/BankContract)  
   * [Backend](https://github.com/DBois/Assigment_1_Mocking_TDD) 
-## Assignemnt 4. REST Integration Testing
+## Assignment 4. REST Integration Testing
 Our proposed solution of [this assignment](https://datsoftlyngby.github.io/soft2020spring/resources/5988f3c5-04-assignment-rest.pdf) 
 
 
