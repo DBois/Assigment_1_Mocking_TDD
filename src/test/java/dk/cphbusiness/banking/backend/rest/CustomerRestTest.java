@@ -54,59 +54,27 @@ public class CustomerRestTest {
         populateDatabase(dbName);
     }
 
-//    @Test
-//    public void testGetCustomer()
-//            throws IOException {
-//
-//        // Assemble
-//        var expectedName = "Emil";
-//        var expectedCPR = "123456001";
-//        HttpUriRequest request = new HttpGet(URI + expectedCPR);
-//        var httpResponse = HttpClientBuilder.create().build().execute(request);
-//        var jsonResponse = EntityUtils.toString(httpResponse.getEntity());
-//
-//        // Act
-//        var result = GSON.fromJson(jsonResponse, CustomerManager.CustomerDetail.class);
-//
-//        // Assert
-//        assertThat(httpResponse.getStatusLine().getStatusCode(),
-//                equalTo(HttpStatus.SC_OK));
-//        assertEquals(expectedName, result.getName());
-//        assertEquals(expectedCPR, result.getCpr());
-//    }
-//
-//
+    @Test
+    public void testGetCustomer()
+            throws IOException {
 
+        // Assemble
+        var expectedName = "Emil";
+        var expectedCPR = "1234560001";
+        HttpUriRequest request = new HttpGet(URI + "/" + expectedCPR);
+        var httpResponse = HttpClientBuilder.create().build().execute(request);
+        var jsonResponse = EntityUtils.toString(httpResponse.getEntity());
+        System.out.println(jsonResponse);
 
-//    @Test
-//    public void testUpdateCustomer() throws IOException {
-//        // Assemble
-//        var expectedName = "It works!";
-//        var CPR = "123456001";
-//
-//        CloseableHttpClient client = HttpClients.createDefault();
-//        HttpPost httpPost = new HttpPost(URI + "/customer");
-//
-//        List<NameValuePair> params = new ArrayList<>();
-//        params.add(new BasicNameValuePair("cpr", "12345601"));
-//        params.add(new BasicNameValuePair("name", expectedName));
-//        httpPost.setEntity(new UrlEncodedFormEntity(params));
-//
-//        //Act
-//        CloseableHttpResponse response = client.execute(httpPost);
-//        var jsonResponse = EntityUtils.toString(response.getEntity());
-//        var result = GSON.fromJson(jsonResponse, CustomerManager.CustomerDetail.class);
-//
-//        // Assert
-//        assertThat(response.getStatusLine().getStatusCode(),
-//                equalTo(HttpStatus.SC_OK));
-//        assertEquals(expectedName, result.getName());
-//        assertEquals(CPR, result.getCpr());
-//
-//
-//        assertThat(response.getStatusLine().getStatusCode(), equalTo(200));
-//        client.close();
-//    }
+        // Act
+        var result = GSON.fromJson(jsonResponse, CustomerManager.CustomerDetail.class);
+
+        // Assert
+        assertThat(httpResponse.getStatusLine().getStatusCode(),
+                equalTo(HttpStatus.SC_OK));
+        assertEquals(expectedName, result.getName());
+        assertEquals(expectedCPR, result.getCpr());
+    }
 
     @Test
     public void testUpdateCustomer() throws ClientProtocolException, IOException {
@@ -114,8 +82,8 @@ public class CustomerRestTest {
         var expectedName = "It works!";
         var CPR = "123456001";
         CloseableHttpClient client = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost("http://www.example.com");
-        String json = "{\"cpr\":" + CPR + " , \"name\":" + expectedName + "}";
+        HttpPost httpPost = new HttpPost(URI + "/customer");
+        String json = "{\"cpr\":\"" + CPR + "\" , \"name\":\"" + expectedName + "\"}";
         StringEntity entity = new StringEntity(json);
         httpPost.setEntity(entity);
         httpPost.setHeader("Accept", "application/json");
@@ -124,6 +92,7 @@ public class CustomerRestTest {
         // Act
         CloseableHttpResponse response = client.execute(httpPost);
         var jsonResponse = EntityUtils.toString(response.getEntity());
+        System.out.println(jsonResponse);
         var result = GSON.fromJson(jsonResponse, CustomerManager.CustomerDetail.class);
 
         // Assert

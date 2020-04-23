@@ -1,6 +1,7 @@
 package dk.cphbusiness.banking.backend.datalayer;
 
 import dk.cphbusiness.banking.backend.models.*;
+import dk.cphbusiness.banking.backend.settings.Settings;
 
 import static dk.cphbusiness.banking.contract.AccountManager.*;
 import static dk.cphbusiness.banking.contract.BankManager.*;
@@ -33,9 +34,9 @@ public class DAO implements DataAccessObject {
 
         try {
             return getAccountHelper(accountNumber, conn);
-        } catch (Exception ex) {
+        } catch (Exception e) {
             conn.rollback();
-            System.out.println(ex);
+            if (env == Environment.DEVELOPMENT) throw e;
             throw new Exception("Something went wrong getting account from database");
         } finally {
             conn.close();
@@ -88,9 +89,9 @@ public class DAO implements DataAccessObject {
                 accounts.add(account);
             }
             return accounts;
-        } catch (Exception ex) {
+        } catch (Exception e) {
             conn.rollback();
-            System.out.println(ex);
+            if (env == Environment.DEVELOPMENT) throw e;
             throw new Exception("Something went wrong getting account from database");
         } finally {
             conn.close();
@@ -151,7 +152,7 @@ public class DAO implements DataAccessObject {
         } catch (Exception e) {
 
             conn.rollback();
-            System.out.println(e);
+            if (env == Environment.DEVELOPMENT) throw e;
             throw new Exception("Transfer went wrong");
         } finally {
             conn.close();
@@ -223,9 +224,9 @@ public class DAO implements DataAccessObject {
             ps.close();
             conn.commit();
             return customer;
-        } catch (Exception ex) {
+        } catch (Exception e) {
             conn.rollback();
-            System.out.println(ex.getMessage());
+            if (env == Environment.DEVELOPMENT) throw e;
             throw new Exception("Transfer went wrong");
         } finally {
             conn.close();
@@ -242,7 +243,7 @@ public class DAO implements DataAccessObject {
         var conn = DBConnector.connection(databaseName);
         try {
             conn.setAutoCommit(false);
-            //Update accounts with correct pricing
+            //Update
             String SQL = "UPDATE customer SET name = ? WHERE cpr=?";
 
             //Update customer
@@ -252,14 +253,11 @@ public class DAO implements DataAccessObject {
 
             var hasUpdated = ps.executeUpdate();
             ps.close();
-
-            if (hasUpdated == 0)
-                throw new Exception("Update on customer went wrong");
             conn.commit();
             return customer;
         } catch (Exception e) {
-
             conn.rollback();
+            if (env == Environment.DEVELOPMENT) throw e;
             throw new Exception("Update on customer went wrong");
         } finally {
             conn.close();
@@ -287,6 +285,7 @@ public class DAO implements DataAccessObject {
             conn.commit();
         } catch (Exception e) {
             conn.rollback();
+            if (env == Environment.DEVELOPMENT) throw e;
             throw new Exception("Deletion of customer went wrong");
         } finally {
             conn.close();
@@ -319,8 +318,9 @@ public class DAO implements DataAccessObject {
                 movements.add(movement);
             }
             return movements;
-        } catch (Exception ex) {
+        } catch (Exception e) {
             conn.rollback();
+            if (env == Environment.DEVELOPMENT) throw e;
             throw new Exception("Something went wrong getting account from database");
         } finally {
             conn.close();
@@ -377,9 +377,9 @@ public class DAO implements DataAccessObject {
 
             }
             return account;
-        } catch (Exception ex) {
+        } catch (Exception e) {
             conn.rollback();
-            System.out.println(ex);
+            if (env == Environment.DEVELOPMENT) throw e;
             throw new Exception("Something went wrong getting account from database");
         } finally {
         }
