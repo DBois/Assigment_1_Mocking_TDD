@@ -119,11 +119,11 @@ public class AccountRestTest {
         TransferDTO t = new TransferDTO(amount, source, target);
 
         // When
-        String       postUrl       = URI + "transfer";// put in your url
-        Gson         gson          = new Gson();
-        HttpClient   httpClient    = HttpClientBuilder.create().build();
-        HttpPost     post          = new HttpPost(postUrl);
-        StringEntity postingString = new StringEntity(gson.toJson(t));//gson.tojson() converts your pojo to json
+        String postUrl = URI + "transfer";
+        Gson gson = new Gson();
+        HttpClient httpClient = HttpClientBuilder.create().build();
+        HttpPost post = new HttpPost(postUrl);
+        StringEntity postingString = new StringEntity(gson.toJson(t));
         post.setEntity(postingString);
         post.setHeader("Content-type", "application/json");
         HttpResponse  httpResponse = httpClient.execute(post);
@@ -133,10 +133,7 @@ public class AccountRestTest {
 
 
         // Then
-        System.out.println("test transfer - jsonRsponse: " + jsonResponse);
-        System.out.println("test transfer - result: " + result);
-        assertThat(httpResponse.getStatusLine().getStatusCode(),
-                equalTo(HttpStatus.SC_OK));
+        assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_OK));
         assertEquals(amount, result.getAmount());
         assertEquals(source, result.getSource());
         assertEquals(target, result.getTarget());

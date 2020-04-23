@@ -53,9 +53,7 @@ public class AccountREST {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response transfer(String t) {
-        System.out.println("test transferDTO: " + t);
         try {
-            System.out.println("test transferDTO: " + t);
             var transferDTO = GSON.fromJson(t, TransferDTO.class);
             var movement = af.transfer(transferDTO.getAmount(), transferDTO.getSource(), transferDTO.getTarget());
             return Response.ok().entity(GSON.toJson(movement)).build();
