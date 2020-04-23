@@ -301,7 +301,7 @@ public class DAO implements DataAccessObject {
         try {
             conn.setAutoCommit(false);
             String SQL = "SELECT * FROM movement WHERE account_source=? OR account_target=?";
-            PreparedStatement ps = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = conn.prepareStatement(SQL);
             ps.setString(1, accountName);
             ps.setString(2, accountName);
             ResultSet rs = ps.executeQuery();
@@ -309,13 +309,13 @@ public class DAO implements DataAccessObject {
 
             while (rs.next()) {
                 //Get fields for movement
-                var id = getIdentifier(ps.getGeneratedKeys());
-                var accountSource = getAccountHelper(rs.getString("account_source"), conn);
-                var accountTarget = getAccountHelper(rs.getString("account_target"), conn);
+                var id = rs.getLong("id");
+                var accountSource = rs.getString("account_source");
+                var accountTarget = rs.getString("account_target");
                 var time = rs.getLong("time");
                 long amount = rs.getLong("amount");
 
-                RealMovement movement = new RealMovement(id, time, amount, accountSource.getNumber(), accountTarget.getNumber());
+                RealMovement movement = new RealMovement(id, time, amount, accountSource, accountTarget);
                 movements.add(movement);
             }
             return movements;
@@ -330,8 +330,8 @@ public class DAO implements DataAccessObject {
     }
 
     private long getIdentifier(ResultSet rs) throws SQLException {
-        var id = 0;
-        if (rs.next()) id = rs.getInt(1);
+        var id = 0L;
+        if (rs.next()) id = rs.getLong(1);
         return id;
     }
 

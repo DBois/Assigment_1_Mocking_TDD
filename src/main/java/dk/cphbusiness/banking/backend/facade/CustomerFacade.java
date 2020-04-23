@@ -1,6 +1,7 @@
 package dk.cphbusiness.banking.backend.facade;
 
 import dk.cphbusiness.banking.backend.datalayer.DAO;
+import dk.cphbusiness.banking.backend.exceptions.RestException;
 import dk.cphbusiness.banking.backend.models.Customer;
 import dk.cphbusiness.banking.backend.models.RealAccount;
 import dk.cphbusiness.banking.backend.models.RealCustomer;
@@ -20,7 +21,7 @@ public class CustomerFacade implements CustomerManager {
         RealCustomer customer;
         try {
             customer = dao.getCustomer(cpr);
-            if(customer==null) throw new Exception("Customer does not exist");
+            if(customer==null) throw new RestException("Customer does not exist", 404);
             return CustomerAssembler.createCustomerDetail(customer);
         } catch (Exception e) {
             throw e;
