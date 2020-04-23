@@ -4,6 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dk.cphbusiness.banking.backend.exceptions.RestException;
 import dk.cphbusiness.banking.backend.facade.AccountFacade;
+import dk.cphbusiness.banking.backend.utility.TransferDTO;
+import dk.cphbusiness.banking.contract.MovementManager;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -19,7 +24,6 @@ public class AccountREST {
     @GET
     @Path("/{number}")
     public Response getAccount(@PathParam("number") String number) {
-
         try {
             var acc = af.getAccount(number);
             return Response.ok().entity(GSON.toJson(acc)).build();
@@ -44,10 +48,23 @@ public class AccountREST {
         }
     }
 
-
-    public Response transfer(long l, String s, String s1) {
-        return null;
+    @POST
+    @Path("/transfer")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response transfer(String t) {
+        try {
+            var transferDTO = GSON.fromJson(t, TransferDTO.class);
+            var movement = af.transfer(transferDTO.getAmount(), transferDTO.getSource(), transferDTO.getTarget());
+            return Response.ok().entity(GSON.toJson(movement)).build();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return Response.status(404).entity(GSON.toJson(e)).build();
+        }
     }
+
+
+
 
 
 }
