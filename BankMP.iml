@@ -44,6 +44,13 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.jmock:jmock-imposters:2.12.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: net.bytebuddy:byte-buddy:1.9.12" level="project" />
     <orderEntry type="library" name="Maven: org.postgresql:postgresql:42.2.5" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.resteasy:resteasy-jackson2-provider:3.0.19.Final" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.6.3" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.6.3" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.6.3" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.6.3" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.6.3" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.6.3" level="project" />
     <orderEntry type="library" name="Maven: dk.cphbusiness:BankContract:1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: ch.raffael.pegdown-doclet:pegdown-doclet:all:1.3" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:18.0" level="project" />

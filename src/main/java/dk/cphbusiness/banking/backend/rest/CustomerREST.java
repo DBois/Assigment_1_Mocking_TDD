@@ -36,14 +36,12 @@ public class CustomerREST{
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateCustomer(RealCustomer customer) {
         System.out.println(customer.toString());
-
-//        try {
-//            var customer = cf.getCustomer(cpr);
-//            return Response.ok().entity(GSON.toJson(customer)).build();
-//        } catch (Exception e) {
-//            return Response.status(404).entity(GSON.toJson(e)).build();
-//        }
-        return null;
+        try {
+            var customerDetail = cf.updateCustomer(customer);
+            return Response.ok().entity(GSON.toJson(customerDetail)).build();
+        } catch (Exception e) {
+            return Response.status(403).entity(GSON.toJson(e)).build();
+        }
     }
 
 }

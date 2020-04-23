@@ -27,13 +27,13 @@ public class CustomerFacade implements CustomerManager {
         }
     }
 
-//    public CustomerDetail updateCustomer(RealCustomer customer) throws Exception { ;
-//        try {
-//            customer = dao.updateCustomer(customer);
-//            return CustomerAssembler.createCustomerDetail(customer);
-//
-//        } catch (Exception e) {
-//            throw e;
-//        }
-//    }
+    public CustomerDetail updateCustomer(RealCustomer customer) throws Exception { ;
+        try {
+            customer = dao.updateCustomer(customer);
+            if(customer==null) throw new Exception("Customer does not exist");
+            return CustomerAssembler.createCustomerDetail(customer);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 }

@@ -7,6 +7,8 @@ public class RealCustomer implements Customer {
     private String cpr, name;
     private List<String> accountNumbers;
 
+    public RealCustomer(){
+    }
 
     public RealCustomer(String cpr, String name) {
         this.cpr = cpr;
