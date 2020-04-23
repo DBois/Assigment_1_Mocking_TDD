@@ -294,7 +294,7 @@ public class DAO implements DataAccessObject {
     }
 
     @Override
-    public List<RealMovement> getMovements(String accountName) throws Exception {
+    public List<RealMovement> getMovements(String accountNumber) throws Exception {
         List<RealMovement> movements = new ArrayList<>();
         Connection conn = DBConnector.connection(databaseName);
 

@@ -4,12 +4,19 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import static dk.cphbusiness.banking.contract.AccountManager.*;
 
+import dk.cphbusiness.banking.backend.utility.TransferDTO;
+import dk.cphbusiness.banking.contract.MovementManager;
+
 import com.google.gson.reflect.TypeToken;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.junit.jupiter.api.AfterAll;
@@ -101,5 +108,49 @@ public class AccountRestTest {
         assertEquals(expectedSize, result.size());
     }
 
+    @Test
+    public void testTransfer()
+        throws IOException {
 
+        //Given
+        long amount = 1000;
+        String source = "0000000000";
+        String target = "2222222222";
+        TransferDTO t = new TransferDTO(amount, source, target);
+
+        // When
+//        String payload = "data=" + GSON.toJson(t, AccountREST.TransferDTO.class);
+//        StringEntity entity = new StringEntity(payload, ContentType.APPLICATION_FORM_URLENCODED);
+//
+//        HttpPost request = new HttpPost(URI + "/transfer");
+//        request.setEntity(entity);
+//
+//        HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
+//        var jsonResponse = EntityUtils.toString(httpResponse.getEntity());
+//        var result = GSON.fromJson(jsonResponse, MovementManager.MovementDetail.class);
+
+
+        //new
+        String       postUrl       = URI + "transfer";// put in your url
+        Gson         gson          = new Gson();
+        HttpClient   httpClient    = HttpClientBuilder.create().build();
+        HttpPost     post          = new HttpPost(postUrl);
+        StringEntity postingString = new StringEntity(gson.toJson(t));//gson.tojson() converts your pojo to json
+        post.setEntity(postingString);
+        post.setHeader("Content-type", "application/json");
+        HttpResponse  httpResponse = httpClient.execute(post);
+        var jsonResponse = EntityUtils.toString(httpResponse.getEntity());
+        var result = GSON.fromJson(jsonResponse, MovementManager.MovementDetail.class);
+
+
+
+        // Then
+        System.out.println("test transfer - jsonRsponse: " + jsonResponse);
+        System.out.println("test transfer - result: " + result);
+        assertThat(httpResponse.getStatusLine().getStatusCode(),
+                equalTo(HttpStatus.SC_OK));
+        assertEquals(amount, result.getAmount());
+        assertEquals(source, result.getSource());
+        assertEquals(target, result.getTarget());
+    }
 }
