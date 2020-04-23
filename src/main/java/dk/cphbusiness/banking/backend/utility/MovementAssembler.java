@@ -14,8 +14,8 @@ public class MovementAssembler {
         return new MovementDetail(movement.getId(),
                 movement.getTime(),
                 movement.getAmount(),
-                createAccountSummary(movement.getTarget()),
-                createAccountSummary(movement.getSource()));
+                movement.getTarget(),
+                movement.getSource());
     }
 
     public static List<MovementDetail> createMovementDetails(List<RealMovement> movement){

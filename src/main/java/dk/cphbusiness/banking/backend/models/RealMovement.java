@@ -4,10 +4,10 @@ public class RealMovement implements Movement {
     private long id;
     long time;
     long amount;
-    Account source;
-    Account target;
+    String source;
+    String target;
 
-    public RealMovement(long id, long time, long amount, Account source, Account target) {
+    public RealMovement(long id, long time, long amount, String source, String target) {
         this.id = id;
         this.time = time;
         this.amount = amount;
@@ -26,12 +26,12 @@ public class RealMovement implements Movement {
     }
 
     @Override
-    public Account getTarget() {
+    public String getTarget() {
         return this.target;
     }
 
     @Override
-    public Account getSource() {
+    public String getSource() {
         return this.source;
     }
 

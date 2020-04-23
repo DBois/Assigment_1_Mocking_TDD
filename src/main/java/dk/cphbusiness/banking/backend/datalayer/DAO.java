@@ -133,8 +133,8 @@ public class DAO implements DataAccessObject {
             PreparedStatement ps3 = conn.prepareStatement(SQL2, Statement.RETURN_GENERATED_KEYS);
             ps3.setLong(1, timestamp);
             ps3.setLong(2, movement.getAmount());
-            ps3.setString(3, movement.getSource().getNumber());
-            ps3.setString(4, movement.getTarget().getNumber());
+            ps3.setString(3, movement.getSource());
+            ps3.setString(4, movement.getTarget());
 
             ps1.executeUpdate();
             ps2.executeUpdate();
@@ -147,7 +147,7 @@ public class DAO implements DataAccessObject {
             ps2.close();
             ps3.close();
 
-            return new RealMovement(id, movement.getTime(), movement.getAmount(), source, target);
+            return new RealMovement(id, movement.getTime(), movement.getAmount(), movement.getSource(), movement.getTarget());
         } catch (Exception e) {
 
             conn.rollback();
@@ -315,7 +315,7 @@ public class DAO implements DataAccessObject {
                 var time = rs.getLong("time");
                 long amount = rs.getLong("amount");
 
-                RealMovement movement = new RealMovement(id, time, amount, accountSource, accountTarget);
+                RealMovement movement = new RealMovement(id, time, amount, accountSource.getNumber(), accountTarget.getNumber());
                 movements.add(movement);
             }
             return movements;

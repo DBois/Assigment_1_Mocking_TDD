@@ -4,8 +4,8 @@ public interface Movement  {
 
     long getTime();
     long getAmount();
-    Account getTarget();
-    Account getSource();
+    String getTarget();
+    String getSource();
     long getId();
 
 }

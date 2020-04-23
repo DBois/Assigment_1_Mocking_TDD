@@ -12,8 +12,8 @@ public class RealMovementTest {
         //Assemble
         var timeStamp = 0L;
         var amount = 0L;
-        AccountDummy target = null;
-        AccountDummy source = null;
+        String target = null;
+        String source = null;
 
         //Act
         var actual = new RealMovement(0, timeStamp, amount, target, source);
@@ -27,8 +27,8 @@ public class RealMovementTest {
         //Assemble
         var timeStamp = 10000000L;
         var amount = 0L;
-        AccountDummy target = null;
-        AccountDummy source = null;
+        String target = null;
+        String source = null;
         var movement = new RealMovement(0, timeStamp, amount, target, source);
 
         //Act
@@ -42,8 +42,8 @@ public class RealMovementTest {
         //Assemble
         var timeStamp = 10000000L;
         var amount = 10000L;
-        AccountDummy target = null;
-        AccountDummy source = null;
+        String target = null;
+        String source = null;
         var movement = new RealMovement(0, timeStamp, amount, target, source);
 
         //Act
@@ -58,8 +58,8 @@ public class RealMovementTest {
         //Assemble
         var timeStamp = 10000000L;
         var amount = 10000L;
-        AccountDummy target = new AccountDummy();
-        AccountDummy source = null;
+        String target = null;
+        String source = null;
         var movement = new RealMovement(0, timeStamp, amount, source, target);
 
         //Act
@@ -74,8 +74,8 @@ public class RealMovementTest {
         //Assemble
         var timeStamp = 10000000L;
         var amount = 10000L;
-        AccountDummy target = new AccountDummy();
-        AccountDummy source = new AccountDummy();
+        String target = "123456789";
+        String source = null;
         var movement = new RealMovement(0, timeStamp, amount, source, target);
 
         //Act

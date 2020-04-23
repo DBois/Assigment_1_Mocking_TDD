@@ -198,7 +198,7 @@ public class RealAccountTest {
         var movements = source.getMovements();
 
         //Assert
-        var expectedAccountNumber = movements.get(2).getTarget().getNumber();
+        var expectedAccountNumber = movements.get(2).getTarget();
         var expectedTime = movements.get(2).getTime();
         assertEquals(3, source.getMovements().size());
         assertEquals("12046",expectedAccountNumber );

@@ -30,8 +30,8 @@ public class MovementManagerDummy implements MovementManager {
         var target = new RealAccount(bank, emil, "9876543210");
 
 
-        var mvmt1 = new RealMovement(1, clock.getTime(), 10000L, source, target);
-        var mvmt2 = new RealMovement(2, clock.getTime(), 10000L, source, target);
+        var mvmt1 = new RealMovement(1, clock.getTime(), 10000L, source.getNumber(), target.getNumber());
+        var mvmt2 = new RealMovement(2, clock.getTime(), 10000L, source.getNumber(), target.getNumber());
 
 
         movements = new ArrayList<>() {{

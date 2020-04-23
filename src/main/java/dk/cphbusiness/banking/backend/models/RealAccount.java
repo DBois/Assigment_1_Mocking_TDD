@@ -50,16 +50,16 @@ public class RealAccount implements Account {
     public void transfer(long amount, Account target, long timeStamp) {
         this.balance -= amount;
         target.updateBalance(amount);
-        movements.add(new RealMovement(movementId++, timeStamp, -amount, this, target));
-        target.getMovements().add(new RealMovement(movementId++, timeStamp, amount, this, target));
+        movements.add(new RealMovement(movementId++, timeStamp, -amount, this.number, target.getNumber()));
+        target.getMovements().add(new RealMovement(movementId++, timeStamp, amount, this.number, target.getNumber()));
     }
 
     @Override
     public void transfer(long amount, String targetNumber, long timeStamp){
         Account target = bank.getAccount(targetNumber);
         transfer(amount, target, timeStamp);
-        movements.add(new RealMovement(movementId++, timeStamp, -amount, this, target));
-        target.getMovements().add(new RealMovement(movementId++, timeStamp, amount, this, target));
+        movements.add(new RealMovement(movementId++, timeStamp, -amount, this.number, target.getNumber()));
+        target.getMovements().add(new RealMovement(movementId++, timeStamp, amount, this.number, target.getNumber()));
     }
 
     @Override

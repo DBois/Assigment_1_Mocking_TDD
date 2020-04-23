@@ -96,8 +96,8 @@ public class DAOTest {
 
         //Assert
         assertNotNull(actual);
-        assertEquals(source, actual.getSource());
-        assertEquals(target, actual.getTarget());
+        assertEquals(source.getNumber(), actual.getSource());
+        assertEquals(target.getNumber(), actual.getTarget());
         assertEquals(time, actual.getTime());
         assertEquals(-amount, actual.getAmount());
     }
