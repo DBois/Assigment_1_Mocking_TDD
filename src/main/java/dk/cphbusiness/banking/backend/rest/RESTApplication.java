@@ -11,7 +11,6 @@ public class RESTApplication extends Application {
     public RESTApplication() throws ClassNotFoundException {
         // Load database driver so it initialises
         Class.forName("org.postgresql.Driver");
-        singletons.add(new HelloRestService());
         singletons.add(new AccountREST());
         singletons.add(new MovementREST());
         singletons.add(new CustomerREST());
