@@ -1,6 +1,16 @@
 # Mocking and TDD  
   * [Contract](https://github.com/DBois/BankContract)  
   * [Backend](https://github.com/DBois/Assigment_1_Mocking_TDD) 
+## Assignment 4. REST Integration Testing
+Our proposed solution of [this assignment](https://datsoftlyngby.github.io/soft2020spring/resources/5988f3c5-04-assignment-rest.pdf) 
+
+
+Inside the `dk.cphbusiness.banking.backend.rest` package, you will find all REST endpoints implemented, which is separated by different entities + root of JAX-RS application `RESTApplication`
+
+Inside the `dk.cphbusiness.banking.backend.rest` package, you will find all tests for the respective REST classes. 
+
+Inside the `dk.cphbusiness.banking.backend.facade` package you will find facades which the REST endpoints call 
+
 ## Assignment 3. Database Testing  
 Our proposed solution of [this assignment](https://datsoftlyngby.github.io/soft2020spring/resources/db4fc3df-03-assignment-database.pdf)  
 
