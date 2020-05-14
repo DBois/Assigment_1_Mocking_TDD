@@ -16,7 +16,6 @@ public class RESTApplication extends Application {
         Class.forName("org.postgresql.Driver");
         singletons.add(new CorsRequestFilter());
         singletons.add(new CorsResponseFilter());
-        singletons.add(new HelloRestService());
         singletons.add(new AccountREST());
         singletons.add(new MovementREST());
         singletons.add(new CustomerREST());
