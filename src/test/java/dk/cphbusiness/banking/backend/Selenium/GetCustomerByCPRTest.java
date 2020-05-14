@@ -11,6 +11,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import java.util.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 
 public class GetCustomerByCPRTest {
@@ -22,24 +25,26 @@ public class GetCustomerByCPRTest {
     public static void beforeClass() throws Exception {
         System.setProperty("webdriver.chrome.driver","C:\\chromedriver.exe");
         driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     @Before
     public void setUp() {
-        driver = new ChromeDriver();
         js = (JavascriptExecutor) driver;
         vars = new HashMap<String, Object>();
+
     }
-    @After
-    public void tearDown() {
-        driver.quit();
-    }
-    @Test
-    public void getCustomerbyCPR() {
-        driver.get("http://localhost:3000/");
-        driver.manage().window().setSize(new Dimension(1456, 1160));
-        driver.findElement(By.cssSelector("div > input")).click();
-        driver.findElement(By.cssSelector("div > input")).sendKeys("1234560001");
-        driver.findElement(By.cssSelector("button:nth-child(3)")).click();
-    }
+
+
+
+//    @Test
+//    public void getCustomerByCPR() {
+//        driver.get("http://localhost:5000/");
+//        driver.manage().window().setSize(new Dimension(1005, 734));
+//        driver.findElement(By.cssSelector(".svelte-1j6zdsv > .input_container")).click();
+//        driver.findElement(By.cssSelector(".svelte-1j6zdsv > .input_container > .svelte-n2exwy")).click();
+//        driver.findElement(By.cssSelector(".svelte-1j6zdsv > .input_container > .svelte-n2exwy")).sendKeys("1234560001");
+//        driver.findElement(By.cssSelector(".svelte-1j6zdsv .svelte-1q9tn3k")).click();
+//    }
+
 }
