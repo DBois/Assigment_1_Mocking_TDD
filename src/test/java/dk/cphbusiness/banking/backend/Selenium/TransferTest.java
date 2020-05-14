@@ -5,11 +5,18 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
+
+import static dk.cphbusiness.banking.backend.datalayer.TestDatabaseUtility.*;
+import static dk.cphbusiness.banking.backend.settings.Settings.DB_NAME;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.IsNot.not;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -22,6 +29,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.Keys;
+
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.*;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -32,11 +42,19 @@ public class TransferTest {
     private static WebDriver driver;
     private Map<String, Object> vars;
     JavascriptExecutor js;
+    private static String dbName = DB_NAME;
+
+
 
     @BeforeClass
     public static void beforeClass() throws Exception {
-        System.setProperty("webdriver.chrome.driver","C:\\chromedriver.exe");
-        driver = new ChromeDriver();
+        createTestDatabase();
+        createTables(dbName);
+        populateDatabase(dbName);
+
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1200","--ignore-certificate-errors", "--silent");
+        driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
