@@ -1,4 +1,5 @@
 package dk.cphbusiness.banking.backend.Selenium;
+<<<<<<< HEAD
 
 import org.junit.After;
 import org.junit.Before;
