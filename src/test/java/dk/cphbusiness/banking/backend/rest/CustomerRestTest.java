@@ -86,7 +86,7 @@ public class CustomerRestTest {
         RealCustomer customer = new RealCustomer(CPR, expectedName);
 
         CloseableHttpClient client = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost(URI + "/customer");
+        HttpPost httpPost = new HttpPost(URI);
         StringEntity entity = new StringEntity(GSON.toJson(customer));
         httpPost.setEntity(entity);
         httpPost.setHeader("Accept", "application/json");
