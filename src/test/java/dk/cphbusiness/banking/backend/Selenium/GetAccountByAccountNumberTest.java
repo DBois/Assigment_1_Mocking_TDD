@@ -1,5 +1,4 @@
 package dk.cphbusiness.banking.backend.Selenium;
-<<<<<<< HEAD
 
 import org.junit.After;
 import org.junit.Before;
@@ -13,10 +12,14 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
+
+import static dk.cphbusiness.banking.backend.datalayer.TestDatabaseUtility.*;
+import static dk.cphbusiness.banking.backend.settings.Settings.DB_NAME;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.is;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
@@ -24,11 +27,18 @@ public class GetAccountByAccountNumberTest {
     private static WebDriver driver;
     private Map<String, Object> vars;
     JavascriptExecutor js;
+    private static String dbName = DB_NAME;
+
 
     @BeforeClass
     public static void beforeClass() throws Exception {
+        createTestDatabase();
+        createTables(dbName);
+        populateDatabase(dbName);
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1200","--ignore-certificate-errors", "--silent");
         System.setProperty("webdriver.chrome.driver","C:\\chromedriver.exe");
-        driver = new ChromeDriver();
+        driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
     }
@@ -43,7 +53,7 @@ public class GetAccountByAccountNumberTest {
         driver.quit();
     }
     @Test
-    public void test() {
+    public void testGetAccountByAccountNumber() {
         driver.get("http://localhost:5000/");
         driver.manage().window().setSize(new Dimension(971, 1020));
         driver.findElement(By.cssSelector(".get-account-container:nth-child(4) .input_container > .svelte-n2exwy")).sendKeys("1111111111");
