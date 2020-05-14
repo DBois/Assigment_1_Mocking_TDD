@@ -35,7 +35,7 @@ public class CustomerREST {
 
 
     @POST
-    @Path("/customer")
+    @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateCustomer(String customerString) {
