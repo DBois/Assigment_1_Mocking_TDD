@@ -252,6 +252,8 @@ public class DAO implements DataAccessObject {
             ps.setString(2, customer.getCpr());
 
             var hasUpdated = ps.executeUpdate();
+            if(hasUpdated == 0)
+                return null;
             ps.close();
             conn.commit();
             return customer;
