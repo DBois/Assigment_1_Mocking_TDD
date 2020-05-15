@@ -18,7 +18,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-public class GetAccountByAccountNumberTest {
+public class GetCustomerAccountsByCPRTest {
     private static WebDriver driver;
     private Map<String, Object> vars;
     JavascriptExecutor js;
@@ -36,11 +36,10 @@ public class GetAccountByAccountNumberTest {
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get("http://localhost:5000");
-                driver.manage().window().setSize(new Dimension(1920, 994));
+        driver.manage().window().setSize(new Dimension(1920, 994));
 
         js = (JavascriptExecutor) driver;
         vars = new HashMap<String, Object>();
-
     }
 
     @After
@@ -49,32 +48,29 @@ public class GetAccountByAccountNumberTest {
     }
 
     @Test
-    public void testGetAccountWithValidAccountNumber() {
+    public void testGetCustomerAccountsWithValidCPR() {
         // Assemble
-        var accountNumber = "1111111111";
+        var cpr = "1234560004";
 
         // Act
-        driver.findElement(By.cssSelector(".get-account-container:nth-child(4) .input_container > .svelte-n2exwy")).sendKeys(accountNumber);
-        driver.findElement(By.cssSelector(".get-account-container:nth-child(4) .svelte-10g3g0h")).click();
+        driver.findElement(By.cssSelector(".svelte-1j6zdsv > .input_container > .svelte-n2exwy")).sendKeys(cpr);
+        driver.findElement(By.cssSelector(".svelte-1j6zdsv .svelte-10g3g0h")).click();
 
         // Assert
-        assertThat(driver.findElement(By.cssSelector("tbody th:nth-child(1)")).getText(), is("$ 100"));
-        assertThat(driver.findElement(By.cssSelector("tbody th:nth-child(2)")).getText(), is("1111111111"));
-        assertThat(driver.findElement(By.cssSelector("tbody th:nth-child(3)")).getText(), is("Danske Bank"));
-        assertThat(driver.findElement(By.cssSelector("tbody th:nth-child(4)")).getText(), is("12345678"));
+        assertThat(driver.findElement(By.cssSelector("tbody > tr:nth-child(1) > th:nth-child(3)")).getText(), is("6666666666"));
+        assertThat(driver.findElement(By.cssSelector("tr:nth-child(2) > th:nth-child(3)")).getText(), is("7777777777"));
     }
 
     @Test
-    public void testGetAccountWithInvalidAccountNumber() {
+    public void testGetCustomerAccountsWithInvalidCPR() {
         // Assemble
-        var accountNumber = "1234";
+        var cpr = "1234560000";
 
         // Act
-        driver.findElement(By.cssSelector(".get-account-container:nth-child(4) .input_container > .svelte-n2exwy")).sendKeys(accountNumber);
-        driver.findElement(By.cssSelector(".get-account-container:nth-child(4) .svelte-10g3g0h")).click();
+        driver.findElement(By.cssSelector(".svelte-1j6zdsv > .input_container > .svelte-n2exwy")).sendKeys(cpr);
+        driver.findElement(By.cssSelector(".svelte-1j6zdsv .svelte-10g3g0h")).click();
 
         // Assert
-        assertEquals("Account not found", driver.findElement(By.cssSelector(".exception-handler > .svelte-1t47y6r")).getText());
+        assertEquals("Accounts not found for the given id", driver.findElement(By.cssSelector(".exception-handler > .svelte-1t47y6r")).getText());
     }
-
 }
