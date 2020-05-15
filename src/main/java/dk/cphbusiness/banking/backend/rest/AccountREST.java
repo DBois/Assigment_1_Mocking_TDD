@@ -2,6 +2,7 @@ package dk.cphbusiness.banking.backend.rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dk.cphbusiness.banking.backend.exceptions.InvalidAmountException;
 import dk.cphbusiness.banking.backend.exceptions.RestException;
 import dk.cphbusiness.banking.backend.facade.AccountFacade;
 import dk.cphbusiness.banking.backend.utility.TransferDTO;
@@ -57,6 +58,8 @@ public class AccountREST {
             var transferDTO = GSON.fromJson(transferString, TransferDTO.class);
             var movement = af.transfer(transferDTO.getAmount(), transferDTO.getSource(), transferDTO.getTarget());
             return Response.ok().entity(GSON.toJson(movement)).build();
+        } catch (InvalidAmountException e) {
+            return e.toResponse(GSON);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return Response.status(404).entity(GSON.toJson(e)).build();

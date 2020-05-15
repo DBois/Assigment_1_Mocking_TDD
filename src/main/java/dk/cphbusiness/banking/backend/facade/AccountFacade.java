@@ -1,6 +1,7 @@
 package dk.cphbusiness.banking.backend.facade;
 
 import dk.cphbusiness.banking.backend.datalayer.DAO;
+import dk.cphbusiness.banking.backend.exceptions.InvalidAmountException;
 import dk.cphbusiness.banking.backend.exceptions.RestException;
 import dk.cphbusiness.banking.backend.models.RealAccount;
 import dk.cphbusiness.banking.backend.models.RealClock;
@@ -8,6 +9,8 @@ import dk.cphbusiness.banking.backend.models.RealMovement;
 import dk.cphbusiness.banking.backend.utility.AccountAssembler;
 import dk.cphbusiness.banking.backend.utility.MovementAssembler;
 import dk.cphbusiness.banking.contract.AccountManager;
+
+import javax.validation.constraints.Null;
 
 import static dk.cphbusiness.banking.contract.MovementManager.*;
 
@@ -51,10 +54,11 @@ public class AccountFacade implements AccountManager {
             acc1.transfer(amount, acc2, clock.getTime());
             RealMovement rm = DAO.transfer(acc1, acc2, clock.getTime());
             return MovementAssembler.createMovementDetail(rm);
+        } catch (NullPointerException e) {
+            throw new RestException("Accounts not found for the given id", 404);
         } catch (Exception e) {
             throw e;
         }
 
     }
-
 }

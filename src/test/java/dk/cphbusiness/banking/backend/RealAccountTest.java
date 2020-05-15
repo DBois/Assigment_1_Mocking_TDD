@@ -1,6 +1,7 @@
 package dk.cphbusiness.banking.backend;
 
 import dk.cphbusiness.banking.backend.doubles.*;
+import dk.cphbusiness.banking.backend.exceptions.InvalidAmountException;
 import dk.cphbusiness.banking.backend.models.*;
 import org.jmock.Expectations;
 import org.jmock.integration.junit4.JUnitRuleMockery;
@@ -88,7 +89,7 @@ public class RealAccountTest {
     }
 
     @Test
-    public void testTransferPositiveAmount(){
+    public void testTransferPositiveAmount() throws InvalidAmountException {
         //Assemble
         Bank bank = new BankDummy();
         Customer customer = new CustomerDummy();
@@ -105,7 +106,7 @@ public class RealAccountTest {
     }
 
     @Test
-    public void testTransferPositiveAmountUsingNumber(){
+    public void testTransferPositiveAmountUsingNumber() throws InvalidAmountException {
         //Assemble
         Bank bankDummy = new BankDummy();
         BankStub bank = new BankStub();
@@ -125,7 +126,7 @@ public class RealAccountTest {
     }
 
     @Test
-    public void testAccountTransferWithAccountNumber(){
+    public void testAccountTransferWithAccountNumber() throws InvalidAmountException {
         //Assemble
         final Customer CUSTOMER = context.mock(Customer.class);
         final Bank BANK = context.mock(Bank.class);
@@ -149,7 +150,7 @@ public class RealAccountTest {
     }
 
     @Test
-    public void testAccountTransferWithAccount(){
+    public void testAccountTransferWithAccount() throws InvalidAmountException {
         //Assemble
         final Customer CUSTOMER = context.mock(Customer.class);
         final Bank BANK = context.mock(Bank.class);
@@ -181,7 +182,7 @@ public class RealAccountTest {
     }
 
     @Test
-    public void testGetMovements(){
+    public void testGetMovements() throws InvalidAmountException {
         //Assemble
         var bank = new BankDummy();
         var customerSource = new CustomerStub("100895-6666", "Adam");

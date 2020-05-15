@@ -1,5 +1,6 @@
 package dk.cphbusiness.banking.backend;
 
+import dk.cphbusiness.banking.backend.exceptions.InvalidAmountException;
 import dk.cphbusiness.banking.backend.models.Bank;
 import dk.cphbusiness.banking.backend.models.Customer;
 import dk.cphbusiness.banking.backend.models.RealAccount;
@@ -17,7 +18,7 @@ public class RealAccountMockingTest {
     public JUnitRuleMockery context = new JUnitRuleMockery();
 
     @Test
-    public void testAccountTransferWithAccountNumber(){
+    public void testAccountTransferWithAccountNumber() throws InvalidAmountException {
         //Arrange
         final Customer CUSTOMER = context.mock(Customer.class);
         final Bank BANK = context.mock(Bank.class);
@@ -41,7 +42,7 @@ public class RealAccountMockingTest {
     }
 
     @Test
-    public void testAccountTransferWithAccount(){
+    public void testAccountTransferWithAccount() throws InvalidAmountException {
         //Arrange
         final Customer CUSTOMER = context.mock(Customer.class);
         final Bank BANK = context.mock(Bank.class);

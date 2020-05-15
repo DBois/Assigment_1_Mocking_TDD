@@ -1,5 +1,6 @@
 package dk.cphbusiness.banking.backend.contract;
 
+import dk.cphbusiness.banking.backend.exceptions.InvalidAmountException;
 import dk.cphbusiness.banking.backend.models.*;
 import dk.cphbusiness.banking.contract.AccountManager;
 import static dk.cphbusiness.banking.contract.MovementManager.*;
@@ -44,7 +45,7 @@ public class AccountManagerDummy implements AccountManager {
 
 
     @Override
-    public MovementDetail transfer(long amount, String sourceNumber, String targetNumber) {
+    public MovementDetail transfer(long amount, String sourceNumber, String targetNumber) throws InvalidAmountException {
         var source = accounts.get(sourceNumber);
         var target = accounts.get(targetNumber);
         var clock = new RealClock();

@@ -82,7 +82,7 @@ public class CustomerRestTest {
     public void testUpdateCustomer() throws ClientProtocolException, IOException {
         // Assemble
         var expectedName = "It works!";
-        var CPR = "123456001";
+        var CPR = "1234560001";
         RealCustomer customer = new RealCustomer(CPR, expectedName);
 
         CloseableHttpClient client = HttpClients.createDefault();

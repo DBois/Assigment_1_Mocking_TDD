@@ -1,5 +1,7 @@
 package dk.cphbusiness.banking.backend.models;
 
+import dk.cphbusiness.banking.backend.exceptions.InvalidAmountException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +49,9 @@ public class RealAccount implements Account {
 
 
     @Override
-    public void transfer(long amount, Account target, long timeStamp) {
+    public void transfer(long amount, Account target, long timeStamp) throws InvalidAmountException {
+        if(target.getNumber().equals(number)) throw new InvalidAmountException("Can't transfer to same account", 403);
+        if (amount <= 0) throw new InvalidAmountException("Invalid amount", 403);
         this.balance -= amount;
         target.updateBalance(amount);
         movements.add(new RealMovement(movementId++, timeStamp, amount, this.number, target.getNumber()));
@@ -55,7 +59,7 @@ public class RealAccount implements Account {
     }
 
     @Override
-    public void transfer(long amount, String targetNumber, long timeStamp){
+    public void transfer(long amount, String targetNumber, long timeStamp) throws InvalidAmountException {
         Account target = bank.getAccount(targetNumber);
         transfer(amount, target, timeStamp);
         movements.add(new RealMovement(movementId++, timeStamp, amount, this.number, target.getNumber()));
