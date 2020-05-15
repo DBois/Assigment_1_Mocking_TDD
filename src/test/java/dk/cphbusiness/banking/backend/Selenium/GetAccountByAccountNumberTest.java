@@ -24,7 +24,6 @@ public class GetAccountByAccountNumberTest {
     JavascriptExecutor js;
     private static String dbName = DB_NAME;
 
-
     @Before
     public void setUp() throws IOException, SQLException {
         createTestDatabase();
@@ -36,11 +35,10 @@ public class GetAccountByAccountNumberTest {
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get("http://localhost:5000");
-                driver.manage().window().setSize(new Dimension(1920, 994));
+        driver.manage().window().setSize(new Dimension(1920, 994));
 
         js = (JavascriptExecutor) driver;
         vars = new HashMap<String, Object>();
-
     }
 
     @After
