@@ -35,7 +35,7 @@ public class AccountFacade implements AccountManager {
         try {
 
             var accounts = DAO.getAccountsFromCustomer(CPR);
-            if (accounts == null) throw new RestException("Accounts not found for the given id", 404);
+            if (accounts.size() == 0) throw new RestException("Accounts not found for the given id", 404);
             return AccountAssembler.createAccountSummaries(accounts);
         } catch (Exception e) {
             throw e;

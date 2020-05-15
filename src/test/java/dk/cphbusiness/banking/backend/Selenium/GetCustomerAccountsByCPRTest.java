@@ -72,6 +72,6 @@ public class GetCustomerAccountsByCPRTest {
 
         // Assert
         // This will fail because the backend doesn't throw an exception to the frontend
-        assertEquals("Accounts not found for the given id", driver.findElement(By.name("exceptionHandler")).getText());
+        assertEquals("Accounts not found for the given id", driver.findElement(By.name("exceptionHolder")).getText());
     }
 }
