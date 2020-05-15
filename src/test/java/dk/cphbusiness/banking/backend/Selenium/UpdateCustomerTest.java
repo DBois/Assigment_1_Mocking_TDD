@@ -23,7 +23,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class CreateCustomerTest {
+public class UpdateCustomerTest {
   private static WebDriver driver;
   private Map<String, Object> vars;
   JavascriptExecutor js;
@@ -36,15 +36,14 @@ public class CreateCustomerTest {
     populateDatabase(dbName);
 
     ChromeOptions options = new ChromeOptions();
-    driver = new ChromeDriver(options);
     options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1200","--ignore-certificate-errors", "--silent");
+    driver = new ChromeDriver(options);
     driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-    driver.get("http://localhost:5000/");
+    driver.get("http://localhost:5000");
     driver.manage().window().setSize(new Dimension(1920, 994));
 
     js = (JavascriptExecutor) driver;
     vars = new HashMap<String, Object>();
-
   }
 
   @After
@@ -52,16 +51,24 @@ public class CreateCustomerTest {
     driver.quit();
   }
   @Test
-  public void createCustomer() {
+  public void updateCustomer() {
     driver.get("http://localhost:5000/");
     driver.manage().window().setSize(new Dimension(976, 1010));
-    driver.findElement(By.cssSelector(".svelte-149tb61 > .input_container:nth-child(1) > .svelte-n2exwy")).click();
-    driver.findElement(By.cssSelector(".svelte-149tb61 > .input_container:nth-child(1) > .svelte-n2exwy")).sendKeys("Frederic Chopin");
-    driver.findElement(By.cssSelector(".input-container > .input_container:nth-child(2) > .svelte-n2exwy")).click();
-    driver.findElement(By.cssSelector(".input-container > .input_container:nth-child(2) > .svelte-n2exwy")).sendKeys("0123456789");
-    driver.findElement(By.cssSelector(".button:nth-child(3) > .svelte-10g3g0h")).click();
-    driver.findElement(By.cssSelector(".svelte-149tb61:nth-child(2)")).click();
-    assertThat(driver.findElement(By.cssSelector(".svelte-149tb61:nth-child(2)")).getText(), is("Customer created!"));
+    driver.findElement(By.name("updatecustomer-name")).sendKeys("Frederic Chopin");
+    driver.findElement(By.name("updatecustomer-cpr")).sendKeys("1234560004");
+    driver.findElement(By.name("updatecustomer-submit")).click();
+    assertThat(driver.findElement(By.name("updatecustomer-res")).getText(), is("Updated customer!"));
+    driver.close();
+  }
+
+  @Test
+  public void updateCustomerFail() {
+    driver.get("http://localhost:5000/");
+    driver.manage().window().setSize(new Dimension(976, 1010));
+    driver.findElement(By.name("updatecustomer-name")).sendKeys("Frederic Chopin");
+    driver.findElement(By.name("updatecustomer-cpr")).sendKeys("1029384756");
+    driver.findElement(By.name("updatecustomer-submit")).click();
+    assertThat(driver.findElement(By.name("exceptionHolder")).getText(), is("Customer does not exist"));
     driver.close();
   }
 }
