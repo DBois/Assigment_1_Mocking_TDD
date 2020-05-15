@@ -1,9 +1,19 @@
 # Mocking and TDD  
   * [Contract](https://github.com/DBois/BankContract)  
   * [Backend](https://github.com/DBois/Assigment_1_Mocking_TDD) 
+  * [Frontend](https://github.com/DBois/BankFrontend) 
+  
+## Assignment 5. Frontend Test  
+Our proposed solution of [this assignment](https://datsoftlyngby.github.io/soft2020spring/resources/4c3f949c-05-assignment-frontend.pdf)    
+
+First off all edit the configuration to have `-ea -Dwebdriver.chrome.driver="C:\chromedriver.exe"` in VM options for the test you're running.
+
+Inside the `dk.cphbusiness.banking.backend.selenium` package, you'll find all of our selenium tests.  
+
+Check out our [frontend](https://github.com/DBois/BankFrontend)  written in Svelte.
+  
 ## Assignment 4. REST Integration Testing
 Our proposed solution of [this assignment](https://datsoftlyngby.github.io/soft2020spring/resources/5988f3c5-04-assignment-rest.pdf) 
-
 
 Inside the `dk.cphbusiness.banking.backend.rest` package, you will find all REST endpoints implemented, which is separated by different entities + root of JAX-RS application `RESTApplication`
 
