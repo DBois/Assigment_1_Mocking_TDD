@@ -53,12 +53,12 @@ public class GetCustomerAccountsByCPRTest {
         var cpr = "1234560004";
 
         // Act
-        driver.findElement(By.cssSelector(".svelte-1j6zdsv > .input_container > .svelte-n2exwy")).sendKeys(cpr);
-        driver.findElement(By.cssSelector(".svelte-1j6zdsv .svelte-10g3g0h")).click();
+        driver.findElement(By.name("getaccounts-cpr")).sendKeys(cpr);
+        driver.findElement(By.name("getaccounts-submit")).click();
 
         // Assert
-        assertThat(driver.findElement(By.cssSelector("tbody > tr:nth-child(1) > th:nth-child(3)")).getText(), is("6666666666"));
-        assertThat(driver.findElement(By.cssSelector("tr:nth-child(2) > th:nth-child(3)")).getText(), is("7777777777"));
+        assertThat(driver.findElement(By.name("0number")).getText(), is("6666666666"));
+        assertThat(driver.findElement(By.name("1number")).getText(), is("7777777777"));
     }
 
     @Test
@@ -67,10 +67,11 @@ public class GetCustomerAccountsByCPRTest {
         var cpr = "1234560000";
 
         // Act
-        driver.findElement(By.cssSelector(".svelte-1j6zdsv > .input_container > .svelte-n2exwy")).sendKeys(cpr);
-        driver.findElement(By.cssSelector(".svelte-1j6zdsv .svelte-10g3g0h")).click();
+        driver.findElement(By.name("getaccounts-cpr")).sendKeys(cpr);
+        driver.findElement(By.name("getaccounts-submit")).click();
 
         // Assert
-        assertEquals("Accounts not found for the given id", driver.findElement(By.cssSelector(".exception-handler > .svelte-1t47y6r")).getText());
+        // This will fail because the backend doesn't throw an exception to the frontend
+        assertEquals("Accounts not found for the given id", driver.findElement(By.name("exceptionHandler")).getText());
     }
 }

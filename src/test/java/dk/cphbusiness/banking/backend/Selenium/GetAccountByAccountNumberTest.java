@@ -52,14 +52,14 @@ public class GetAccountByAccountNumberTest {
         var accountNumber = "1111111111";
 
         // Act
-        driver.findElement(By.cssSelector(".get-account-container:nth-child(4) .input_container > .svelte-n2exwy")).sendKeys(accountNumber);
-        driver.findElement(By.cssSelector(".get-account-container:nth-child(4) .svelte-10g3g0h")).click();
+        driver.findElement(By.name("getaccount-number")).sendKeys(accountNumber);
+        driver.findElement(By.name("getaccount-submit")).click();
 
         // Assert
-        assertThat(driver.findElement(By.cssSelector("tbody th:nth-child(1)")).getText(), is("$ 100"));
-        assertThat(driver.findElement(By.cssSelector("tbody th:nth-child(2)")).getText(), is("1111111111"));
-        assertThat(driver.findElement(By.cssSelector("tbody th:nth-child(3)")).getText(), is("Danske Bank"));
-        assertThat(driver.findElement(By.cssSelector("tbody th:nth-child(4)")).getText(), is("12345678"));
+        assertThat(driver.findElement(By.name("getaccount-resbalance")).getText(), is("$ 100"));
+        assertThat(driver.findElement(By.name("getaccount-resnumber")).getText(), is("1111111111"));
+        assertThat(driver.findElement(By.name("getaccount-resname")).getText(), is("Danske Bank"));
+        assertThat(driver.findElement(By.name("getaccount-rescvr")).getText(), is("12345678"));
     }
 
     @Test
@@ -68,11 +68,11 @@ public class GetAccountByAccountNumberTest {
         var accountNumber = "1234";
 
         // Act
-        driver.findElement(By.cssSelector(".get-account-container:nth-child(4) .input_container > .svelte-n2exwy")).sendKeys(accountNumber);
-        driver.findElement(By.cssSelector(".get-account-container:nth-child(4) .svelte-10g3g0h")).click();
+        driver.findElement(By.name("getaccount-number")).sendKeys(accountNumber);
+        driver.findElement(By.name("getaccount-submit")).click();
 
         // Assert
-        assertEquals("Account not found", driver.findElement(By.cssSelector(".exception-handler > .svelte-1t47y6r")).getText());
+        assertEquals("Account not found", driver.findElement(By.name("exceptionHolder")).getText());
     }
 
 }
