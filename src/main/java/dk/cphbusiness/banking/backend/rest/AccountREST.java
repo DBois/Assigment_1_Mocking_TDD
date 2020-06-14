@@ -6,14 +6,10 @@ import dk.cphbusiness.banking.backend.exceptions.InvalidAmountException;
 import dk.cphbusiness.banking.backend.exceptions.RestException;
 import dk.cphbusiness.banking.backend.facade.AccountFacade;
 import dk.cphbusiness.banking.backend.utility.TransferDTO;
-import dk.cphbusiness.banking.contract.MovementManager;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 
 

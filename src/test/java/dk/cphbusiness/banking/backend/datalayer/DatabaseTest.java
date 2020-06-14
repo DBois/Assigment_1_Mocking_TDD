@@ -1,6 +1,5 @@
 package dk.cphbusiness.banking.backend.datalayer;
 import org.junit.*;
-import org.postgresql.util.PSQLException;
 
 import java.io.IOException;
 import java.sql.Connection;

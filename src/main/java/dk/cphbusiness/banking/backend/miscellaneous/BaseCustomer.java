@@ -1,7 +1,5 @@
 package dk.cphbusiness.banking.backend.miscellaneous;
 
-import dk.cphbusiness.banking.backend.models.Account;
-import dk.cphbusiness.banking.backend.models.Bank;
 import dk.cphbusiness.banking.backend.models.Customer;
 
 import java.util.List;

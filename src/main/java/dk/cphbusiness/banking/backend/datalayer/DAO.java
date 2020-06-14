@@ -1,18 +1,10 @@
 package dk.cphbusiness.banking.backend.datalayer;
 
 import dk.cphbusiness.banking.backend.models.*;
-import dk.cphbusiness.banking.backend.settings.Settings;
 
-import static dk.cphbusiness.banking.contract.AccountManager.*;
-import static dk.cphbusiness.banking.contract.BankManager.*;
-import static dk.cphbusiness.banking.contract.CustomerManager.*;
-import static dk.cphbusiness.banking.contract.MovementManager.*;
-
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static dk.cphbusiness.banking.backend.settings.Settings.*;
 

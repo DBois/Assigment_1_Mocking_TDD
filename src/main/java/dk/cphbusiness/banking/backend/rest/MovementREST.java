@@ -10,10 +10,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 
-import static dk.cphbusiness.banking.contract.MovementManager.*;
-
-import java.util.List;
-
 @Path("/movements")
 public class MovementREST {
     MovementFacade mf = new MovementFacade();

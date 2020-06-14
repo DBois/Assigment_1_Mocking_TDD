@@ -1,5 +1,4 @@
 package dk.cphbusiness.banking.backend;
-import dk.cphbusiness.banking.backend.doubles.AccountDummy;
 import dk.cphbusiness.banking.backend.models.RealMovement;
 import org.junit.Test;
 

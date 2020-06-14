@@ -1,12 +1,9 @@
 package dk.cphbusiness.banking.backend.datalayer;
 
-import static dk.cphbusiness.banking.backend.datalayer.TestDatabaseUtility.createTestDatabase;
-
 
 import dk.cphbusiness.banking.backend.models.RealCustomer;
 import dk.cphbusiness.banking.backend.doubles.ClockStub;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

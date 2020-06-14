@@ -1,7 +1,5 @@
 package dk.cphbusiness.banking.backend.doubles;
 
-import dk.cphbusiness.banking.backend.models.Account;
-import dk.cphbusiness.banking.backend.models.Bank;
 import dk.cphbusiness.banking.backend.models.Customer;
 
 import java.util.List;

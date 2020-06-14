@@ -2,18 +2,12 @@ package dk.cphbusiness.banking.backend.rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import static dk.cphbusiness.banking.contract.AccountManager.*;
 
-import com.google.gson.reflect.TypeToken;
-import dk.cphbusiness.banking.backend.models.RealAccount;
 import dk.cphbusiness.banking.backend.models.RealCustomer;
 import dk.cphbusiness.banking.contract.CustomerManager;
-import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 
-import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -22,17 +16,13 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static dk.cphbusiness.banking.backend.datalayer.TestDatabaseUtility.*;
 import static dk.cphbusiness.banking.backend.settings.Settings.DB_NAME;

@@ -2,13 +2,9 @@ package dk.cphbusiness.banking.backend.facade;
 
 import dk.cphbusiness.banking.backend.datalayer.DAO;
 import dk.cphbusiness.banking.backend.exceptions.RestException;
-import dk.cphbusiness.banking.backend.models.Customer;
-import dk.cphbusiness.banking.backend.models.RealAccount;
 import dk.cphbusiness.banking.backend.models.RealCustomer;
-import dk.cphbusiness.banking.backend.utility.AccountAssembler;
 import dk.cphbusiness.banking.backend.utility.CustomerAssembler;
 import dk.cphbusiness.banking.contract.CustomerManager;
-import static dk.cphbusiness.banking.backend.settings.Settings.*;
 
 public class CustomerFacade implements CustomerManager {
     private DAO dao;

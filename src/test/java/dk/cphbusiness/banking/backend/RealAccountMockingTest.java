@@ -24,7 +24,7 @@ public class RealAccountMockingTest {
         final Customer CUSTOMER = context.mock(Customer.class);
         final Bank BANK = context.mock(Bank.class);
         final String TARGET_NUMBER = "TGT54321";
-        var clock = new RealClock();
+        var clock = new ClockStub();
         RealAccount source = new RealAccount(BANK, CUSTOMER, "DPG43212");
         RealAccount target = new RealAccount(BANK, CUSTOMER, TARGET_NUMBER);
         context.checking(new Expectations(){{
@@ -39,7 +39,7 @@ public class RealAccountMockingTest {
         //Assert
         assertEquals(-10000L, source.getBalance());
         assertEquals(10000L, target.getBalance());
-
+        assertEquals(1585812373273L, source.getMovements().get(source.getMovements().size() - 1).getTime());
     }
 
     @Test

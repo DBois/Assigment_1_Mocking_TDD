@@ -1,7 +1,6 @@
 package dk.cphbusiness.banking.backend.facade;
 
 import dk.cphbusiness.banking.backend.datalayer.DAO;
-import dk.cphbusiness.banking.backend.exceptions.InvalidAmountException;
 import dk.cphbusiness.banking.backend.exceptions.RestException;
 import dk.cphbusiness.banking.backend.models.RealAccount;
 import dk.cphbusiness.banking.backend.models.RealClock;
@@ -9,8 +8,6 @@ import dk.cphbusiness.banking.backend.models.RealMovement;
 import dk.cphbusiness.banking.backend.utility.AccountAssembler;
 import dk.cphbusiness.banking.backend.utility.MovementAssembler;
 import dk.cphbusiness.banking.contract.AccountManager;
-
-import javax.validation.constraints.Null;
 
 import static dk.cphbusiness.banking.contract.MovementManager.*;
 

@@ -1,10 +1,6 @@
 package dk.cphbusiness.banking.backend;
 import dk.cphbusiness.banking.backend.doubles.BankDummy;
-import dk.cphbusiness.banking.backend.doubles.ClockStub;
-import dk.cphbusiness.banking.backend.models.Account;
-import dk.cphbusiness.banking.backend.models.Bank;
 import dk.cphbusiness.banking.backend.models.RealCustomer;
-import org.jmock.Expectations;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
 import org.junit.Test;

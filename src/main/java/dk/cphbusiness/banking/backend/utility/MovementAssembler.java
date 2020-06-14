@@ -1,12 +1,10 @@
 package dk.cphbusiness.banking.backend.utility;
 
-import dk.cphbusiness.banking.backend.models.Movement;
 import dk.cphbusiness.banking.backend.models.RealMovement;
 
 import java.util.ArrayList;
 import java.util.List;
 import static dk.cphbusiness.banking.contract.MovementManager.*;
-import static dk.cphbusiness.banking.backend.utility.AccountAssembler.*;
 
 public class MovementAssembler {
 

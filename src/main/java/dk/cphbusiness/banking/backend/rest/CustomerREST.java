@@ -3,15 +3,12 @@ package dk.cphbusiness.banking.backend.rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dk.cphbusiness.banking.backend.exceptions.RestException;
-import dk.cphbusiness.banking.backend.facade.AccountFacade;
 import dk.cphbusiness.banking.backend.facade.CustomerFacade;
 import dk.cphbusiness.banking.backend.models.RealCustomer;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import static dk.cphbusiness.banking.contract.CustomerManager.*;
 
 @Path("/customers")
 public class CustomerREST {
