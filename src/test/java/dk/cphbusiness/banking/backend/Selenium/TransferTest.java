@@ -75,11 +75,11 @@ public class TransferTest {
         String targetAccNumber = "3333333333";
 
         //Act
-        driver.findElement(By.name("transfer-source")).click();
+        driver.findElement(By.name("transfer-source"));
         driver.findElement(By.name("transfer-source")).sendKeys(sourceAccNumber);
-        driver.findElement(By.name("transfer-target")).click();
+        driver.findElement(By.name("transfer-target"));
         driver.findElement(By.name("transfer-target")).sendKeys(targetAccNumber);
-        driver.findElement(By.name("transfer-amount")).click();
+        driver.findElement(By.name("transfer-amount"));
         driver.findElement(By.name("transfer-amount")).sendKeys(amount);
         driver.findElement(By.name("transfer-submit")).click();
 
@@ -96,11 +96,11 @@ public class TransferTest {
         String targetAccNumber = "3333333333";
 
         //Act
-        driver.findElement(By.name("transfer-source")).click();
+        driver.findElement(By.name("transfer-source"));
         driver.findElement(By.name("transfer-source")).sendKeys(sourceAccNumber);
-        driver.findElement(By.name("transfer-target")).click();
+        driver.findElement(By.name("transfer-target"));
         driver.findElement(By.name("transfer-target")).sendKeys(targetAccNumber);
-        driver.findElement(By.name("transfer-amount")).click();
+        driver.findElement(By.name("transfer-amount"));
         driver.findElement(By.name("transfer-amount")).sendKeys(amount);
         driver.findElement(By.name("transfer-submit")).click();
 

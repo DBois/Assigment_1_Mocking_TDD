@@ -64,7 +64,7 @@ public class GetCustomerByCPRTest {
         var expectedAccounts = "0000000000, 1111111111";
 
         //Act
-        driver.findElement(By.name("getcustomer-cpr")).click();
+        driver.findElement(By.name("getcustomer-cpr"));
         driver.findElement(By.name("getcustomer-cpr")).sendKeys(cpr);
         driver.findElement(By.name("getcustomer-submit")).click();
 
@@ -80,7 +80,7 @@ public class GetCustomerByCPRTest {
         var cpr = "abc";
 
         //Act
-        driver.findElement(By.name("getcustomer-cpr")).click();
+        driver.findElement(By.name("getcustomer-cpr"));
         driver.findElement(By.name("getcustomer-cpr")).sendKeys(cpr);
         driver.findElement(By.name("getcustomer-submit")).click();
 
